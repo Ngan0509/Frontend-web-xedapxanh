@@ -1,0 +1,39 @@
+{
+    "menu": {
+        "system": {
+            "header": "System",
+            "hello": "Hello",
+            "system-administrator": {
+                "header": "System Administrator",
+                "register-package-group-or-account": "Register service package for group/account"
+            },
+            "system-parameter": {
+                "header": "System-parameter"
+            }
+        },
+        "admin": {
+            "user": "Users System"
+        },
+        "shipper": {
+            "user": "Users System"
+        }
+    },
+    "manage-user": {
+        "add-new-user": "Add new User",
+        "email": "Email",
+        "password": "Password",
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "fullname": "Fullname",
+        "address": "Address",
+        "phoneNumber": "Phone Number",
+        "sex": "Sex",
+        "role": "Role",
+        "position": "Position",
+        "image": "Image",
+        "reason": "Reason",
+        "birthday": "Birthday",
+        "time": "Time",
+        "actions": "Actions"
+    }
+}

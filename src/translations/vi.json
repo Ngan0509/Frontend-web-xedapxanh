@@ -1,0 +1,39 @@
+{
+    "menu": {
+        "system": {
+            "header": "Hệ thống",
+            "hello": "Xin chào",
+            "system-administrator": {
+                "header": "Quản trị hệ thống",
+                "register-package-group-or-account": "Đăng ký gói dịch vụ cho nhóm/tài khoản"
+            },
+            "system-parameter": {
+                "header": "Tham số hệ thống"
+            }
+        },
+        "admin": {
+            "user": "Người dùng"
+        },
+        "shipper": {
+            "user": "Người dùng"
+        }
+    },
+    "manage-user": {
+        "add-new-user": "Thêm người dùng mới",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "firstname": "Tên",
+        "lastname": "Họ",
+        "fullname": "Họ tên",
+        "address": "Địa chỉ",
+        "phoneNumber": "Số điện thoại",
+        "sex": "Giới tính",
+        "role": "Vai trò",
+        "position": "Chức vụ",
+        "image": "Ảnh",
+        "reason": "Lý do",
+        "birthday": "Ngày sinh",
+        "time": "Thời gian",
+        "actions": "Thao tác"
+    }
+}
