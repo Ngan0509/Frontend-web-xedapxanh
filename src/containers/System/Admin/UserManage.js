@@ -5,16 +5,18 @@ import * as selectors from "../../../store/selectors"
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils/constant'
 import Select from 'react-select';
-
+import * as userService from '../../../services/userService'
 
 // import Slider from "react-slick";
 import './Manage.scss'
 function UserManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const allCodeUserData = useSelector(selectors.selectorAllcodeUserData)
+    const allUserData = useSelector(selectors.selectorAllUserData)
 
     const dispatch = useDispatch()
 
+    // input onChange
     const [form, setForm] = useState({
         fullname: '',
         email: '',
@@ -31,13 +33,18 @@ function UserManage() {
 
     }
 
+    // array
     const [listRole, setListRole] = useState([]);
     const [listGender, setListGender] = useState([]);
+    const [listAllUser, setListAllUser] = useState([]);
 
+    // dispatch actions
     useEffect(() => {
         dispatch(actions.fetchAllcodeUserStart())
+        dispatch(actions.fetchAllUserStart('All'))
     }, [dispatch])
 
+    // Get Allcodeuser cho user
     useEffect(() => {
         const buildInputData = (inputData, type) => {
             if (inputData && inputData.length > 0) {
@@ -63,6 +70,12 @@ function UserManage() {
 
     }, [allCodeUserData, lang])
 
+    // get AllUser
+    useEffect(() => {
+        setListAllUser(allUserData)
+    }, [allUserData])
+
+    // select onChange
     const [selects, setSelects] = useState({
         role: '',
         gender: ''
@@ -77,7 +90,8 @@ function UserManage() {
         setSelects({ ...copySelects })
     }
 
-    const handleOnSubmit = () => {
+    // submit (create user)
+    const handleOnSubmit = async () => {
         setForm({
             fullname: '',
             email: '',
@@ -88,7 +102,73 @@ function UserManage() {
             role: '',
             gender: ''
         })
-        console.log("data", { ...form, ...selects })
+        setIsEdit(false)
+        setId('')
+
+
+        if (isEdit) {
+            let dataEdit = {
+                id,
+                ...form,
+                role: role.value,
+                gender: gender.value
+            }
+            console.log("dataEdit", dataEdit)
+            const resp = await userService.handleUpdateNewUser(dataEdit)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllUserStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
+        } else {
+            let data = {
+                ...form,
+                role: role.value,
+                gender: gender.value
+            }
+            console.log("data", data)
+            const resp = await userService.handleCreateNewUser(data)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllUserStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
+        }
+    }
+
+    // delete user
+    const handleDeleteNewUser = async (userId) => {
+        const resp = await userService.handleDeleteNewUser(userId)
+        if (resp && resp.errCode === 0) {
+            dispatch(actions.fetchAllUserStart('All'))
+            alert(resp.errMessage)
+        } else {
+            alert(resp.errMessage)
+        }
+    }
+
+    // edit user
+    const [isEdit, setIsEdit] = useState(false)
+    const [id, setId] = useState('')
+
+    const handleEditNewUser = (adminData) => {
+        setIsEdit(true)
+        setId(adminData.id)
+        setForm({
+            fullname: adminData.name,
+            email: adminData.email,
+            password: 'password',
+            phoneNumber: adminData.phoneNumber,
+        })
+        let role = listRole.find(item => item.value === adminData.roleId)
+        let gender = listGender.find(item => item.value === adminData.genderId)
+
+        setSelects({
+            role,
+            gender
+        })
     }
 
     return (
@@ -110,6 +190,7 @@ function UserManage() {
                     <div className='col-4 form-group'>
                         <label><FormattedMessage id="user-manage.email" /></label>
                         <input
+                            disabled={isEdit ? true : false}
                             value={email}
                             type='email'
                             onChange={(e) => handleOnChange(e, 'email')}
@@ -120,6 +201,7 @@ function UserManage() {
                     <div className='col-4 form-group'>
                         <label><FormattedMessage id="user-manage.password" /></label>
                         <input
+                            disabled={isEdit ? true : false}
                             value={password}
                             type='password'
                             onChange={(e) => handleOnChange(e, 'password')}
@@ -163,10 +245,14 @@ function UserManage() {
 
                     <div className='col-4 form-group'>
                         <button
-                            className='btn btn-primary btn-create'
+                            className={`btn ${isEdit ? 'btn-warning' : 'btn-primary'} btn-create`}
                             onClick={() => handleOnSubmit()}
                         >
-                            <FormattedMessage id="user-manage.create-user" />
+                            {
+                                isEdit ?
+                                    <FormattedMessage id="user-manage.update-user" /> :
+                                    <FormattedMessage id="user-manage.create-user" />
+                            }
                         </button>
                     </div>
                 </div>
@@ -177,23 +263,35 @@ function UserManage() {
                                 <th>Họ tên</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
+                                <th>Role</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Peter</td>
-                                <td>Griffin</td>
-                                <td>123</td>
-                                <td>
-                                    <span className='icon-edit'>
-                                        <i class='bx bxs-pencil'></i>
-                                    </span>
-                                    <span className='icon-delete'>
-                                        <i class='bx bxs-trash' ></i>
-                                    </span>
-                                </td>
-                            </tr>
+                            {
+                                listAllUser && listAllUser.length > 0 &&
+                                listAllUser.map((item) => (
+                                    <tr key={item.id}>
+                                        <td>{item.name}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.phoneNumber}</td>
+                                        <td>{item.roleId}</td>
+                                        <td>
+                                            <span
+                                                onClick={() => handleEditNewUser(item)}
+                                                className='icon-edit'>
+                                                <i className='bx bxs-pencil'></i>
+                                            </span>
+                                            <span
+                                                onClick={() => handleDeleteNewUser(item.id)}
+                                                className='icon-delete'>
+                                                <i className='bx bxs-trash' ></i>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                ))
+                            }
                         </tbody>
                     </table>
                 </div>

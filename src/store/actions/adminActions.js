@@ -114,3 +114,30 @@ export const fetchCategorySuccess = (CategoryData) => ({
 export const fetchCategoryFailed = () => ({
     type: actionTypes.FETCH_CATEGORY_FAILED
 })
+
+//-------------------------------------------------------
+export const fetchAllUserStart = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALLUSER_START })
+            let resp = await userService.handleGetAllUser(inputId)
+            console.log('resp all user', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllUserSuccess(resp.data))
+            } else {
+                dispatch(fetchAllUserFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllUserFailed())
+        }
+    }
+}
+
+export const fetchAllUserSuccess = (AllUserData) => ({
+    type: actionTypes.FETCH_ALLUSER_SUCCESS,
+    data: AllUserData
+})
+
+export const fetchAllUserFailed = () => ({
+    type: actionTypes.FETCH_ALLUSER_FAILED
+})

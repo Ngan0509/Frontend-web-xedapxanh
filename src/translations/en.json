@@ -52,6 +52,7 @@
     },
     "user-manage": {
         "create-user": "Create user",
+        "update-user": "Update user",
         "add-new-user": "Add new User",
         "email": "Email",
         "password": "Password",

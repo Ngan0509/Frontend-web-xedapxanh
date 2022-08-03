@@ -3,7 +3,8 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     allcodeData: {},
     allcodeUserData: {},
-    categoryData: []
+    categoryData: [],
+    allUserData: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -43,6 +44,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categoryData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALLUSER_SUCCESS:
+            return {
+                ...state,
+                allUserData: action.data
+            }
+        case actionTypes.FETCH_ALLUSER_FAILED:
+            return {
+                ...state,
+                allUserData: []
             }
         default:
             return state;

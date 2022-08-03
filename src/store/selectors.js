@@ -11,4 +11,7 @@ export const selectorAllcodeUserData = (state) => state.admin.allcodeUserData
 
 export const selectorCategoryData = (state) => state.admin.categoryData
 
+export const selectorAllUserData = (state) => state.admin.allUserData
+
+
 

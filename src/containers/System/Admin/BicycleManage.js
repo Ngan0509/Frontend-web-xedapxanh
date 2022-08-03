@@ -303,10 +303,10 @@ function BicycleManage() {
                                 <td>Griffin</td>
                                 <td>
                                     <span className='icon-edit'>
-                                        <i class='bx bxs-pencil'></i>
+                                        <i className='bx bxs-pencil'></i>
                                     </span>
                                     <span className='icon-delete'>
-                                        <i class='bx bxs-trash' ></i>
+                                        <i className='bx bxs-trash' ></i>
                                     </span>
                                 </td>
                             </tr>

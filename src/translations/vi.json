@@ -52,6 +52,7 @@
     },
     "user-manage": {
         "create-user": "Tạo người dùng",
+        "update-user": "Cập nhật người dùng",
         "add-new-user": "Thêm người dùng mới",
         "email": "Email",
         "password": "Mật khẩu",
