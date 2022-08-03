@@ -3,10 +3,16 @@ import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 
 const locationHelper = locationHelperBuilder({});
 
-export const userIsAuthenticated = connectedRouterRedirect({
+export const userIsAuthenticatedAdmin = connectedRouterRedirect({
     authenticatedSelector: state => state.user.isLoggedIn,
     wrapperDisplayName: 'UserIsAuthenticated',
-    redirectPath: '/login'
+    redirectPath: '/admin/login'
+});
+
+export const userIsAuthenticatedShipper = connectedRouterRedirect({
+    authenticatedSelector: state => state.user.isLoggedIn,
+    wrapperDisplayName: 'UserIsAuthenticated',
+    redirectPath: '/shipper/login'
 });
 
 export const userIsNotAuthenticated = connectedRouterRedirect({

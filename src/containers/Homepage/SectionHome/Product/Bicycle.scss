@@ -1,0 +1,82 @@
+#Bicycle {
+    .bicycle_bg {
+        padding: 30px 0;
+
+        .bicycle {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            .bicycle_filter {
+                display: flex;
+                align-items: center;
+
+                .item {
+                    position: relative;
+
+                    .filter_label {
+                        margin-right: 8px;
+                        border: 1px solid var(--primary-color);
+                        padding: 8px 12px;
+                        color: var(--text-color);
+                        border-radius: 4px;
+                    }
+
+                    .filter_box {
+                        position: absolute;
+                        top: 40px;
+                        display: none;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        width: 550px;
+                        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+                        padding: 8px;
+                    }
+
+                    &.left {
+                        left: 0;
+                    }
+
+                    &.right {
+                        right: 0;
+                    }
+                }
+            }
+
+            .bicycle_filter-more {
+                margin-top: 30px;
+
+                .bicycle_amount {
+                    display: inline-block;
+                    font-weight: 600;
+
+                    span {
+                        margin-right: 4px;
+                    }
+                }
+
+                .bicycle_discount {
+                    display: inline-block;
+                    margin-left: 24px;
+
+                    input {
+                        margin-right: 4px;
+                        position: relative;
+                        top: 1px;
+                    }
+                }
+
+                .bicycle_sort {
+                    float: right;
+
+                    select {
+                        border: 1px solid var(--primary-color);
+                        outline: none;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

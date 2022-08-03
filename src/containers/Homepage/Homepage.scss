@@ -1,0 +1,23 @@
+:root {
+    --primary-color: #009900;
+    --color-with-primary-bg: #fff;
+    --text-color: #333;
+    --border-color: #ececec;
+    --text-size: 15px;
+    --title-size: 20px;
+}
+
+#Homepage,
+#Bicycle,
+#BicycleAccessories,
+#PeopleAccessories,
+#Accessary {
+    font-size: var(--text-size);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Route, Switch } from 'react-router-dom';
 import UserManage from '../containers/System/Admin/UserManage';
+import BicycleManage from '../containers/System/Admin/BicycleManage';
+import AccessoriesManage from '../containers/System/Admin/AccessoriesManage';
 import Header from '../containers/Header/Header';
 
 class Admin extends Component {
@@ -13,6 +15,8 @@ class Admin extends Component {
                     <div className="system-list">
                         <Switch>
                             <Route path="/system/admin/user-manage" component={UserManage} />
+                            <Route path="/system/admin/bicycle-manage" component={BicycleManage} />
+                            <Route path="/system/admin/accessories-manage" component={AccessoriesManage} />
                         </Switch>
                     </div>
                 </div>

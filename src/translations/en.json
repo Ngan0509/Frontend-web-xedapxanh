@@ -1,4 +1,16 @@
 {
+    "headerHome": {
+        "contact": "Contact",
+        "news": "News",
+        "pageAdmin": "Admin's page",
+        "pageShipper": "Shipper's page",
+        "find-store-address": "Find store address",
+        "cart": "Cart",
+        "search": "Search...",
+        "login": "Log in",
+        "signup": "Sign up",
+        "view-cart": "View cart"
+    },
     "menu": {
         "system": {
             "header": "System",
@@ -12,13 +24,34 @@
             }
         },
         "admin": {
-            "user": "Users System"
+            "admin": "Admin",
+            "user-manage": "User manage",
+            "bicycle-manage": "Bicycle manage",
+            "accessories-manage": "Accessories manage"
         },
         "shipper": {
             "user": "Users System"
         }
     },
-    "manage-user": {
+    "bicycle-manage": {
+        "category": "Category",
+        "productName": "Product's Name",
+        "image": "Image",
+        "downImage": "Download",
+        "priceSpace": "Price's space",
+        "brand": "Brand",
+        "useTarget": "Use target",
+        "weelSize": "Weel's size",
+        "frameMaterial": "Frame's Material",
+        "riderHeight": "Rider's height",
+        "brake": "Brake",
+        "priceNew": "New price",
+        "priceOld": "Old price",
+        "discout": "% discout",
+        "create-product": "Create product"
+    },
+    "user-manage": {
+        "create-user": "Create user",
         "add-new-user": "Add new User",
         "email": "Email",
         "password": "Password",

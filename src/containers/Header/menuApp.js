@@ -1,8 +1,15 @@
 export const adminMenu = [
     { //Quản lý người dùng
-        name: 'menu.admin.user', menus: [
+        name: 'menu.admin.admin',
+        menus: [
             {
-                name: 'menu.admin.user', link: '/system/admin/user-manage'
+                name: 'menu.admin.user-manage', link: '/system/admin/user-manage'
+            },
+            {
+                name: 'menu.admin.bicycle-manage', link: '/system/admin/bicycle-manage'
+            },
+            {
+                name: 'menu.admin.accessories-manage', link: '/system/admin/accessories-manage'
             }
         ]
     }

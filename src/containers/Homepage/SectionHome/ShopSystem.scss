@@ -1,0 +1,44 @@
+#ShopSystem {
+    .shopSystem_bg {
+        padding: 30px 0;
+
+        .shopSystem {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            h3 {
+                margin-bottom: 30px;
+                font-size: 30px;
+                color: #333;
+                text-align: center;
+            }
+
+            .row {
+                --bs-gutter-x: 4.5rem;
+
+                .shopSystem_item {
+                    .shopSystem_image {
+                        width: 100%;
+                        height: 350px;
+                    }
+
+                    .shopSystem_info {
+                        margin-top: 16px;
+                        text-align: center;
+
+                        .city,
+                        .tel {
+                            font-weight: 600;
+                        }
+                    }
+
+                    .shopSystem_info>* {
+                        margin: 8px;
+                    }
+                }
+            }
+        }
+
+    }
+}

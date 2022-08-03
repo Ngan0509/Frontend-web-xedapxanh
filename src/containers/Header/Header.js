@@ -8,6 +8,8 @@ import { adminMenu, shipperMenu } from './menuApp';
 import './Header.scss';
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES, USER_ROLE } from '../../utils/constant'
+import { withRouter } from "react-router";
+
 
 class Header extends Component {
     constructor(props) {
@@ -38,27 +40,32 @@ class Header extends Component {
         })
     }
 
+    handleClickLogout() {
+        this.props.processLogout()
+        this.props.history.push('/home')
+    }
+
     render() {
-        const { processLogout, lang, userInfo } = this.props;
+        const { lang, userInfo } = this.props;
         // console.log(userInfo)
 
         return (
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={adminMenu} />
+                    <Navigator menus={this.state.menuApp} />
                 </div>
 
                 {/* nút logout */}
                 <div className='right-wrap'>
                     <div className='welcome'>
-                        <span><FormattedMessage id="menu.system.hello" />, {userInfo && userInfo.firstName ? userInfo.firstName : ""} !!!</span>
+                        <span><FormattedMessage id="menu.system.hello" />, {userInfo && userInfo.fullname ? userInfo.fullname : ""} !!!</span>
                     </div>
                     <div className='languages'>
                         <span onClick={() => this.changeLanguage(LANGUAGES.VI)} className={lang === LANGUAGES.VI ? 'vietnam active' : 'vietnam'}>VI</span>
                         <span onClick={() => this.changeLanguage(LANGUAGES.EN)} className={lang === LANGUAGES.EN ? 'english active' : 'english'}>EN</span>
                     </div>
-                    <div className="btn btn-logout" onClick={processLogout}>
+                    <div className="btn btn-logout" onClick={() => this.handleClickLogout()}>
                         <i className="fas fa-sign-out-alt"></i>
                     </div>
                 </div>
@@ -83,4 +90,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

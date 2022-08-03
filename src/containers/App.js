@@ -6,7 +6,7 @@ import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
 
 
-// import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
+import { userIsAuthenticatedAdmin, userIsAuthenticatedShipper, userIsNotAuthenticated } from '../hoc/authentication';
 
 import { path } from '../utils'
 
@@ -15,9 +15,11 @@ import Admin from '../routes/Admin';
 import Shipper from '../routes/Shipper';
 
 import Homepage from './Homepage/Homepage';
+import Bicycle from './Homepage/SectionHome/Product/Bicycle';
 
 import CustomScrollbars from '../components/CustomScrollbars';
 // import ConfirmModal from '../components/ConfirmModal';
+import Login from "./Auth/Login"
 
 class App extends Component {
 
@@ -50,9 +52,12 @@ class App extends Component {
                             <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                                 <Switch>
                                     <Route path={path.HOME} exact component={(Home)} />
-                                    <Route path={path.ADMIN} component={(Admin)} />
-                                    <Route path={path.SHIPPER} component={(Shipper)} />
-                                    <Route path={path.HOMEPAGE} component={(Homepage)} />
+                                    <Route path={path.LOGINADMIN} component={userIsNotAuthenticated(Login)} />
+                                    <Route path={path.ADMIN} component={userIsAuthenticatedAdmin(Admin)} />
+                                    <Route path={path.LOGINSHIPPER} component={userIsNotAuthenticated(Login)} />
+                                    <Route path={path.SHIPPER} component={userIsAuthenticatedShipper(Shipper)} />
+                                    <Route path={path.HOMEPAGE} exact component={(Homepage)} />
+                                    <Route path={path.BICYCLE} component={(Bicycle)} />
                                 </Switch>
 
                             </CustomScrollbars>

@@ -1,0 +1,40 @@
+#Category {
+    .category_bg {
+        padding: 30px 0;
+
+        .category {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            .category_list {
+                padding-left: 0;
+                list-style: none;
+
+                .row {
+                    --bs-gutter-x: 4.5rem;
+
+                    li {
+                        border: 1px solid #000;
+                        border-radius: 4px;
+                        padding: 20px 0;
+                        margin: 8px 0;
+                        font-size: var(--title-size);
+                        text-align: center;
+                        background-color: #f7f7f7;
+                        color: var(--primary-color);
+                        font-weight: 600;
+                        transition: 0.3s;
+                    }
+
+                    li:hover {
+                        cursor: pointer;
+                        background-color: var(--primary-color);
+                        color: var(--color-with-primary-bg);
+                    }
+                }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+#Sliders {
+    .sliders_bg {
+        padding: 30px 0;
+
+        .sliders {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            .banner:first-child {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

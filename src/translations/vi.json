@@ -1,4 +1,16 @@
 {
+    "headerHome": {
+        "contact": "Liên hệ",
+        "news": "Tin tức",
+        "pageAdmin": "Trang quản trị",
+        "pageShipper": "Trang giao hàng",
+        "find-store-address": "Tìm địa chỉ cửa hàng",
+        "cart": "Giỏ hàng",
+        "search": "Tìm kiếm...",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký",
+        "view-cart": "Xem giỏ hàng"
+    },
     "menu": {
         "system": {
             "header": "Hệ thống",
@@ -12,13 +24,34 @@
             }
         },
         "admin": {
-            "user": "Người dùng"
+            "admin": "Quản trị viên",
+            "user-manage": "Quản lý người dùng",
+            "bicycle-manage": "Quản lý xe đạp",
+            "accessories-manage": "Quản lý phụ kiện"
         },
         "shipper": {
             "user": "Người dùng"
         }
     },
-    "manage-user": {
+    "bicycle-manage": {
+        "category": "Danh mục sản phẩm",
+        "productName": "Tên sản phẩm",
+        "image": "Ảnh",
+        "downImage": "Tải ảnh",
+        "priceSpace": "Giá trong khoảng",
+        "brand": "Hãng",
+        "useTarget": "Mục đích sử dụng",
+        "weelSize": "Kích thước bánh xe",
+        "frameMaterial": "Chất liệu khung sườn",
+        "riderHeight": "Chiều cao người lái",
+        "brake": "Thắng xe",
+        "priceNew": "Giá mới",
+        "priceOld": "Giá cũ",
+        "discout": "% giảm giá",
+        "create-product": "Tạo sản phẩm"
+    },
+    "user-manage": {
+        "create-user": "Tạo người dùng",
         "add-new-user": "Thêm người dùng mới",
         "email": "Email",
         "password": "Mật khẩu",

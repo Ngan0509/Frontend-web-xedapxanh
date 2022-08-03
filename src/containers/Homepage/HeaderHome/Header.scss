@@ -1,0 +1,277 @@
+#Header {
+    .header_bg {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: var(--color-with-primary-bg);
+
+        .header_author,
+        .header_home {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .header_author {
+            justify-content: space-between;
+
+            li:not(.user_not-login):hover {
+                opacity: 0.85;
+                cursor: pointer;
+            }
+
+            li {
+                i {
+                    margin-right: 4px;
+                    position: relative;
+                    top: 2px;
+                }
+            }
+
+            .left-content {
+                .nav {
+                    padding-left: 0;
+
+                    li {
+                        padding: 0 8px;
+                        border-right: 1px solid var(--border-color);
+                    }
+
+                    li:last-child {
+                        border-right: none;
+                    }
+
+                }
+            }
+
+            .right-content {
+                li:not(.user_not-login) {
+                    margin: 0 8px;
+                }
+
+                .languages {
+                    margin-right: 16px;
+
+                    span {
+                        margin: 0 4px;
+                        padding: 0 4px;
+                        cursor: pointer;
+                        font-size: var(--text-color);
+                        font-weight: 600;
+                        color: #fff;
+                        opacity: 1;
+                    }
+
+                    span.active {
+                        color: red;
+                    }
+
+                    span:not(.active):hover {
+                        opacity: 0.5;
+                    }
+                }
+
+                .user_not-login {
+                    margin-left: 24px;
+
+                    span {
+                        padding: 0 8px;
+                        border-right: 1px solid var(--border-color);
+                    }
+
+                    span:last-child {
+                        border-right: none;
+                    }
+
+                    span:hover {
+                        opacity: 0.85;
+                        cursor: pointer;
+                    }
+                }
+
+                .user_login {
+                    display: flex;
+
+                    .user_img {
+                        width: 30px;
+                        height: 30px;
+                        display: inline-block;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        border: 1px solid var(--border-color);
+                    }
+
+                    .user_name {
+                        margin-left: 8px;
+                        align-self: flex-start;
+                    }
+                }
+            }
+        }
+
+        .header_home {
+            justify-content: space-between;
+
+            span {
+                i {
+                    margin-right: 4px;
+                    position: relative;
+                    top: 2px;
+                }
+            }
+
+            .logo {
+                width: 100px;
+                cursor: pointer;
+            }
+
+            .search {
+                flex: 0.8;
+                border-radius: 4px;
+                overflow: hidden;
+                position: relative;
+
+                input {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    padding: 8px 60px 8px 16px;
+                    color: var(--text-color);
+                }
+
+                i {
+                    position: absolute;
+                    color: var(--primary-color);
+                    font-size: 22px;
+                    top: 0;
+                    right: 12px;
+                    padding: 8px;
+                    cursor: pointer;
+                }
+            }
+
+            .news,
+            .cart {
+
+                .news_icon,
+                .cart_icon {
+                    cursor: pointer;
+                    border: 1px solid var(--border-color);
+                    border-radius: 5px;
+                    padding: 8px 16px;
+                }
+            }
+
+            .cart {
+
+                .cart_wrap {
+                    position: relative;
+
+                    .cart_icon {
+                        i {
+                            font-size: 20px;
+                        }
+
+                        .amount {
+                            margin-left: 8px;
+                            border-radius: 50%;
+                            background-color: orange;
+                            width: 20px;
+                            height: 20px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            text-align: center;
+                            display: inline-block;
+                        }
+
+                    }
+
+                    .cart_icon::before {
+                        position: absolute;
+                        left: 0;
+                        top: 30px;
+                        width: 100%;
+                        height: 20px;
+                        display: block;
+                        content: "";
+                    }
+
+                    .cart_info {
+                        transition: 0.3s;
+                        visibility: hidden;
+                        opacity: 0;
+                        position: absolute;
+                        z-index: 100;
+                        width: 400px;
+                        background-color: #fff;
+                        border: 1px solid var(--border-color);
+                        border-radius: 5px;
+                        right: 0;
+                        top: 40px;
+
+                        .cart_not-product {
+                            display: flex;
+                            flex-direction: column;
+                            padding: 16px;
+
+                            .cart_not-product-img {
+                                width: 100px;
+                                margin: auto;
+                            }
+
+                            span {
+                                color: var(--text-color);
+                                margin: 16px auto;
+                            }
+
+                        }
+
+                        .cart_have-product {
+                            padding: 16px 0 8px;
+
+                            .product_list {
+                                padding-left: 0;
+
+                                .product_list-item {
+                                    display: flex;
+                                    align-items: center;
+                                    margin-bottom: 16px;
+
+                                    .product_img {
+                                        width: 80px;
+                                        height: 80px;
+                                        margin-right: 16px;
+                                    }
+
+                                    .product_info {
+                                        color: var(--text-color);
+                                    }
+                                }
+
+                            }
+
+                            .btn-view_cart {
+                                width: 100%;
+                                font-size: var(--text-size);
+                                color: orange;
+                                height: auto;
+                                padding: 8px;
+                                border-top: 1px solid var(--border-color);
+                            }
+                        }
+                    }
+                }
+
+                .cart_wrap:hover {
+                    .cart_info {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+
+            }
+        }
+    }
+}
