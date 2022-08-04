@@ -29,7 +29,7 @@ export const fetchAllcodeStart = () => {
                     listUseTarget: respUseTarget.data,
                     listWeelSize: respWeelSize.data,
                     listFrameMaterial: respFrameMaterial.data,
-                    listriderHeight: respriderHeight.data,
+                    listRiderHeight: respriderHeight.data,
                     listBrake: respBrake.data,
                 }
 
@@ -140,4 +140,31 @@ export const fetchAllUserSuccess = (AllUserData) => ({
 
 export const fetchAllUserFailed = () => ({
     type: actionTypes.FETCH_ALLUSER_FAILED
+})
+
+//-------------------------------------------------------
+export const fetchAllBicycleStart = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALLBICYCLE_START })
+            let resp = await userService.handleGetAllBicycle(inputId)
+            console.log('resp all Bicycle', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllBicycleSuccess(resp.data))
+            } else {
+                dispatch(fetchAllBicycleFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllBicycleFailed())
+        }
+    }
+}
+
+export const fetchAllBicycleSuccess = (AllBicycleData) => ({
+    type: actionTypes.FETCH_ALLBICYCLE_SUCCESS,
+    data: AllBicycleData
+})
+
+export const fetchAllBicycleFailed = () => ({
+    type: actionTypes.FETCH_ALLBICYCLE_FAILED
 })

@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'
 import Select from 'react-select';
@@ -7,16 +8,18 @@ import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../store/selectors"
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils/constant'
-
+import * as userService from '../../../services/userService'
 // import Slider from "react-slick";
 import './Manage.scss'
 function BicycleManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const allCodeData = useSelector(selectors.selectorAllcodeData)
     const categoryData = useSelector(selectors.selectorCategoryData)
+    const allBicycleData = useSelector(selectors.selectorAllBicycleData)
 
     const dispatch = useDispatch()
 
+    // input onChange
     const [form, setForm] = useState({
         productName: '',
         priceNew: '',
@@ -34,6 +37,7 @@ function BicycleManage() {
 
     }
 
+    // image onChange
     const handleChangeImage = async (e) => {
         let files = e.target.files;
         let file = files[0]
@@ -44,21 +48,25 @@ function BicycleManage() {
         }
     }
 
+    // array
     const [listCategory, setListCategory] = useState([]);
     const [listPriceSpace, setListPriceSpace] = useState([]);
     const [listBrand, setListBrand] = useState([]);
     const [listUseTarget, setListUseTarget] = useState([]);
     const [listWeelSize, setListWeelSize] = useState([]);
     const [listFrameMaterial, setListFrameMaterial] = useState([]);
-    const [listriderHeight, setListriderHeight] = useState([]);
+    const [listRiderHeight, setListRiderHeight] = useState([]);
     const [listBrake, setListBrake] = useState([]);
-
+    const [listAllBicycle, setListAllBicycle] = useState([]);
+    //dispatch actions
     useEffect(() => {
         console.log("abcxyz")
         dispatch(actions.fetchAllcodeStart())
         dispatch(actions.fetchCategoryStart())
+        dispatch(actions.fetchAllBicycleStart('All'))
     }, [dispatch])
 
+    // get allCode cho bicycle
     useEffect(() => {
         const buildInputData = (inputData, type) => {
             if (inputData && inputData.length > 0) {
@@ -85,10 +93,16 @@ function BicycleManage() {
         setListUseTarget(buildInputData(allCodeData.listUseTarget))
         setListWeelSize(buildInputData(allCodeData.listWeelSize))
         setListFrameMaterial(buildInputData(allCodeData.listFrameMaterial))
-        setListriderHeight(buildInputData(allCodeData.listriderHeight))
+        setListRiderHeight(buildInputData(allCodeData.listRiderHeight))
         setListBrake(buildInputData(allCodeData.listBrake))
     }, [allCodeData, lang, categoryData])
 
+    // get AllBicycle
+    useEffect(() => {
+        setListAllBicycle(allBicycleData)
+    }, [allBicycleData])
+
+    // select onChange
     const [selects, setSelects] = useState({
         category: '',
         priceSpace: '',
@@ -109,7 +123,15 @@ function BicycleManage() {
         setSelects({ ...copySelects })
     }
 
-    const handleOnSubmit = () => {
+    // search bicycle onChange
+
+    const [bicycle, setBicycle] = useState('')
+    const handleOnChangeSearch = (e) => {
+        setBicycle(e.target.value)
+    }
+
+    // create product
+    const handleOnSubmit = async () => {
         setForm({
             productName: '',
             priceNew: '',
@@ -127,9 +149,125 @@ function BicycleManage() {
             riderHeight: '',
             brake: ''
         })
-        console.log("data", { ...form, ...selects })
+        setIsEdit(false)
+        setId('')
 
+        if (isEdit) {
+            let dataEdit = {
+                id,
+                ...form,
+                category: category.value,
+                priceSpace: priceSpace.value,
+                brand: brand.value,
+                useTarget: useTarget.value,
+                weelSize: weelSize.value,
+                frameMaterial: frameMaterial.value,
+                riderHeight: riderHeight.value,
+                brake: brake.value
+            }
+            console.log("dataEdit", dataEdit)
+            const resp = await userService.handleUpdateNewBicycle(dataEdit)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllBicycleStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
+        } else {
+            let data = {
+                ...form,
+                category: category.value,
+                priceSpace: priceSpace.value,
+                brand: brand.value,
+                useTarget: useTarget.value,
+                weelSize: weelSize.value,
+                frameMaterial: frameMaterial.value,
+                riderHeight: riderHeight.value,
+                brake: brake.value
+            }
+            console.log("data", data)
+            const resp = await userService.handleCreateNewBicycle(data)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllBicycleStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
+        }
     }
+
+    // delete bicycle
+    const handleDeleteNewBicycle = async (userId) => {
+        const resp = await userService.handleDeleteNewBicycle(userId)
+        if (resp && resp.errCode === 0) {
+            dispatch(actions.fetchAllBicycleStart('All'))
+            alert(resp.errMessage)
+        } else {
+            alert(resp.errMessage)
+        }
+    }
+
+    // edit bicycle
+    const [isEdit, setIsEdit] = useState(false)
+    const [id, setId] = useState('')
+
+    const handleEditNewBicycle = (bicycleData) => {
+        let imageBase64 = ''
+        if (bicycleData.image) {
+            imageBase64 = new Buffer(bicycleData.image, 'base64').toString('binary')
+        }
+        setIsEdit(true)
+        setId(bicycleData.id)
+        setForm({
+            productName: bicycleData.name,
+            priceNew: bicycleData.price_new,
+            priceOld: bicycleData.price_old,
+            discout: bicycleData.discout,
+            previewImg: imageBase64
+        })
+        let category = listCategory.find(item => item.value === bicycleData.category_id)
+        let priceSpace = listPriceSpace.find(item => item.value === bicycleData.price_space_id)
+        let brand = listBrand.find(item => item.value === bicycleData.brand_id)
+        let useTarget = listUseTarget.find(item => item.value === bicycleData.use_target_id)
+        let weelSize = listWeelSize.find(item => item.value === bicycleData.weel_size_id)
+        let frameMaterial = listFrameMaterial.find(item => item.value === bicycleData.frame_material_id)
+        let riderHeight = listRiderHeight.find(item => item.value === bicycleData.rider_height_id)
+        let brake = listBrake.find(item => item.value === bicycleData.brake_id)
+
+
+        setSelects({
+            category,
+            priceSpace,
+            brand,
+            useTarget,
+            weelSize,
+            frameMaterial,
+            riderHeight,
+            brake
+        })
+    }
+
+    const producJSX = (item) => (
+        <tr key={item.id}>
+            <td>{item.name}</td>
+            <td>{item.price_old}</td>
+            <td>{item.price_new}</td>
+            <td>{item.discout}</td>
+            <td>
+                <span
+                    onClick={() => handleEditNewBicycle(item)}
+                    className='icon-edit'>
+                    <i className='bx bxs-pencil'></i>
+                </span>
+                <span
+                    onClick={() => handleDeleteNewBicycle(item.id)}
+                    className='icon-delete'>
+                    <i className='bx bxs-trash' ></i>
+                </span>
+            </td>
+        </tr>
+
+    )
 
     return (
         <div id="BicycleManage">
@@ -235,7 +373,7 @@ function BicycleManage() {
                             value={riderHeight}
                             name="riderHeight"
                             onChange={handleChangeSelect}
-                            options={listriderHeight}
+                            options={listRiderHeight}
                         />
                     </div>
 
@@ -281,35 +419,50 @@ function BicycleManage() {
 
                     <div className='col-4 form-group'>
                         <button
-                            className='btn btn-primary btn-create'
+                            className={`btn ${isEdit ? 'btn-warning' : 'btn-primary'} btn-create`}
                             onClick={() => handleOnSubmit()}
                         >
-                            <FormattedMessage id="bicycle-manage.create-product" />
+                            {
+                                isEdit ?
+                                    <FormattedMessage id="bicycle-manage.update-product" /> :
+                                    <FormattedMessage id="bicycle-manage.create-product" />
+                            }
                         </button>
                     </div>
                 </div>
+
+                <div className='search-product'>
+                    <div className='row'>
+                        <div className='col-6 form-group'>
+                            <label>Tìm kiếm sản phẩm</label>
+                            <input
+                                value={bicycle}
+                                onChange={(e) => handleOnChangeSearch(e)}
+                                type='text'
+                                className='form-control'
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <div className='table'>
                     <table>
                         <thead>
                             <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá cũ</th>
+                                <th>Giá mới</th>
+                                <th>% giảm giá</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Peter</td>
-                                <td>Griffin</td>
-                                <td>
-                                    <span className='icon-edit'>
-                                        <i className='bx bxs-pencil'></i>
-                                    </span>
-                                    <span className='icon-delete'>
-                                        <i className='bx bxs-trash' ></i>
-                                    </span>
-                                </td>
-                            </tr>
+                            {
+                                listAllBicycle && listAllBicycle.length > 0 &&
+                                listAllBicycle
+                                    .filter((item) => item.name.match(new RegExp(bicycle, "i")))
+                                    .map((item) => producJSX(item))
+                            }
                         </tbody>
                     </table>
                 </div>

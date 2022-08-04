@@ -48,7 +48,8 @@
         "priceNew": "Giá mới",
         "priceOld": "Giá cũ",
         "discout": "% giảm giá",
-        "create-product": "Tạo sản phẩm"
+        "create-product": "Tạo sản phẩm",
+        "update-product": "Sửa sản phẩm"
     },
     "user-manage": {
         "create-user": "Tạo người dùng",

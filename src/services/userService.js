@@ -21,6 +21,22 @@ const handleUpdateNewUser = (editData) => {
     return axios.put('/api/update-user', editData)
 }
 
+const handleGetAllBicycle = (inputId) => {
+    return axios.get(`/api/get-all-bicycle?id=${inputId}`)
+}
+
+const handleCreateNewBicycle = (data) => {
+    return axios.post('/api/create-new-bicycle', data)
+}
+
+const handleDeleteNewBicycle = (bicycleId) => {
+    return axios.delete(`/api/delete-bicycle?id=${bicycleId}`)
+}
+
+const handleUpdateNewBicycle = (editData) => {
+    return axios.put('/api/update-bicycle', editData)
+}
+
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/get-all-code?type=${inputType}`)
 }
@@ -31,5 +47,7 @@ const getCategory = () => {
 
 export {
     handleLogin, getAllCodeService, getCategory, handleGetAllUser,
-    handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser
+    handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
+    handleGetAllBicycle, handleCreateNewBicycle, handleDeleteNewBicycle, handleUpdateNewBicycle,
+
 }

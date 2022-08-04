@@ -13,5 +13,8 @@ export const selectorCategoryData = (state) => state.admin.categoryData
 
 export const selectorAllUserData = (state) => state.admin.allUserData
 
+export const selectorAllBicycleData = (state) => state.admin.allBicycleData
+
+
 
 

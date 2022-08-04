@@ -48,7 +48,8 @@
         "priceNew": "New price",
         "priceOld": "Old price",
         "discout": "% discout",
-        "create-product": "Create product"
+        "create-product": "Create product",
+        "update-product": "Update product"
     },
     "user-manage": {
         "create-user": "Create user",

@@ -4,7 +4,8 @@ const initialState = {
     allcodeData: {},
     allcodeUserData: {},
     categoryData: [],
-    allUserData: []
+    allUserData: [],
+    allBicycleData: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -57,6 +58,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allUserData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALLBICYCLE_SUCCESS:
+            return {
+                ...state,
+                allBicycleData: action.data
+            }
+        case actionTypes.FETCH_ALLBICYCLE_FAILED:
+            return {
+                ...state,
+                allBicycleData: []
             }
         default:
             return state;
