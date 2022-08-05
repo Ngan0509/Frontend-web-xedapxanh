@@ -2,10 +2,12 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     allcodeData: {},
+    allcodeAccessoryData: {},
     allcodeUserData: {},
     categoryData: [],
     allUserData: [],
-    allBicycleData: []
+    allBicycleData: [],
+    allAccessoriesData: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -19,6 +21,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allcodeData: {}
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALLCODE_ACCESSORY_SUCCESS:
+            return {
+                ...state,
+                allcodeAccessoryData: action.data
+            }
+        case actionTypes.FETCH_ALLCODE_ACCESSORY_FAILED:
+            return {
+                ...state,
+                allcodeAccessoryData: {}
             }
 
         //---------------------------------------
@@ -71,6 +86,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allBicycleData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALL_ACCESSORIES_SUCCESS:
+            return {
+                ...state,
+                allAccessoriesData: action.data
+            }
+        case actionTypes.FETCH_ALL_ACCESSORIES_FAILED:
+            return {
+                ...state,
+                allAccessoriesData: []
             }
         default:
             return state;

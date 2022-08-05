@@ -27,7 +27,8 @@
             "admin": "Admin",
             "user-manage": "User manage",
             "bicycle-manage": "Bicycle manage",
-            "accessories-manage": "Accessories manage"
+            "accessories-manage": "Accessories manage",
+            "filter-manage": "Filter product manage"
         },
         "shipper": {
             "user": "Users System"
@@ -49,7 +50,8 @@
         "priceOld": "Old price",
         "discout": "% discout",
         "create-product": "Create product",
-        "update-product": "Update product"
+        "update-product": "Update product",
+        "accessories": "Accessories List"
     },
     "user-manage": {
         "create-user": "Create user",

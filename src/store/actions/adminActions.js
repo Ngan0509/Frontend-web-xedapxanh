@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import * as userService from "../../services/userService"
 
-//user---------------------------------------------------------------user
+//---------------------------------------------------------------
 export const fetchAllcodeStart = () => {
     return async (dispatch, getState) => {
         try {
@@ -52,6 +52,45 @@ export const fetchAllcodeFailed = () => ({
     type: actionTypes.FETCH_ALLCODE_FAILED
 })
 
+//---------------------------------------------------------------
+export const fetchAllcodeAccessoryStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALLCODE_ACCESSORY_START })
+            let respBicycleAs = await userService.getAllCodeService('BICYCLE_AS')
+            let respRiderAs = await userService.getAllCodeService('RIDER_AS')
+            let respAccessary = await userService.getAllCodeService('ACCESSARY')
+
+            if (
+                respBicycleAs && respBicycleAs.errCode === 0 &&
+                respRiderAs && respRiderAs.errCode === 0 &&
+                respAccessary && respAccessary.errCode === 0
+            ) {
+                let data = {
+                    listBicycleAs: respBicycleAs.data,
+                    listRiderAs: respRiderAs.data,
+                    listAccessary: respAccessary.data
+                }
+
+                dispatch(fetchAllcodeAccessorySuccess(data))
+            } else {
+                dispatch(fetchAllcodeAccessoryFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllcodeAccessoryFailed())
+        }
+    }
+}
+
+export const fetchAllcodeAccessorySuccess = (AllcodeAccessoryData) => ({
+    type: actionTypes.FETCH_ALLCODE_ACCESSORY_SUCCESS,
+    data: AllcodeAccessoryData
+})
+
+export const fetchAllcodeAccessoryFailed = () => ({
+    type: actionTypes.FETCH_ALLCODE_ACCESSORY_FAILED
+})
+
 //-------------------------------------------------------
 
 export const fetchAllcodeUserStart = () => {
@@ -90,11 +129,11 @@ export const fetchAllcodeUserFailed = () => ({
 })
 
 //-------------------------------------------------------
-export const fetchCategoryStart = () => {
+export const fetchCategoryStart = (inputType) => {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: actionTypes.FETCH_CATEGORY_START })
-            let resp = await userService.getCategory()
+            let resp = await userService.getCategory(inputType)
             if (resp && resp.errCode === 0) {
                 dispatch(fetchCategorySuccess(resp.data))
             } else {
@@ -167,4 +206,31 @@ export const fetchAllBicycleSuccess = (AllBicycleData) => ({
 
 export const fetchAllBicycleFailed = () => ({
     type: actionTypes.FETCH_ALLBICYCLE_FAILED
+})
+
+//-------------------------------------------------------
+export const fetchAllAccessoriesStart = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_ACCESSORIES_START })
+            let resp = await userService.handleGetAllAccessory(inputId)
+            console.log('resp all accessories', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllAccessoriesSuccess(resp.data))
+            } else {
+                dispatch(fetchAllAccessoriesFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllAccessoriesFailed())
+        }
+    }
+}
+
+export const fetchAllAccessoriesSuccess = (AllAccessoriesData) => ({
+    type: actionTypes.FETCH_ALL_ACCESSORIES_SUCCESS,
+    data: AllAccessoriesData
+})
+
+export const fetchAllAccessoriesFailed = () => ({
+    type: actionTypes.FETCH_ALL_ACCESSORIES_FAILED
 })

@@ -27,7 +27,8 @@
             "admin": "Quản trị viên",
             "user-manage": "Quản lý người dùng",
             "bicycle-manage": "Quản lý xe đạp",
-            "accessories-manage": "Quản lý phụ kiện"
+            "accessories-manage": "Quản lý phụ kiện",
+            "filter-manage": "Quản lý bộ lọc sản phẩm"
         },
         "shipper": {
             "user": "Người dùng"
@@ -49,7 +50,8 @@
         "priceOld": "Giá cũ",
         "discout": "% giảm giá",
         "create-product": "Tạo sản phẩm",
-        "update-product": "Sửa sản phẩm"
+        "update-product": "Sửa sản phẩm",
+        "accessories": "Danh sách phụ kiện"
     },
     "user-manage": {
         "create-user": "Tạo người dùng",

@@ -37,6 +37,27 @@ function BicycleManage() {
 
     }
 
+    // select onChange
+    const [selects, setSelects] = useState({
+        category: '',
+        priceSpace: '',
+        brand: '',
+        useTarget: '',
+        weelSize: '',
+        frameMaterial: '',
+        riderHeight: '',
+        brake: ''
+    })
+
+    const { category, priceSpace, brand, useTarget, weelSize, frameMaterial, riderHeight, brake } = selects
+    const handleChangeSelect = (selectedOption, name) => {
+        let stateName = name.name;
+        let copySelects = { ...selects }
+        copySelects[stateName] = selectedOption
+
+        setSelects({ ...copySelects })
+    }
+
     // image onChange
     const handleChangeImage = async (e) => {
         let files = e.target.files;
@@ -62,7 +83,7 @@ function BicycleManage() {
     useEffect(() => {
         console.log("abcxyz")
         dispatch(actions.fetchAllcodeStart())
-        dispatch(actions.fetchCategoryStart())
+        dispatch(actions.fetchCategoryStart('BICYCLE'))
         dispatch(actions.fetchAllBicycleStart('All'))
     }, [dispatch])
 
@@ -101,27 +122,6 @@ function BicycleManage() {
     useEffect(() => {
         setListAllBicycle(allBicycleData)
     }, [allBicycleData])
-
-    // select onChange
-    const [selects, setSelects] = useState({
-        category: '',
-        priceSpace: '',
-        brand: '',
-        useTarget: '',
-        weelSize: '',
-        frameMaterial: '',
-        riderHeight: '',
-        brake: ''
-    })
-
-    const { category, priceSpace, brand, useTarget, weelSize, frameMaterial, riderHeight, brake } = selects
-    const handleChangeSelect = (selectedOption, name) => {
-        let stateName = name.name;
-        let copySelects = { ...selects }
-        copySelects[stateName] = selectedOption
-
-        setSelects({ ...copySelects })
-    }
 
     // search bicycle onChange
 
@@ -431,9 +431,9 @@ function BicycleManage() {
                     </div>
                 </div>
 
-                <div className='search-product'>
+                <div className='search_product'>
                     <div className='row'>
-                        <div className='col-6 form-group'>
+                        <div className='col-8 form-group'>
                             <label>Tìm kiếm sản phẩm</label>
                             <input
                                 value={bicycle}

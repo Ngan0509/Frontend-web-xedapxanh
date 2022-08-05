@@ -10,6 +10,9 @@ export const adminMenu = [
             },
             {
                 name: 'menu.admin.accessories-manage', link: '/system/admin/accessories-manage'
+            },
+            {
+                name: 'menu.admin.filter-manage', link: '/system/admin/filter-manage'
             }
         ]
     }

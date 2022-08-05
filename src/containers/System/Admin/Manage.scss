@@ -48,16 +48,21 @@ h3 {
 }
 
 #UserManage,
-#BicycleManage {
+#BicycleManage,
+#AccessoriesManage,
+#FilterManage {
 
     .userManage,
-    .bicycleManage {
+    .bicycleManage,
+    .accessoriesManage,
+    .filterManage {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
         padding: 30px 0;
 
-        .form {
+        .form,
+        .search_product {
             label {
                 margin-bottom: 8px;
             }

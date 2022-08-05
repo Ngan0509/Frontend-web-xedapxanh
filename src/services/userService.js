@@ -37,17 +37,37 @@ const handleUpdateNewBicycle = (editData) => {
     return axios.put('/api/update-bicycle', editData)
 }
 
+const handleGetAllAccessory = (inputId) => {
+    return axios.get(`/api/get-all-accessory?id=${inputId}`)
+}
+
+const handleCreateNewAccessory = (data) => {
+    return axios.post('/api/create-new-accessory', data)
+}
+
+const handleDeleteNewAccessory = (accessoryId) => {
+    return axios.delete(`/api/delete-accessory?id=${accessoryId}`)
+}
+
+const handleUpdateNewAccessory = (editData) => {
+    return axios.put('/api/update-accessory', editData)
+}
+
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/get-all-code?type=${inputType}`)
 }
 
-const getCategory = () => {
-    return axios.get('/api/get-category')
+const getCategory = (inputType) => {
+    return axios.get(`/api/get-category?type=${inputType}`)
+}
+
+const handleGetTypeAllCode = () => {
+    return axios.get('/api/get-type-allcode')
 }
 
 export {
-    handleLogin, getAllCodeService, getCategory, handleGetAllUser,
+    handleLogin, getAllCodeService, getCategory, handleGetAllUser, handleGetTypeAllCode,
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
     handleGetAllBicycle, handleCreateNewBicycle, handleDeleteNewBicycle, handleUpdateNewBicycle,
-
+    handleGetAllAccessory, handleCreateNewAccessory, handleDeleteNewAccessory, handleUpdateNewAccessory,
 }
