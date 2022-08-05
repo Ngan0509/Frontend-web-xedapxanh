@@ -7,7 +7,8 @@ const initialState = {
     categoryData: [],
     allUserData: [],
     allBicycleData: [],
-    allAccessoriesData: []
+    allAccessoriesData: [],
+    allFilterData: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -99,6 +100,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allAccessoriesData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALL_FILTER_SUCCESS:
+            return {
+                ...state,
+                allFilterData: action.data
+            }
+        case actionTypes.FETCH_ALL_FILTER_FAILED:
+            return {
+                ...state,
+                allFilterData: []
             }
         default:
             return state;

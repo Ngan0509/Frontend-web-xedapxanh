@@ -12,6 +12,7 @@ import './Manage.scss'
 function FilterManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const categoryData = useSelector(selectors.selectorCategoryData)
+    const allFilterData = useSelector(selectors.selectorAllFilterData)
 
     const dispatch = useDispatch()
 
@@ -48,32 +49,38 @@ function FilterManage() {
     // array
     const [listType, setListType] = useState([]);
     const [listCategory, setListCategory] = useState([]);
-    console.log("listType", listType)
+    const [listAllFilter, setListAllFilter] = useState([]);
+
     // dispatch actions
     useEffect(() => {
         dispatch(actions.fetchCategoryStart())
+        dispatch(actions.fetchAllFilterStart('All'))
     }, [dispatch])
 
     // get type
-    useEffect(async () => {
-        const buildInputData = (inputData) => {
-            if (inputData && inputData.length > 0) {
-                let result = inputData.map((item) => {
-                    return {
-                        label: item.type,
-                        value: item.type
-                    }
-                })
-                return result
+    useEffect(() => {
+        async function fetchData() {
+            // You can await here
+            const buildInputData = (inputData) => {
+                if (inputData && inputData.length > 0) {
+                    let result = inputData.map((item) => {
+                        return {
+                            label: item.type,
+                            value: item.type
+                        }
+                    })
+                    return result
+                }
             }
+            let resp = await userService.handleGetTypeAllCode()
+            if (resp && resp.errCode === 0) {
+                setListType(buildInputData(resp.data))
+            } else {
+                alert(resp.errMessage)
+            }
+            // ...
         }
-        let resp = await userService.handleGetTypeAllCode()
-        if (resp && resp.errCode === 0) {
-            setListType(buildInputData(resp.data))
-            alert(resp.errMessage)
-        } else {
-            alert(resp.errMessage)
-        }
+        fetchData();
     }, [])
     useEffect(() => {
         const buildInputData = (inputData, type) => {
@@ -99,6 +106,11 @@ function FilterManage() {
 
     }, [categoryData, lang])
 
+    // get AllFilter
+    useEffect(() => {
+        setListAllFilter(allFilterData)
+    }, [allFilterData])
+
     // submit
     const handleOnSubmit = async () => {
         setForm({
@@ -110,20 +122,94 @@ function FilterManage() {
             category: ''
         })
 
-        let data = {
-            ...form,
-            type: type.value,
-            category: category.value
+        setIsEdit(false)
+        setId('')
+
+        if (isEdit) {
+            let dataEdit = {
+                id,
+                ...form,
+                type: type.value,
+                category: category.value
+            }
+            console.log("dataEdit", dataEdit)
+            const resp = await userService.handleUpdateNewFilter(dataEdit)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllFilterStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
+        } else {
+            let data = {
+                ...form,
+                type: type.value,
+                category: category.value
+            }
+            console.log("data", data)
+            const resp = await userService.handleCreateNewFilter(data)
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllFilterStart('All'))
+                alert(resp.errMessage)
+            } else {
+                alert(resp.errMessage)
+            }
         }
-        console.log("data", data)
-        // const resp = await userService.handleCreateFilter(data)
-        // if (resp && resp.errCode === 0) {
-        //     alert(resp.errMessage)
-        // } else {
-        //     alert(resp.errMessage)
-        // }
 
     }
+
+    // delete filter
+    const handleDeleteNewFilter = async (userId) => {
+        const resp = await userService.handleDeleteNewFilter(userId)
+        if (resp && resp.errCode === 0) {
+            dispatch(actions.fetchAllFilterStart('All'))
+            alert(resp.errMessage)
+        } else {
+            alert(resp.errMessage)
+        }
+    }
+
+    // edit filter
+    const [isEdit, setIsEdit] = useState(false)
+    const [id, setId] = useState('')
+
+    const handleEditNewFilter = (filterData) => {
+        setIsEdit(true)
+        setId(filterData.id)
+        setForm({
+            nameEn: filterData.nameEn,
+            nameVi: filterData.nameVi
+        })
+        let category = listCategory.find(item => item.value === filterData.category_id)
+        let type = listType.find(item => item.value === filterData.type)
+
+        setSelects({
+            category,
+            type
+        })
+    }
+
+    const producJSX = (item) => (
+        <tr key={item.id}>
+            <td>{item.category_id}</td>
+            <td>{item.nameEn}</td>
+            <td>{item.nameVi}</td>
+            <td>{item.type}</td>
+            <td>
+                <span
+                    onClick={() => handleEditNewFilter(item)}
+                    className='icon-edit'>
+                    <i className='bx bxs-pencil'></i>
+                </span>
+                <span
+                    onClick={() => handleDeleteNewFilter(item.id)}
+                    className='icon-delete'>
+                    <i className='bx bxs-trash' ></i>
+                </span>
+            </td>
+        </tr>
+
+    )
 
     return (
         <div id="FilterManage">
@@ -176,12 +262,41 @@ function FilterManage() {
 
                     <div className='col-4 form-group'>
                         <button
-                            className='btn btn-primary btn-create'
+                            className={`btn ${isEdit ? 'btn-warning' : 'btn-primary'} btn-create`}
                             onClick={() => handleOnSubmit()}
                         >
-                            Tạo bộ lọc
+                            {
+                                isEdit ? 'Sửa bộ lọc' : 'Tạo bộ lọc'
+                            }
                         </button>
                     </div>
+                </div>
+
+                <div className='table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID danh mục</th>
+                                <th>Nhãn tiếng Anh</th>
+                                <th>Nhãn tiếng Việt</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                listAllFilter && listAllFilter.length > 0 &&
+                                    category ?
+                                    listAllFilter
+                                        .filter((item) => item.category_id === category.value)
+                                        .map((item) => producJSX(item))
+                                    :
+                                    listAllFilter
+                                        .map((item) => producJSX(item))
+
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

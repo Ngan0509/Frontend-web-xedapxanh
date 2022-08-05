@@ -19,6 +19,8 @@ export const selectorAllBicycleData = (state) => state.admin.allBicycleData
 
 export const selectorAllAccessoriesData = (state) => state.admin.allAccessoriesData
 
+export const selectorAllFilterData = (state) => state.admin.allFilterData
+
 
 
 

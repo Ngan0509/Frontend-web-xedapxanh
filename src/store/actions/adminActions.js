@@ -234,3 +234,30 @@ export const fetchAllAccessoriesSuccess = (AllAccessoriesData) => ({
 export const fetchAllAccessoriesFailed = () => ({
     type: actionTypes.FETCH_ALL_ACCESSORIES_FAILED
 })
+
+//-------------------------------------------------------
+export const fetchAllFilterStart = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_FILTER_START })
+            let resp = await userService.handleGetAllFilter(inputId)
+            console.log('resp all Filter', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllFilterSuccess(resp.data))
+            } else {
+                dispatch(fetchAllFilterFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllFilterFailed())
+        }
+    }
+}
+
+export const fetchAllFilterSuccess = (AllFilterData) => ({
+    type: actionTypes.FETCH_ALL_FILTER_SUCCESS,
+    data: AllFilterData
+})
+
+export const fetchAllFilterFailed = () => ({
+    type: actionTypes.FETCH_ALL_FILTER_FAILED
+})

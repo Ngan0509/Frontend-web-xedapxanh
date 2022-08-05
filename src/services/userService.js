@@ -53,6 +53,22 @@ const handleUpdateNewAccessory = (editData) => {
     return axios.put('/api/update-accessory', editData)
 }
 
+const handleGetAllFilter = (inputId) => {
+    return axios.get(`/api/get-all-filter?id=${inputId}`)
+}
+
+const handleCreateNewFilter = (data) => {
+    return axios.post('/api/create-new-filter', data)
+}
+
+const handleDeleteNewFilter = (filterId) => {
+    return axios.delete(`/api/delete-filter?id=${filterId}`)
+}
+
+const handleUpdateNewFilter = (editData) => {
+    return axios.put('/api/update-filter', editData)
+}
+
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/get-all-code?type=${inputType}`)
 }
@@ -70,4 +86,5 @@ export {
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
     handleGetAllBicycle, handleCreateNewBicycle, handleDeleteNewBicycle, handleUpdateNewBicycle,
     handleGetAllAccessory, handleCreateNewAccessory, handleDeleteNewAccessory, handleUpdateNewAccessory,
+    handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter
 }
