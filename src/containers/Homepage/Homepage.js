@@ -43,8 +43,8 @@ function Homepage() {
     return (
         <div id="Homepage">
             <Header />
-            <Category />
             <Sliders />
+            <Category />
             <Knowledge settings={settings} />
             <ShopSystem />
             <Footer />

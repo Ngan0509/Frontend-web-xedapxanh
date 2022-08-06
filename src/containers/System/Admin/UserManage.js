@@ -260,10 +260,10 @@ function UserManage() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Role</th>
+                                <th><FormattedMessage id="user-manage.fullname" /></th>
+                                <th><FormattedMessage id="user-manage.email" /></th>
+                                <th><FormattedMessage id="user-manage.phoneNumber" /></th>
+                                <th><FormattedMessage id="user-manage.role" /></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

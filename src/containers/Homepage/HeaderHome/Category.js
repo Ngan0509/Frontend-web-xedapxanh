@@ -1,14 +1,27 @@
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
-// import * as selectors from "../../../store/selectors"
-// import * as actions from "../../../store/actions";
-// import { LANGUAGES } from '../../../utils/constant'
+import * as selectors from "../../../store/selectors"
+import * as actions from "../../../store/actions";
+import { LANGUAGES } from '../../../utils/constant'
 import "./Category.scss"
+import { useEffect, useState } from 'react';
 
 function Category() {
-    // const lang = useSelector(selectors.selectorLanguages)
+    const lang = useSelector(selectors.selectorLanguages)
+    const categoryData = useSelector(selectors.selectorCategoryData)
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
+
+
+    const [listCategory, setListCategory] = useState([]);
+
+    useEffect(() => {
+        dispatch(actions.fetchCategoryStart())
+    }, [dispatch])
+
+    useEffect(() => {
+        setListCategory(categoryData)
+    }, [categoryData])
 
     return (
         <div id="Category">
@@ -16,42 +29,19 @@ function Category() {
                 <div className="category">
                     <ul className="category_list">
                         <div className="row">
-                            <div className="col-4">
-                                <li>
-                                    Xe đạp địa hình
-                                </li>
+                            {
+                                listCategory && listCategory.length > 0 &&
+                                listCategory.map((item) => (
+                                    <div key={item.id} className="col-4">
+                                        <li>
+                                            {
+                                                lang === LANGUAGES.VI ? item.nameVi : item.nameEn
+                                            }
+                                        </li>
 
-                            </div>
-                            <div className="col-4">
-                                <li>
-                                    Xe đạp đua
-                                </li>
-
-                            </div>
-                            <div className="col-4">
-                                <li>
-                                    Xe đạp đường phố
-                                </li>
-
-                            </div>
-                            <div className="col-4">
-                                <li>
-                                    Phụ tùng
-                                </li>
-
-                            </div>
-                            <div className="col-4">
-                                <li>
-                                    Phụ kiện xe đạp
-                                </li>
-
-                            </div>
-                            <div className="col-4">
-                                <li>
-                                    Phụ kiện người lái
-                                </li>
-
-                            </div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </ul>
                 </div>

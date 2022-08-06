@@ -46,10 +46,12 @@ function BicycleManage() {
         weelSize: '',
         frameMaterial: '',
         riderHeight: '',
-        brake: ''
+        brake: '',
+        diskNumber: '',
+        utilities: ''
     })
 
-    const { category, priceSpace, brand, useTarget, weelSize, frameMaterial, riderHeight, brake } = selects
+    const { category, priceSpace, brand, useTarget, weelSize, frameMaterial, riderHeight, brake, diskNumber, utilities } = selects
     const handleChangeSelect = (selectedOption, name) => {
         let stateName = name.name;
         let copySelects = { ...selects }
@@ -78,6 +80,8 @@ function BicycleManage() {
     const [listFrameMaterial, setListFrameMaterial] = useState([]);
     const [listRiderHeight, setListRiderHeight] = useState([]);
     const [listBrake, setListBrake] = useState([]);
+    const [listDiskNumber, setListDiskNumber] = useState([]);
+    const [listUtilities, setListUtilities] = useState([]);
     const [listAllBicycle, setListAllBicycle] = useState([]);
     //dispatch actions
     useEffect(() => {
@@ -116,6 +120,8 @@ function BicycleManage() {
         setListFrameMaterial(buildInputData(allCodeData.listFrameMaterial))
         setListRiderHeight(buildInputData(allCodeData.listRiderHeight))
         setListBrake(buildInputData(allCodeData.listBrake))
+        setListDiskNumber(buildInputData(allCodeData.listDiskNumber))
+        setListUtilities(buildInputData(allCodeData.listUtilities))
     }, [allCodeData, lang, categoryData])
 
     // get AllBicycle
@@ -147,7 +153,9 @@ function BicycleManage() {
             weelSize: '',
             frameMaterial: '',
             riderHeight: '',
-            brake: ''
+            brake: '',
+            diskNumber: '',
+            utilities: ''
         })
         setIsEdit(false)
         setId('')
@@ -163,7 +171,9 @@ function BicycleManage() {
                 weelSize: weelSize.value,
                 frameMaterial: frameMaterial.value,
                 riderHeight: riderHeight.value,
-                brake: brake.value
+                brake: brake.value,
+                diskNumber: diskNumber.value,
+                utilities: utilities.value
             }
             console.log("dataEdit", dataEdit)
             const resp = await userService.handleUpdateNewBicycle(dataEdit)
@@ -183,7 +193,9 @@ function BicycleManage() {
                 weelSize: weelSize.value,
                 frameMaterial: frameMaterial.value,
                 riderHeight: riderHeight.value,
-                brake: brake.value
+                brake: brake.value,
+                diskNumber: diskNumber.value,
+                utilities: utilities.value
             }
             console.log("data", data)
             const resp = await userService.handleCreateNewBicycle(data)
@@ -233,6 +245,8 @@ function BicycleManage() {
         let frameMaterial = listFrameMaterial.find(item => item.value === bicycleData.frame_material_id)
         let riderHeight = listRiderHeight.find(item => item.value === bicycleData.rider_height_id)
         let brake = listBrake.find(item => item.value === bicycleData.brake_id)
+        let diskNumber = listDiskNumber.find(item => item.value === bicycleData.disk_number_id)
+        let utilities = listUtilities.find(item => item.value === bicycleData.utilities_id)
 
 
         setSelects({
@@ -243,7 +257,9 @@ function BicycleManage() {
             weelSize,
             frameMaterial,
             riderHeight,
-            brake
+            brake,
+            diskNumber,
+            utilities
         })
     }
 
@@ -388,6 +404,26 @@ function BicycleManage() {
                     </div>
 
                     <div className='col-4 form-group'>
+                        <label><FormattedMessage id="bicycle-manage.diskNumber" /></label>
+                        <Select
+                            value={diskNumber}
+                            name="diskNumber"
+                            onChange={handleChangeSelect}
+                            options={listDiskNumber}
+                        />
+                    </div>
+
+                    <div className='col-4 form-group'>
+                        <label><FormattedMessage id="bicycle-manage.utilities" /></label>
+                        <Select
+                            value={utilities}
+                            name="utilities"
+                            onChange={handleChangeSelect}
+                            options={listUtilities}
+                        />
+                    </div>
+
+                    <div className='col-4 form-group'>
                         <label><FormattedMessage id="bicycle-manage.priceNew" /></label>
                         <input
                             value={priceNew}
@@ -434,7 +470,7 @@ function BicycleManage() {
                 <div className='search_product'>
                     <div className='row'>
                         <div className='col-8 form-group'>
-                            <label>Tìm kiếm sản phẩm</label>
+                            <label><FormattedMessage id="bicycle-manage.search" /></label>
                             <input
                                 value={bicycle}
                                 onChange={(e) => handleOnChangeSearch(e)}
@@ -449,10 +485,10 @@ function BicycleManage() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Tên sản phẩm</th>
-                                <th>Giá cũ</th>
-                                <th>Giá mới</th>
-                                <th>% giảm giá</th>
+                                <th><FormattedMessage id="bicycle-manage.productName" /></th>
+                                <th><FormattedMessage id="bicycle-manage.priceOld" /></th>
+                                <th><FormattedMessage id="bicycle-manage.priceNew" /></th>
+                                <th><FormattedMessage id="bicycle-manage.discout" /></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

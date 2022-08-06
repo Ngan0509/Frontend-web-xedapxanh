@@ -46,12 +46,20 @@
         "frameMaterial": "Frame's Material",
         "riderHeight": "Rider's height",
         "brake": "Brake",
+        "diskNumber": "Disk's number",
+        "utilities": "Utilities",
         "priceNew": "New price",
         "priceOld": "Old price",
         "discout": "% discout",
         "create-product": "Create product",
         "update-product": "Update product",
-        "accessories": "Accessories List"
+        "accessories": "Accessories List",
+        "search": "Search product",
+        "labelVi": "Label Vietnamese",
+        "labelEn": "Label English",
+        "type": "Product Type",
+        "create-filter": "Create filter",
+        "update-filter": "Update filter"
     },
     "user-manage": {
         "create-user": "Create user",

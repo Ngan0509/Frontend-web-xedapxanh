@@ -305,7 +305,7 @@ function AccessoriesManage() {
                 <div className='search_product'>
                     <div className='row'>
                         <div className='col-8 form-group'>
-                            <label>Tìm kiếm sản phẩm</label>
+                            <label><FormattedMessage id="bicycle-manage.search" /></label>
                             <input
                                 value={accessories}
                                 onChange={(e) => handleOnChangeSearch(e)}
@@ -320,8 +320,8 @@ function AccessoriesManage() {
                     <table>
                         <thead>
                             <tr>
-                                <th>Tên sản phẩm</th>
-                                <th>Giá cũ</th>
+                                <th><FormattedMessage id="bicycle-manage.productName" /></th>
+                                <th><FormattedMessage id="bicycle-manage.priceNew" /></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

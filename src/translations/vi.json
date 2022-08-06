@@ -46,12 +46,20 @@
         "frameMaterial": "Chất liệu khung sườn",
         "riderHeight": "Chiều cao người lái",
         "brake": "Thắng xe",
+        "diskNumber": "Số đĩa",
+        "utilities": "Tiện ích",
         "priceNew": "Giá mới",
         "priceOld": "Giá cũ",
         "discout": "% giảm giá",
         "create-product": "Tạo sản phẩm",
         "update-product": "Sửa sản phẩm",
-        "accessories": "Danh sách phụ kiện"
+        "accessories": "Danh sách phụ kiện",
+        "search": "Tìm kiếm sản phẩm",
+        "labelVi": "Nhãn tiếng Việt",
+        "labelEn": "Nhãn tiếng Anh",
+        "type": "Loại sản phẩm",
+        "create-filter": "Tạo bộ lọc",
+        "update-filter": "Sửa bộ lọc"
     },
     "user-manage": {
         "create-user": "Tạo người dùng",

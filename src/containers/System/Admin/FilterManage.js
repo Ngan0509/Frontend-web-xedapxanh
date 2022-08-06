@@ -229,7 +229,7 @@ function FilterManage() {
                         />
                     </div>
                     <div className='col-4 form-group'>
-                        <label>Nhãn tiếng Anh</label>
+                        <label><FormattedMessage id="bicycle-manage.labelEn" /></label>
                         <input
                             value={nameEn}
                             type='text'
@@ -239,7 +239,7 @@ function FilterManage() {
                     </div>
 
                     <div className='col-4 form-group'>
-                        <label>Nhãn tiếng Việt</label>
+                        <label><FormattedMessage id="bicycle-manage.labelVi" /></label>
                         <input
                             value={nameVi}
                             type='text'
@@ -250,7 +250,7 @@ function FilterManage() {
 
                     <div className='col-4 form-group'>
                         <label>
-                            Loại sản phẩm
+                            <FormattedMessage id="bicycle-manage.type" />
                         </label>
                         <Select
                             value={type}
@@ -266,7 +266,9 @@ function FilterManage() {
                             onClick={() => handleOnSubmit()}
                         >
                             {
-                                isEdit ? 'Sửa bộ lọc' : 'Tạo bộ lọc'
+                                isEdit ?
+                                    <FormattedMessage id="bicycle-manage.update-filter" /> :
+                                    <FormattedMessage id="bicycle-manage.create-filter" />
                             }
                         </button>
                     </div>
@@ -276,10 +278,10 @@ function FilterManage() {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID danh mục</th>
-                                <th>Nhãn tiếng Anh</th>
-                                <th>Nhãn tiếng Việt</th>
-                                <th>Loại sản phẩm</th>
+                                <th>ID <FormattedMessage id="bicycle-manage.category" /></th>
+                                <th><FormattedMessage id="bicycle-manage.labelEn" /></th>
+                                <th><FormattedMessage id="bicycle-manage.labelVi" /></th>
+                                <th><FormattedMessage id="bicycle-manage.type" /></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

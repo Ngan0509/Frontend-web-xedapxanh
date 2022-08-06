@@ -13,6 +13,8 @@ export const fetchAllcodeStart = () => {
             let respFrameMaterial = await userService.getAllCodeService('FRAMEMATERIAL')
             let respriderHeight = await userService.getAllCodeService('RIDERHEIGHT')
             let respBrake = await userService.getAllCodeService('BRAKE')
+            let respDiskNumber = await userService.getAllCodeService('DISKNUMBER')
+            let respUtilities = await userService.getAllCodeService('UTILITIES')
 
             if (
                 respPriceSpace && respPriceSpace.errCode === 0 &&
@@ -21,7 +23,9 @@ export const fetchAllcodeStart = () => {
                 respWeelSize && respWeelSize.errCode === 0 &&
                 respFrameMaterial && respFrameMaterial.errCode === 0 &&
                 respriderHeight && respriderHeight.errCode === 0 &&
-                respBrake && respBrake.errCode === 0
+                respBrake && respBrake.errCode === 0 &&
+                respDiskNumber && respDiskNumber.errCode === 0 &&
+                respUtilities && respUtilities.errCode === 0
             ) {
                 let data = {
                     listPriceSpace: respPriceSpace.data,
@@ -31,6 +35,8 @@ export const fetchAllcodeStart = () => {
                     listFrameMaterial: respFrameMaterial.data,
                     listRiderHeight: respriderHeight.data,
                     listBrake: respBrake.data,
+                    listDiskNumber: respDiskNumber.data,
+                    listUtilities: respUtilities.data,
                 }
 
                 dispatch(fetchAllcodeSuccess(data))
