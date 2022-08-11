@@ -1,4 +1,5 @@
-#Bicycle {
+#Bicycle,
+#Accessories {
     .bicycle_bg {
         padding: 30px 0;
 
@@ -7,44 +8,104 @@
             max-width: 1200px;
             margin: 0 auto;
 
+            .link {
+                padding: 0 0 20px;
+
+                span {
+                    font-size: var(--title-size);
+                    font-style: italic;
+                    margin: 0 4px;
+                    cursor: pointer;
+                }
+
+                span.bicycle-link {
+                    color: var(--primary-color);
+                }
+            }
+
             .bicycle_filter {
-                display: flex;
-                align-items: center;
 
                 .item {
+                    display: inline-block;
+                    margin: 8px;
                     position: relative;
 
                     .filter_label {
-                        margin-right: 8px;
                         border: 1px solid var(--primary-color);
-                        padding: 8px 12px;
-                        color: var(--text-color);
                         border-radius: 4px;
+                        padding: 4px 8px;
+                        cursor: pointer;
+                        display: block;
+
+                        .icon-arrow {
+                            font-size: 10px;
+                            position: relative;
+                            top: 0px;
+                            margin-left: 8px;
+                        }
+                    }
+
+                    .filter_label.active~.filter_box {
+                        opacity: 1;
+                        visibility: visible;
                     }
 
                     .filter_box {
                         position: absolute;
                         top: 40px;
-                        display: none;
-                        align-items: center;
-                        flex-wrap: wrap;
+                        z-index: 100;
                         width: 550px;
+                        background-color: #fff;
                         box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-                        padding: 8px;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: 0.3s;
+
+                        .filter_box-wrap {
+                            padding: 8px 24px 8px 8px;
+                            position: relative;
+
+                            .filter_label-child {
+                                display: inline-block;
+                                margin: 8px;
+                                border: 1px solid var(--primary-color);
+                                border-radius: 4px;
+                                padding: 4px 8px;
+                                cursor: pointer;
+                                background-color: #fff;
+                                color: #333;
+                                transition: 0.3s;
+                            }
+
+                            .filter_label-child.active {
+                                background-color: var(--primary-color);
+                                color: #fff;
+                            }
+
+                            .icon-close {
+                                position: absolute;
+                                right: 10px;
+                                top: 10px;
+                                font-size: 24px;
+                                cursor: pointer;
+                            }
+                        }
+
+                        &.left {
+                            left: 0;
+                        }
+
+                        &.right {
+                            right: 0;
+                        }
                     }
 
-                    &.left {
-                        left: 0;
-                    }
-
-                    &.right {
-                        right: 0;
-                    }
                 }
+
             }
 
             .bicycle_filter-more {
-                margin-top: 30px;
+                margin-top: 16px;
 
                 .bicycle_amount {
                     display: inline-block;
@@ -55,7 +116,7 @@
                     }
                 }
 
-                .bicycle_discount {
+                .bicycle_discout {
                     display: inline-block;
                     margin-left: 24px;
 
@@ -76,6 +137,53 @@
                         border-radius: 4px;
                     }
                 }
+            }
+        }
+
+        .bicycle>ul {
+            text-align: center;
+            margin-top: 30px;
+
+            li {
+                display: inline-block;
+                margin: 0 8px;
+            }
+
+            li.previous,
+            li.next {
+                margin: 0 16px;
+                background-color: var(--primary-color);
+                min-width: 50px;
+                border-radius: 5px;
+
+                a {
+                    padding: 4px 8px;
+                    font-size: 18px;
+                    color: var(--color-with-primary-bg);
+                    text-decoration: none;
+                    display: block;
+                }
+            }
+
+            li.selected {
+                border: 1px solid var(--primary-color);
+            }
+
+            li {
+                background-color: #fff;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                cursor: pointer;
+
+                a {
+                    font-weight: 600;
+                    padding: 3px 12px;
+                    display: block;
+                }
+            }
+
+            li:not(.selected):hover {
+                border: 1px solid #ccc;
             }
         }
     }

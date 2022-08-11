@@ -1,0 +1,96 @@
+#ProductList {
+    .productList {
+        .productList_item {
+            border-radius: 4px;
+            margin: 16px 0;
+
+            .productList_item-wrap {
+                cursor: pointer;
+
+                .image {
+                    width: 100%;
+                    height: 200px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+
+                .product_info {
+                    padding: 8px 16px;
+
+                    .name {
+                        margin: 3px 0;
+                        font-size: var(--title-size);
+                        display: -webkit-box;
+                        line-height: 2rem;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                        color: var(--primary-color);
+                    }
+
+                    .label {
+                        margin: 3px 0;
+
+                        span {
+                            display: inline-block;
+                            padding: 1px 4px;
+                            border: 1px solid #ccc;
+                            background-color: #fff;
+                            margin-right: 8px;
+                            font-size: 13px;
+                            border-radius: 4px;
+                        }
+                    }
+
+                    .priceOld {
+                        margin: 3px 0;
+
+                        span {
+                            margin-right: 8px;
+
+                            &.price {
+                                text-decoration: line-through;
+                            }
+                        }
+                    }
+
+                    .priceNew {
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .product_info-more {
+                padding: 0 16px 4px;
+
+                .evaluate {
+                    .icon-star {
+                        font-size: 18px;
+                        color: #ccc;
+                        cursor: pointer;
+                    }
+
+                    .icon-star:hover {
+                        color: var(--primary-color);
+                    }
+                }
+
+                .desc_list {
+                    padding-left: 1rem;
+
+                    li {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+}

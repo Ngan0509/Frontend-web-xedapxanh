@@ -5,13 +5,14 @@ import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils/constant'
 import "./Category.scss"
 import { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 
 function Category() {
     const lang = useSelector(selectors.selectorLanguages)
     const categoryData = useSelector(selectors.selectorCategoryData)
 
     const dispatch = useDispatch()
-
+    let history = useHistory();
 
     const [listCategory, setListCategory] = useState([]);
 
@@ -23,6 +24,13 @@ function Category() {
         setListCategory(categoryData)
     }, [categoryData])
 
+    const handleClickPushPage = (item) => {
+        if (item.type === 'BICYCLE') {
+            history.push(`/home/bicycle/${item.id}`);
+        } else if (item.type === 'ACCESSORIES') {
+            history.push(`/home/accessories/${item.id}`);
+        }
+    }
     return (
         <div id="Category">
             <div className="category_bg">
@@ -32,7 +40,11 @@ function Category() {
                             {
                                 listCategory && listCategory.length > 0 &&
                                 listCategory.map((item) => (
-                                    <div key={item.id} className="col-4">
+                                    <div
+                                        key={item.id}
+                                        className="col-4"
+                                        onClick={() => handleClickPushPage(item)}
+                                    >
                                         <li>
                                             {
                                                 lang === LANGUAGES.VI ? item.nameVi : item.nameEn

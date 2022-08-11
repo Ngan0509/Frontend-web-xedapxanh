@@ -9,7 +9,8 @@
         "search": "Tìm kiếm...",
         "login": "Đăng nhập",
         "signup": "Đăng ký",
-        "view-cart": "Xem giỏ hàng"
+        "view-cart": "Xem giỏ hàng",
+        "store-system": "Hệ thống cửa hàng"
     },
     "menu": {
         "system": {
@@ -50,7 +51,7 @@
         "utilities": "Tiện ích",
         "priceNew": "Giá mới",
         "priceOld": "Giá cũ",
-        "discout": "% giảm giá",
+        "discout": "Giảm giá",
         "create-product": "Tạo sản phẩm",
         "update-product": "Sửa sản phẩm",
         "accessories": "Danh sách phụ kiện",
@@ -59,7 +60,11 @@
         "labelEn": "Nhãn tiếng Anh",
         "type": "Loại sản phẩm",
         "create-filter": "Tạo bộ lọc",
-        "update-filter": "Sửa bộ lọc"
+        "update-filter": "Sửa bộ lọc",
+        "bike-type": "Loại xe",
+        "brake-type": "Loại thắng",
+        "weight": "Tải trọng",
+        "origin": "Xuất xứ"
     },
     "user-manage": {
         "create-user": "Tạo người dùng",

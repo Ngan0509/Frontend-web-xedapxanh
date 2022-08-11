@@ -1,0 +1,16 @@
+#Footer {
+    padding: 30px 0 0;
+
+    .footer_bg {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: var(--color-with-primary-bg);
+
+        .footer {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 16px 0;
+        }
+    }
+}

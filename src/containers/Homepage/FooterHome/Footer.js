@@ -3,6 +3,7 @@
 // import * as selectors from "../../../store/selectors"
 // import * as actions from "../../../store/actions";
 // import { LANGUAGES } from '../../../utils/constant'
+import './Footer.scss'
 
 function Footer() {
     // const lang = useSelector(selectors.selectorLanguages)
@@ -11,7 +12,13 @@ function Footer() {
 
     return (
         <div id="Footer">
-            Footer
+            <div className="footer_bg">
+                <div className="footer">
+                    <div className='copyright'>
+                        <span>copyright 2022@ ecobike.com</span>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

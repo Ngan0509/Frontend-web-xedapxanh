@@ -1,5 +1,5 @@
 // import { useDispatch, useSelector } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 // import * as selectors from "../../../store/selectors"
 // import * as actions from "../../../store/actions";
 // import { LANGUAGES } from '../../../utils/constant'
@@ -17,7 +17,7 @@ function Knowledge({ settings }) {
         <div id="Knowledge">
             <div className="knowledge_bg">
                 <div className="knowledge">
-                    <h3>Tin Tức</h3>
+                    <h3><FormattedMessage id="headerHome.news" /></h3>
                     <div className="row">
                         <Slider {...settings}>
                             <div className="col-3">

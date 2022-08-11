@@ -11,6 +11,7 @@ import { SampleNextArrow, SamplePrevArrow } from '../../ArrowButtons/ArrowButton
 
 import Header from "../../HeaderHome/Header"
 import Footer from "../../FooterHome/Footer"
+
 import Knowledge from "../Knowledge"
 
 import '../../Homepage.scss'
@@ -20,22 +21,23 @@ import { useHistory } from "react-router-dom";
 
 import React, { useEffect, useState, useMemo } from 'react';
 import PaginatedItems from './ProductList/Pagination';
-function Bicycle() {
+function Accessories() {
     const lang = useSelector(selectors.selectorLanguages)
-    const allBicycleData = useSelector(selectors.selectorAllBicycleData)
+    const allAccessoriesData = useSelector(selectors.selectorAllAccessoriesData)
     const allFilterData = useSelector(selectors.selectorAllFilterData)
-    const allCodeData = useSelector(selectors.selectorAllcodeData)
+    const allCodeAccessoryData = useSelector(selectors.selectorAllcodeAccessoryData)
     const categoryData = useSelector(selectors.selectorCategoryData)
 
 
     const dispatch = useDispatch()
     let history = useHistory();
+
     let { id } = useParams();
 
     const [category, setCategory] = useState('')
 
     useEffect(() => {
-        dispatch(actions.fetchCategoryStart('BICYCLE'))
+        dispatch(actions.fetchCategoryStart('ACCESSORIES'))
     }, [dispatch])
 
     useEffect(() => {
@@ -49,45 +51,33 @@ function Bicycle() {
     }, [category, categoryData, lang])
 
     useEffect(() => {
-        dispatch(actions.fetchAllcodeStart())
-        dispatch(actions.fetchAllBicycleStart(id))
+        dispatch(actions.fetchAllcodeAccessoryStart())
+        dispatch(actions.fetchAllAccessoriesStart(id))
         dispatch(actions.fetchAllFilterStart(id))
     }, [id, dispatch])
 
-    const [listAllBicycle, setListAllBicycle] = useState([]);
+    const [listAllAccessories, setListAllAccessories] = useState([]);
     const [listAllFilter, setListAllFilter] = useState([]);
 
     const refs = useMemo(() => allFilterData.map(() => React.createRef()), [allFilterData]);
-    // console.log("listAllBicycle", listAllBicycle)
+    // console.log("listAllAccessories", listAllAccessories)
     // console.log("listAllFilter", listAllFilter)
 
-    // get AllBicycle
+    // get AllAccessories
     useEffect(() => {
-        setListAllBicycle(allBicycleData)
-    }, [allBicycleData])
+        setListAllAccessories(allAccessoriesData)
+    }, [allAccessoriesData])
 
     // get AllFilter
     useEffect(() => {
         let result = allFilterData.map((item) => {
             let arrayType = []
-            if (item.type === 'PRICESPACE') {
-                arrayType = allCodeData.listPriceSpace
-            } else if (item.type === 'BRAND') {
-                arrayType = allCodeData.listBrand
-            } else if (item.type === 'USETARGET') {
-                arrayType = allCodeData.listUseTarget
-            } else if (item.type === 'WEELSIZE') {
-                arrayType = allCodeData.listWeelSize
-            } else if (item.type === 'FRAMEMATERIAL') {
-                arrayType = allCodeData.listFrameMaterial
-            } else if (item.type === 'RIDERHEIGHT') {
-                arrayType = allCodeData.listRiderHeight
-            } else if (item.type === 'BRAKE') {
-                arrayType = allCodeData.listBrake
-            } else if (item.type === 'DISKNUMBER') {
-                arrayType = allCodeData.listDiskNumber
-            } else if (item.type === 'UTILITIES') {
-                arrayType = allCodeData.listUtilities
+            if (item.type === 'BICYCLE_AS') {
+                arrayType = allCodeAccessoryData.listBicycleAs
+            } else if (item.type === 'RIDER_AS') {
+                arrayType = allCodeAccessoryData.listRiderAs
+            } else if (item.type === 'ACCESSARY') {
+                arrayType = allCodeAccessoryData.listAccessary
             }
             return {
                 ...item,
@@ -95,23 +85,17 @@ function Bicycle() {
             }
         })
         setListAllFilter(result)
-    }, [allFilterData, allCodeData])
+    }, [allFilterData, allCodeAccessoryData])
 
     // Click show filter-box
     const handleClickShowFilterBox = (e) => {
         e.stopPropagation()
         refs.forEach((item) => {
-            if (item.current !== e.currentTarget) {
-                if (item.current.classList.contains('active')) {
-                    item.current.classList.remove('active')
-                }
+            if (item.current.classList.contains('active')) {
+                item.current.classList.remove('active')
             }
         })
-        if (!e.currentTarget.classList.contains('active')) {
-            e.currentTarget.classList.add('active')
-        } else {
-            e.currentTarget.classList.remove('active')
-        }
+        e.currentTarget.classList.add('active')
     }
 
     const handleHideFilterBox = () => {
@@ -122,36 +106,8 @@ function Bicycle() {
         })
     }
 
-    let result = []
-    let listResult = []
-    let listResultEnd = []
-    const handleFilterByKeyMap = (itemFilter, e) => {
-        // console.log(itemFilter)
-        if (!e.currentTarget.classList.contains('active')) {
-            e.currentTarget.classList.add('active')
-            result.push(itemFilter)
-            result.forEach(itemFilter => {
-                let arr = [...listAllBicycle]
-                if (itemFilter.type === 'BRAND') {
-                    arr = arr.filter((item) => item.brand_id === itemFilter.keyMap)
-                }
-                if (itemFilter.type === 'PRICESPACE') {
-                    arr = arr.filter((item) => item.price_space_id === itemFilter.keyMap)
-                }
-                listResult.push(...arr)
-            })
-
-
-        } else {
-            e.currentTarget.classList.remove('active')
-            result = result.filter(item => item !== itemFilter.keyMap)
-        }
-
-        const menuItems = [...new Set(listResult.map((item) => item))];
-        console.log("menuItems", menuItems)
-        // console.log("result", result)
-        // console.log("listResult", listResult)
-
+    const handleFilterByKeyMap = (keyMap) => {
+        console.log(keyMap)
     }
 
     const handleClickLogoHome = () => {
@@ -176,7 +132,7 @@ function Bicycle() {
     settings = { ...settings, ...settingsArrow }
 
     return (
-        <div id="Bicycle">
+        <div id="Accessories">
             <Header />
             <div className="bicycle_bg">
                 <div className="bicycle">
@@ -211,7 +167,7 @@ function Bicycle() {
                                                 item.arrayType && item.arrayType.length > 0 &&
                                                 item.arrayType.map((itemChild) => (
                                                     <span
-                                                        onClick={(e) => handleFilterByKeyMap(itemChild, e)}
+                                                        onClick={() => handleFilterByKeyMap(itemChild.keyMap)}
                                                         key={itemChild.id} className="filter_label-child">
                                                         {
                                                             lang === LANGUAGES.VI ? itemChild.valueVi : itemChild.valueEn
@@ -235,7 +191,7 @@ function Bicycle() {
                     <div className="bicycle_filter-more">
                         <div className="bicycle_amount">
                             <span>403</span>
-                            Xe đạp
+                            Phụ kiện
                         </div>
                         <div className="bicycle_discout">
                             <input type='checkbox' id='discout' value='discout' />
@@ -243,7 +199,7 @@ function Bicycle() {
                         </div>
                     </div>
 
-                    <PaginatedItems itemsPerPage={8} items={listAllBicycle} />
+                    <PaginatedItems itemsPerPage={8} items={listAllAccessories} />
                 </div>
             </div>
             <Knowledge settings={settings} />
@@ -252,4 +208,4 @@ function Bicycle() {
     )
 }
 
-export default Bicycle
+export default Accessories

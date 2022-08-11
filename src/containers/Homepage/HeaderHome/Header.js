@@ -29,6 +29,10 @@ function Header() {
     const handleClickShipper = () => {
         history.push("/system/shipper");
     }
+
+    const handleClickLogoHome = () => {
+        history.push("/home");
+    }
     return (
         <div id="Header">
             <div className='header_bg'>
@@ -76,7 +80,9 @@ function Header() {
                     </div>
                 </div>
                 <div className='header_home'>
-                    <div className='logo'>
+                    <div
+                        onClick={() => handleClickLogoHome()}
+                        className='logo'>
                         <img src={logo} alt='logo-xedapxanh' />
                     </div>
 

@@ -9,10 +9,9 @@
 
 #Homepage,
 #Bicycle,
-#BicycleAccessories,
-#PeopleAccessories,
-#Accessary {
+#Accessories {
     font-size: var(--text-size);
+    overflow: hidden;
 
     img {
         width: 100%;

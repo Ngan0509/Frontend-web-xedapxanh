@@ -9,7 +9,8 @@
         "search": "Search...",
         "login": "Log in",
         "signup": "Sign up",
-        "view-cart": "View cart"
+        "view-cart": "View cart",
+        "store-system": "Store system"
     },
     "menu": {
         "system": {
@@ -50,7 +51,7 @@
         "utilities": "Utilities",
         "priceNew": "New price",
         "priceOld": "Old price",
-        "discout": "% discout",
+        "discout": "Discout",
         "create-product": "Create product",
         "update-product": "Update product",
         "accessories": "Accessories List",
@@ -59,7 +60,11 @@
         "labelEn": "Label English",
         "type": "Product Type",
         "create-filter": "Create filter",
-        "update-filter": "Update filter"
+        "update-filter": "Update filter",
+        "bike-type": "Bike type",
+        "brake-type": "Brake type",
+        "weight": "Weight",
+        "origin": "Origin"
     },
     "user-manage": {
         "create-user": "Create user",

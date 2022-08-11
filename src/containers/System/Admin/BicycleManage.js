@@ -37,6 +37,19 @@ function BicycleManage() {
 
     }
 
+    useEffect(() => {
+        let result = ''
+        if (!isNaN(priceOld) && !isNaN(discout)) {
+            result = priceOld - (discout / 100) * priceOld
+        } else {
+            alert("Nhập số hợp lệ")
+        }
+        setForm(state => ({
+            ...state,
+            priceNew: result
+        }))
+    }, [priceOld, discout])
+
     // select onChange
     const [selects, setSelects] = useState({
         category: '',
@@ -69,6 +82,22 @@ function BicycleManage() {
             // let objectUrl = URL.createObjectURL(file)
             setForm({ ...form, previewImg: base64 })
         }
+    }
+
+    //check input
+    const checkUserInput = () => {
+        let isValid = true
+        let arrInputs = ["productName", "priceNew", "priceOld", "discout", "category", "priceSpace", "brand", "useTarget", "weelSize", "frameMaterial", "riderHeight", "brake", "diskNumber", "utilities"]
+        let data = { ...form, ...selects }
+        for (let i = 0; i < arrInputs.length; i++) {
+            console.log('input changed: ', data[arrInputs[i]])
+            if (!data[arrInputs[i]]) {
+                isValid = false
+                alert(`Missing required parameter: ${arrInputs[i]}`)
+                break
+            }
+        }
+        return isValid
     }
 
     // array
@@ -138,6 +167,8 @@ function BicycleManage() {
 
     // create product
     const handleOnSubmit = async () => {
+        let isValid = checkUserInput()
+        if (!isValid) return
         setForm({
             productName: '',
             priceNew: '',

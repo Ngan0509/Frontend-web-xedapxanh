@@ -16,6 +16,7 @@ import Shipper from '../routes/Shipper';
 
 import Homepage from './Homepage/Homepage';
 import Bicycle from './Homepage/SectionHome/Product/Bicycle';
+import Accessories from './Homepage/SectionHome/Product/Accessories';
 
 import CustomScrollbars from '../components/CustomScrollbars';
 // import ConfirmModal from '../components/ConfirmModal';
@@ -58,6 +59,7 @@ class App extends Component {
                                     <Route path={path.SHIPPER} component={userIsAuthenticatedShipper(Shipper)} />
                                     <Route path={path.HOMEPAGE} exact component={(Homepage)} />
                                     <Route path={path.BICYCLE} component={(Bicycle)} />
+                                    <Route path={path.ACCESSORIES} component={(Accessories)} />
                                 </Switch>
 
                             </CustomScrollbars>
