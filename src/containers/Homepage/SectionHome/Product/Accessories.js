@@ -19,7 +19,7 @@ import './Bicycle.scss'
 import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom";
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import PaginatedItems from './ProductList/Pagination';
 function Accessories() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -89,13 +89,18 @@ function Accessories() {
 
     // Click show filter-box
     const handleClickShowFilterBox = (e) => {
+        console.log(e.currentTarget)
         e.stopPropagation()
-        refs.forEach((item) => {
-            if (item.current.classList.contains('active')) {
-                item.current.classList.remove('active')
-            }
-        })
-        e.currentTarget.classList.add('active')
+        // refs.forEach((item) => {
+        //     if (item.current.classList.contains('active')) {
+        //         item.current.classList.remove('active')
+        //     }
+        // })
+        if (!e.currentTarget.classList.contains('active')) {
+            e.currentTarget.classList.add('active')
+        } else {
+            e.currentTarget.classList.remove('active')
+        }
     }
 
     const handleHideFilterBox = () => {
@@ -106,8 +111,66 @@ function Accessories() {
         })
     }
 
-    const handleFilterByKeyMap = (keyMap) => {
-        console.log(keyMap)
+    const [saveFilters, setSaveFilters] = useState({
+        accessories_id: []
+    })
+
+    let filters = useRef()
+    filters.current = {
+        accessories_id: saveFilters.accessories_id
+    }
+
+    const filterKeys = Object.keys(filters.current)
+    // console.log("filterKeys", filterKeys)
+    console.log("filtersOut", filters.current)
+
+    const handleFilterByKeyMap = (itemFilter, e) => {
+        if (!e.currentTarget.classList.contains('active')) {
+            e.currentTarget.classList.add('active')
+
+            itemFilter.type === 'BICYCLE_AS' && filters.current.accessories_id.push(itemFilter.keyMap)
+
+            setSaveFilters({
+                accessories_id: filters.current.accessories_id
+            })
+
+            const listResult = allAccessoriesData.filter(item => {
+                let result = filterKeys.every(key => {
+                    if (!filters.current[key].length) return true;
+
+                    return filters.current[key].includes(item[key]);
+                })
+                return result
+            })
+
+            setListAllAccessories(listResult)
+            // console.log("listResult1", listResult)
+
+
+        } else {
+            e.currentTarget.classList.remove('active')
+
+            if (itemFilter.type === "BICYCLE_AS" && filters.current.accessories_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.accessories_id = filters.current.accessories_id.filter(item => item !== itemFilter.keyMap)
+            }
+
+            setSaveFilters({
+                accessories_id: filters.current.accessories_id
+            })
+
+            const listResult = allAccessoriesData.filter(item => {
+                let result = filterKeys.every(key => {
+                    if (!filters.current[key].length) return true;
+
+                    return filters.current[key].includes(item[key]);
+                })
+                return result
+            })
+
+            setListAllAccessories(listResult)
+            // console.log("listResult2", listResult)
+
+        }
     }
 
     const handleClickLogoHome = () => {
@@ -167,7 +230,7 @@ function Accessories() {
                                                 item.arrayType && item.arrayType.length > 0 &&
                                                 item.arrayType.map((itemChild) => (
                                                     <span
-                                                        onClick={() => handleFilterByKeyMap(itemChild.keyMap)}
+                                                        onClick={(e) => handleFilterByKeyMap(itemChild, e)}
                                                         key={itemChild.id} className="filter_label-child">
                                                         {
                                                             lang === LANGUAGES.VI ? itemChild.valueVi : itemChild.valueEn
@@ -190,7 +253,7 @@ function Accessories() {
 
                     <div className="bicycle_filter-more">
                         <div className="bicycle_amount">
-                            <span>403</span>
+                            <span>{listAllAccessories.length}</span>
                             Phụ kiện
                         </div>
                         <div className="bicycle_discout">

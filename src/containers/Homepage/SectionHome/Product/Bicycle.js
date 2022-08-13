@@ -18,7 +18,7 @@ import './Bicycle.scss'
 import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom";
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import PaginatedItems from './ProductList/Pagination';
 function Bicycle() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -122,36 +122,277 @@ function Bicycle() {
         })
     }
 
-    let result = []
-    let listResult = []
-    let listResultEnd = []
+    const [saveFilters, setSaveFilters] = useState({
+        brand_id: [],
+        price_space_id: [],
+        use_target_id: [],
+        weel_size_id: [],
+        frame_material_id: [],
+        rider_height_id: [],
+        brake_id: [],
+        disk_number_id: [],
+        utilities_id: []
+    })
+
+    let filters = useRef()
+    filters.current = {
+        brand_id: saveFilters.brand_id,
+        price_space_id: saveFilters.price_space_id,
+        use_target_id: saveFilters.use_target_id,
+        weel_size_id: saveFilters.weel_size_id,
+        frame_material_id: saveFilters.frame_material_id,
+        rider_height_id: saveFilters.rider_height_id,
+        brake_id: saveFilters.brake_id,
+        disk_number_id: saveFilters.disk_number_id,
+        utilities_id: saveFilters.utilities_id,
+    }
+
+    const filterKeys = Object.keys(filters.current)
+    // console.log("filterKeys", filterKeys)
+    console.log("filtersOut", filters.current)
     const handleFilterByKeyMap = (itemFilter, e) => {
         // console.log(itemFilter)
         if (!e.currentTarget.classList.contains('active')) {
             e.currentTarget.classList.add('active')
-            result.push(itemFilter)
-            result.forEach(itemFilter => {
-                let arr = [...listAllBicycle]
-                if (itemFilter.type === 'BRAND') {
-                    arr = arr.filter((item) => item.brand_id === itemFilter.keyMap)
-                }
-                if (itemFilter.type === 'PRICESPACE') {
-                    arr = arr.filter((item) => item.price_space_id === itemFilter.keyMap)
-                }
-                listResult.push(...arr)
+
+            itemFilter.type === 'BRAND' && filters.current.brand_id.push(itemFilter.keyMap)
+            itemFilter.type === 'PRICESPACE' && filters.current.price_space_id.push(itemFilter.keyMap)
+            itemFilter.type === 'USETARGET' && filters.current.use_target_id.push(itemFilter.keyMap)
+            itemFilter.type === 'WEELSIZE' && filters.current.weel_size_id.push(itemFilter.keyMap)
+            itemFilter.type === 'FRAMEMATERIAL' && filters.current.frame_material_id.push(itemFilter.keyMap)
+            itemFilter.type === 'RIDERHEIGHT' && filters.current.rider_height_id.push(itemFilter.keyMap)
+            itemFilter.type === 'BRAKE' && filters.current.brake_id.push(itemFilter.keyMap)
+            itemFilter.type === 'DISKNUMBER' && filters.current.disk_number_id.push(itemFilter.keyMap)
+            itemFilter.type === 'UTILITIES' && filters.current.utilities_id.push(itemFilter.keyMap)
+
+            setSaveFilters({
+                brand_id: filters.current.brand_id,
+                price_space_id: filters.current.price_space_id,
+                use_target_id: filters.current.use_target_id,
+                weel_size_id: filters.current.weel_size_id,
+                frame_material_id: filters.current.frame_material_id,
+                rider_height_id: filters.current.rider_height_id,
+                brake_id: filters.current.brake_id,
+                disk_number_id: filters.current.disk_number_id,
+                utilities_id: filters.current.utilities_id
             })
+
+            const listResult = allBicycleData.filter(item => {
+                let result = filterKeys.every(key => {
+                    if (!filters.current[key].length) return true;
+
+                    return filters.current[key].includes(item[key]);
+                })
+                if (checkedBoxArr.includes('discout')) {
+                    return result && item.discout > 5
+                }
+                return result
+            })
+            if (sortSelect.id === 'desc') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.price_new, 10);
+                    let numB = parseInt(b.price_new, 10);
+                    return numB - numA;
+                })
+            }
+            if (sortSelect.id === 'asc') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.price_new, 10);
+                    let numB = parseInt(b.price_new, 10);
+                    return numA - numB;
+                })
+            }
+
+            if (sortSelect.id === '%discout') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.discout, 10);
+                    let numB = parseInt(b.discout, 10);
+                    return numB - numA;
+                })
+            }
+            setListAllBicycle(listResult)
+            // console.log("listResult1", listResult)
 
 
         } else {
             e.currentTarget.classList.remove('active')
-            result = result.filter(item => item !== itemFilter.keyMap)
+
+            if (itemFilter.type === "BRAND" && filters.current.brand_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.brand_id = filters.current.brand_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "PRICESPACE" && filters.current.price_space_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.price_space_id = filters.current.price_space_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "USETARGET" && filters.current.use_target_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.use_target_id = filters.current.use_target_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "WEELSIZE" && filters.current.weel_size_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.weel_size_id = filters.current.weel_size_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "FRAMEMATERIAL" && filters.current.frame_material_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.frame_material_id = filters.current.frame_material_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "RIDERHEIGHT" && filters.current.rider_height_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.rider_height_id = filters.current.rider_height_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "BRAKE" && filters.current.brake_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.brake_id = filters.current.brake_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "DISKNUMBER" && filters.current.disk_number_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.disk_number_id = filters.current.disk_number_id.filter(item => item !== itemFilter.keyMap)
+            }
+            if (itemFilter.type === "UTILITIES" && filters.current.utilities_id.indexOf(itemFilter.keyMap) > -1) {
+                filters.current.utilities_id = filters.current.utilities_id.filter(item => item !== itemFilter.keyMap)
+            }
+
+            setSaveFilters({
+                brand_id: filters.current.brand_id,
+                price_space_id: filters.current.price_space_id,
+                use_target_id: filters.current.use_target_id,
+                weel_size_id: filters.current.weel_size_id,
+                frame_material_id: filters.current.frame_material_id,
+                rider_height_id: filters.current.rider_height_id,
+                brake_id: filters.current.brake_id,
+                disk_number_id: filters.current.disk_number_id,
+                utilities_id: filters.current.utilities_id
+            })
+
+            const listResult = allBicycleData.filter(item => {
+                let result = filterKeys.every(key => {
+                    if (!filters.current[key].length) return true;
+
+                    return filters.current[key].includes(item[key]);
+                })
+                if (checkedBoxArr.includes('discout')) {
+                    return result && item.discout > 5
+                }
+                return result
+            })
+            if (sortSelect.id === 'desc') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.price_new, 10);
+                    let numB = parseInt(b.price_new, 10);
+                    return numB - numA;
+                })
+            }
+            if (sortSelect.id === 'asc') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.price_new, 10);
+                    let numB = parseInt(b.price_new, 10);
+                    return numA - numB;
+                })
+            }
+
+            if (sortSelect.id === '%discout') {
+                listResult.sort((a, b) => {
+                    let numA = parseInt(a.discout, 10);
+                    let numB = parseInt(b.discout, 10);
+                    return numB - numA;
+                })
+            }
+            setListAllBicycle(listResult)
+            // console.log("listResult2", listResult)
+
+        }
+        // const menuItems = [...new Set(listResult.map((item) => item))];
+        // console.log("menuItems", menuItems)
+
+    }
+    const [checkedBoxArr, setCheckedBoxArr] = useState([])
+
+    const handleCheckBox = (id) => {
+        const isChecked = checkedBoxArr.includes(id)
+        setCheckedBoxArr(prev => {
+            if (isChecked) {
+                return prev.filter((item) => item !== id)
+            } else {
+                return [...prev, id]
+            }
+        })
+        const listResult = allBicycleData.filter(item => {
+            let result = filterKeys.every(key => {
+                if (!filters.current[key].length) return true;
+
+                return filters.current[key].includes(item[key]);
+            })
+
+            if (!isChecked && id === 'discout') {
+                return result && item.discout > 5
+            }
+            return result
+        })
+        if (sortSelect.id === 'desc') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.price_new, 10);
+                let numB = parseInt(b.price_new, 10);
+                return numB - numA;
+            })
+        }
+        if (sortSelect.id === 'asc') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.price_new, 10);
+                let numB = parseInt(b.price_new, 10);
+                return numA - numB;
+            })
         }
 
-        const menuItems = [...new Set(listResult.map((item) => item))];
-        console.log("menuItems", menuItems)
-        // console.log("result", result)
-        // console.log("listResult", listResult)
+        if (sortSelect.id === '%discout') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.discout, 10);
+                let numB = parseInt(b.discout, 10);
+                return numB - numA;
+            })
+        }
+        setListAllBicycle(listResult)
 
+    }
+
+    const [sortSelect, setSortSelect] = useState({
+        id: '',
+        name: 'Nổi bật'
+    })
+
+    const handleClickSortSelect = (itemSort) => {
+        setSortSelect({
+            id: itemSort.id,
+            name: itemSort.name
+        })
+        console.log(itemSort)
+        const listResult = allBicycleData.filter(item => {
+            let result = filterKeys.every(key => {
+                if (!filters.current[key].length) return true;
+
+                return filters.current[key].includes(item[key]);
+            })
+            if (checkedBoxArr.includes('discout')) {
+                return result && item.discout > 5
+            }
+            return result
+        })
+        if (itemSort.id === 'desc') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.price_new, 10);
+                let numB = parseInt(b.price_new, 10);
+                return numB - numA;
+            })
+        }
+        if (itemSort.id === 'asc') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.price_new, 10);
+                let numB = parseInt(b.price_new, 10);
+                return numA - numB;
+            })
+        }
+
+        if (itemSort.id === '%discout') {
+            listResult.sort((a, b) => {
+                let numA = parseInt(a.discout, 10);
+                let numB = parseInt(b.discout, 10);
+                return numB - numA;
+            })
+        }
+
+        setListAllBicycle(listResult)
     }
 
     const handleClickLogoHome = () => {
@@ -174,6 +415,33 @@ function Bicycle() {
     }
 
     settings = { ...settings, ...settingsArrow }
+
+    const selectSorts = [
+        {
+            id: 'outstanding',
+            name: 'Nổi bật'
+        },
+        {
+            id: 'new products',
+            name: 'Hàng mới về'
+        },
+        {
+            id: 'selling',
+            name: 'Bán chạy'
+        },
+        {
+            id: '%discout',
+            name: '%Giảm giá'
+        },
+        {
+            id: 'desc',
+            name: 'Cao đến thấp'
+        },
+        {
+            id: 'asc',
+            name: 'Thấp đến cao'
+        }
+    ]
 
     return (
         <div id="Bicycle">
@@ -234,12 +502,41 @@ function Bicycle() {
 
                     <div className="bicycle_filter-more">
                         <div className="bicycle_amount">
-                            <span>403</span>
+                            <span>{listAllBicycle.length}</span>
                             Xe đạp
                         </div>
                         <div className="bicycle_discout">
-                            <input type='checkbox' id='discout' value='discout' />
-                            <label htmlFor="discout"><FormattedMessage id="bicycle-manage.discout" /></label>
+                            <input
+                                type='checkbox'
+                                checked={checkedBoxArr.includes('discout')}
+                                onChange={() => handleCheckBox('discout')}
+                                id='discout' />
+                            <label
+                                htmlFor="discout"><FormattedMessage id="bicycle-manage.discout" /></label>
+                        </div>
+
+                        <div className="sort-select ">
+                            <p
+                                onClick={(e) => handleClickShowFilterBox(e)}
+                                className="click-sort">Xếp theo:
+                                <span className="sort-show">
+                                    {sortSelect.name}
+                                </span>
+                            </p>
+                            <div className="sort-select-main">
+                                {
+                                    selectSorts && selectSorts.length > 0 &&
+                                    selectSorts.map(item => (
+                                        <p
+                                            className={`${sortSelect.id === item.id ? 'active' : ''}`}
+                                            key={item.id}
+                                            onClick={() => handleClickSortSelect(item)}
+                                        >
+                                            {item.name}
+                                        </p>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
 

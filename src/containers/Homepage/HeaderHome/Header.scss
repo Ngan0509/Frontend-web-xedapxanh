@@ -260,6 +260,10 @@
                                 padding: 8px;
                                 border-top: 1px solid var(--border-color);
                             }
+
+                            .track-vertical {
+                                visibility: hidden !important;
+                            }
                         }
                     }
                 }
@@ -268,6 +272,12 @@
                     .cart_info {
                         visibility: visible;
                         opacity: 1;
+
+                        .cart_have-product {
+                            .track-vertical {
+                                visibility: visible !important;
+                            }
+                        }
                     }
                 }
 

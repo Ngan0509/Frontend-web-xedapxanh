@@ -127,14 +127,68 @@
                     }
                 }
 
-                .bicycle_sort {
+                .sort-select {
                     float: right;
+                    position: relative;
+                    margin-bottom: 10px;
 
-                    select {
-                        border: 1px solid var(--primary-color);
-                        outline: none;
-                        padding: 4px 8px;
+                    .click-sort {
+                        border: 1px solid #e0e0e0;
                         border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        line-height: 12px;
+                        padding: 6px 10px 6px 8px;
+
+                        .sort-show {
+                            padding-right: 12px;
+                            position: relative;
+                        }
+
+                        .sort-show::before {
+                            border-left: 4px solid transparent;
+                            border-right: 4px solid transparent;
+                            border-top: 4px solid #333;
+                            content: '';
+                            height: 0;
+                            position: absolute;
+                            top: 6px;
+                            right: 0;
+                            width: 0;
+                        }
+                    }
+
+                    .click-sort.active~.sort-select-main {
+                        display: block;
+                    }
+
+                    .sort-select-main {
+                        background-color: #fff;
+                        border-radius: 4px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                        display: none;
+                        position: absolute;
+                        padding: 0 7px;
+                        top: 30px;
+                        right: 0;
+                        width: 160px;
+                        z-index: 2;
+
+                        p {
+                            border-bottom: 1px solid #f1f1f1;
+                            color: #000;
+                            font-size: 14px;
+                            line-height: 17px;
+                            padding: 11px 3px;
+                            display: block;
+                            margin-bottom: 0;
+                            cursor: pointer;
+                        }
+
+                        .active {
+                            color: var(--primary-color);
+                            font-weight: 600;
+                        }
                     }
                 }
             }
@@ -143,6 +197,7 @@
         .bicycle>ul {
             text-align: center;
             margin-top: 30px;
+            padding-left: 0;
 
             li {
                 display: inline-block;
