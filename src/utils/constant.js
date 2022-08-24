@@ -2,12 +2,17 @@ export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
     BICYCLE: '/home/bicycle/:id',
+    DETAILBICYCLE: '/home/bicycle/detail/:id',
     ACCESSORIES: '/home/accessories/:id',
     LOGINADMIN: '/admin/login',
     LOGINSHIPPER: '/shipper/login',
     LOG_OUT: '/logout',
     ADMIN: '/system/admin',
-    SHIPPER: '/system/shipper'
+    SHIPPER: '/system/shipper',
+    SHOPPINGCART: '/home/cart/shoppingcart',
+    CHECKOUTDETAILS: '/home/cart/checkoutdetails',
+    ORDERCOMPLETE: '/home/cart/ordercomplete',
+    CART: '/home/cart',
 };
 
 export const LANGUAGES = {

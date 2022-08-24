@@ -28,6 +28,8 @@
             "admin": "Admin",
             "user-manage": "User manage",
             "bicycle-manage": "Bicycle manage",
+            "bicycle-markdown": "Markdown",
+            "bicycle-specifications": "Specifications",
             "accessories-manage": "Accessories manage",
             "filter-manage": "Filter product manage"
         },

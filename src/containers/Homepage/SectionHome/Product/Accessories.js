@@ -48,7 +48,7 @@ function Accessories() {
                 setCategory(cate)
             }
         })
-    }, [category, categoryData, lang])
+    }, [id, category, categoryData, lang])
 
     useEffect(() => {
         dispatch(actions.fetchAllcodeAccessoryStart())
@@ -89,7 +89,6 @@ function Accessories() {
 
     // Click show filter-box
     const handleClickShowFilterBox = (e) => {
-        console.log(e.currentTarget)
         e.stopPropagation()
         // refs.forEach((item) => {
         //     if (item.current.classList.contains('active')) {

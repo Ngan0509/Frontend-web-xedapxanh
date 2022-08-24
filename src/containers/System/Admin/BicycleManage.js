@@ -42,7 +42,7 @@ function BicycleManage() {
         if (!isNaN(priceOld) && !isNaN(discout)) {
             result = priceOld - (discout / 100) * priceOld
         } else {
-            alert("Nhập số hợp lệ")
+            alert("Vui lòng nhập số hợp lệ")
         }
         setForm(state => ({
             ...state,
@@ -169,27 +169,6 @@ function BicycleManage() {
     const handleOnSubmit = async () => {
         let isValid = checkUserInput()
         if (!isValid) return
-        setForm({
-            productName: '',
-            priceNew: '',
-            priceOld: '',
-            discout: '',
-            previewImg: ''
-        })
-        setSelects({
-            category: '',
-            priceSpace: '',
-            brand: '',
-            useTarget: '',
-            weelSize: '',
-            frameMaterial: '',
-            riderHeight: '',
-            brake: '',
-            diskNumber: '',
-            utilities: ''
-        })
-        setIsEdit(false)
-        setId('')
 
         if (isEdit) {
             let dataEdit = {
@@ -237,6 +216,28 @@ function BicycleManage() {
                 alert(resp.errMessage)
             }
         }
+
+        setForm({
+            productName: '',
+            priceNew: '',
+            priceOld: '',
+            discout: '',
+            previewImg: ''
+        })
+        setSelects({
+            category: '',
+            priceSpace: '',
+            brand: '',
+            useTarget: '',
+            weelSize: '',
+            frameMaterial: '',
+            riderHeight: '',
+            brake: '',
+            diskNumber: '',
+            utilities: ''
+        })
+        setIsEdit(false)
+        setId('')
     }
 
     // delete bicycle

@@ -46,7 +46,7 @@ function Bicycle() {
                 setCategory(cate)
             }
         })
-    }, [category, categoryData, lang])
+    }, [id, category, categoryData, lang])
 
     useEffect(() => {
         dispatch(actions.fetchAllcodeStart())

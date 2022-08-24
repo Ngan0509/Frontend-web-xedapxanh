@@ -25,6 +25,18 @@ const handleGetAllBicycle = (inputId) => {
     return axios.get(`/api/get-all-bicycle?id=${inputId}`)
 }
 
+const handleGetDetailBicycle = (inputId) => {
+    return axios.get(`/api/get-detail-bicycle?id=${inputId}`)
+}
+
+const handleCreateMarkDownBicycle = (data) => {
+    return axios.post('/api/create-markdown-bicycle', data)
+}
+
+const handleCreateSpecificationsBicycle = (data) => {
+    return axios.post('/api/create-specifications-bicycle', data)
+}
+
 const handleCreateNewBicycle = (data) => {
     return axios.post('/api/create-new-bicycle', data)
 }
@@ -69,6 +81,22 @@ const handleUpdateNewFilter = (editData) => {
     return axios.put('/api/update-filter', editData)
 }
 
+const handleGetAllCart = (inputId) => {
+    return axios.get(`/api/get-all-cart?id=${inputId}`)
+}
+
+const handleCreateNewCart = (data) => {
+    return axios.post('/api/create-new-cart', data)
+}
+
+const handleDeleteNewCart = (cartId) => {
+    return axios.delete(`/api/delete-cart?id=${cartId}`)
+}
+
+const handleUpdateNewCart = (editData) => {
+    return axios.put('/api/update-cart', editData)
+}
+
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/get-all-code?type=${inputType}`)
 }
@@ -86,5 +114,7 @@ export {
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
     handleGetAllBicycle, handleCreateNewBicycle, handleDeleteNewBicycle, handleUpdateNewBicycle,
     handleGetAllAccessory, handleCreateNewAccessory, handleDeleteNewAccessory, handleUpdateNewAccessory,
-    handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter
+    handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter,
+    handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
+    handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart
 }

@@ -6,6 +6,8 @@ import BicycleManage from '../containers/System/Admin/BicycleManage';
 import AccessoriesManage from '../containers/System/Admin/AccessoriesManage';
 import FilterManage from '../containers/System/Admin/FilterManage';
 import Header from '../containers/Header/Header';
+import MarkdownManage from '../containers/System/Admin/MardownManage';
+import SpecificationsManage from '../containers/System/Admin/SpecificationsManage';
 
 class Admin extends Component {
     render() {
@@ -17,6 +19,8 @@ class Admin extends Component {
                         <Switch>
                             <Route path="/system/admin/user-manage" component={UserManage} />
                             <Route path="/system/admin/bicycle-manage" component={BicycleManage} />
+                            <Route path="/system/admin/bicycle-markdown" component={MarkdownManage} />
+                            <Route path="/system/admin/bicycle-specifications" component={SpecificationsManage} />
                             <Route path="/system/admin/accessories-manage" component={AccessoriesManage} />
                             <Route path="/system/admin/filter-manage" component={FilterManage} />
                         </Switch>

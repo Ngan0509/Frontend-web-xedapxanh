@@ -120,18 +120,6 @@ function AccessoriesManage() {
 
     // create product
     const handleOnSubmit = async () => {
-        setForm({
-            productName: '',
-            priceNew: '',
-            previewImg: ''
-        })
-        setSelects({
-            category: '',
-            accessories_id: ''
-        })
-        setIsEdit(false)
-        setId('')
-
         if (isEdit) {
             let dataEdit = {
                 id,
@@ -162,6 +150,18 @@ function AccessoriesManage() {
                 alert(resp.errMessage)
             }
         }
+
+        setForm({
+            productName: '',
+            priceNew: '',
+            previewImg: ''
+        })
+        setSelects({
+            category: '',
+            accessories_id: ''
+        })
+        setIsEdit(false)
+        setId('')
     }
 
     // delete bicycle

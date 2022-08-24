@@ -1,0 +1,168 @@
+#Cart {
+    .cart_bg {
+        padding: 30px 0;
+
+        .cart {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            .topnav {
+                text-align: center;
+
+                a {
+                    display: inline-block;
+                    font-size: 30px;
+                    margin: 0 24px;
+                    color: #ccc;
+                    text-decoration: none;
+                    transition: 0.3s;
+                }
+
+                a:hover {
+                    color: rgba(0, 128, 0, 0.5);
+                }
+
+                a.active {
+                    color: var(--primary-color);
+                }
+
+                i {
+                    font-size: 40px;
+                    color: #ccc;
+                    position: relative;
+                    top: 8px;
+                }
+            }
+        }
+    }
+}
+
+#ShoppingCart {
+    .shoppingCart_bg {
+        .shoppingCart {
+            .product-wrap {
+                display: flex;
+                align-items: center;
+
+                .icon-close {
+                    font-size: 24px;
+                    color: #999;
+                    cursor: pointer;
+                    margin: 0 4px;
+                }
+
+                .product-img {
+                    margin: 0 4px;
+                    width: 80px;
+                    height: auto;
+                    border: 1px solid var(--border-color);
+                }
+
+                .product-title {
+                    font-size: 14px;
+                    margin: 0 4px;
+                    width: 140px;
+                }
+            }
+
+            .product-num {
+
+                span,
+                .minus,
+                .plus {
+                    display: inline-block;
+                    padding: 4px 8px;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                }
+            }
+
+            .btn-wrap {
+                margin-top: 30px;
+
+                .home_btn,
+                .update_btn {
+                    margin: 0 8px;
+                    border: none;
+                    outline: none;
+                    padding: 8px 16px;
+                    opacity: 1;
+                    transition: 0.3s;
+                }
+
+                .home_btn:hover,
+                .update_btn:hover {
+                    opacity: 0.9;
+                }
+
+                .home_btn {
+                    color: #333;
+                    background-color: #ccc;
+                }
+
+                .update_btn {
+                    color: #fff;
+                    background-color: orange;
+                }
+            }
+
+            .checkout {
+                margin-top: 60px;
+                border-left: 1px solid var(--border-color);
+                padding-left: 30px;
+
+                .number,
+                .sum {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .number {
+                    color: #666;
+
+                    .label,
+                    .num {
+                        font-weight: 600;
+                    }
+
+                    .num {
+                        font-size: 18px;
+                        color: orange;
+                    }
+
+                    padding: 4px 0;
+                    border-bottom: 1px solid var(--border-color);
+                }
+
+                .sum {
+                    padding: 4px 0;
+                    margin-top: 16px;
+
+                    .price {
+                        font-weight: 600;
+                        color: #333;
+                        font-size: 20px;
+                    }
+                }
+
+                .checkout_btn {
+                    margin-top: 30px;
+                    width: 100%;
+                    padding: 8px 16px;
+                    border: none;
+                    outline: none;
+                    color: #fff;
+                    background-color: var(--primary-color);
+                    opacity: 1;
+                    transition: 0.3s;
+                }
+
+                .checkout_btn:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}

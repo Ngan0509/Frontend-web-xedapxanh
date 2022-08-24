@@ -10,14 +10,21 @@ import _ from 'lodash'
 import logoTempest from '../../../../../assets/images/E6TkEIRUcAMnlfa.jpg'
 import './ProductList.scss'
 import NumberFormat from 'react-number-format';
+import { useHistory } from "react-router-dom";
 
 function ProductList(props) {
     const lang = useSelector(selectors.selectorLanguages)
 
     // const dispatch = useDispatch()
+    let history = useHistory();
+
     let { id } = useParams()
     const { items } = props
     console.log("items", items)
+
+    const handleClickPushDetailBicycle = (item) => {
+        history.push(`/home/bicycle/detail/${item.id}`);
+    }
     return (
         <div id="ProductList">
             <div className="productList">
@@ -28,7 +35,9 @@ function ProductList(props) {
                                 {
                                     items && items.length > 0 &&
                                     items.map(item => (
-                                        <div key={item.id} className="col-3">
+                                        <div
+                                            onClick={() => handleClickPushDetailBicycle(item)}
+                                            key={item.id} className="col-3">
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">
