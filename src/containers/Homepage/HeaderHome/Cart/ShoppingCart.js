@@ -9,6 +9,8 @@ import { useHistory } from "react-router-dom";
 import logoTempest from '../../../../assets/images/E6TkEIRUcAMnlfa.jpg'
 import * as userService from "../../../../services/userService"
 import _ from 'lodash';
+import NumberFormat from 'react-number-format';
+
 
 function ShoppingCart() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -32,7 +34,7 @@ function ShoppingCart() {
     const [arrCartId, setArrCartId] = useState([])
     console.log("arrCartId", arrCartId)
 
-    const handleClickMinus = async (cartItem) => {
+    const handleClickMinus = (cartItem) => {
         const result = listAllCart.map(item => {
             if (item.id === cartItem.id) {
                 if (item.so_luong > 1) {
@@ -48,7 +50,7 @@ function ShoppingCart() {
         setArrCartId(menuItems)
     }
 
-    const handleClickPlus = async (cartItem) => {
+    const handleClickPlus = (cartItem) => {
         const result = listAllCart.map(item => {
             if (item.id === cartItem.id) {
                 item.so_luong++
@@ -94,6 +96,27 @@ function ShoppingCart() {
         setArrCartId([])
     }
 
+    const handleDeleteCart = async (id) => {
+        await userService.handleDeleteNewCart(id)
+        dispatch(actions.fetchAllCartStart('All'))
+    }
+
+    const sumSo_luong = () => {
+        let sum = 0
+        listAllCart.forEach(item => {
+            sum += item.so_luong
+        })
+        return sum
+    }
+
+    const sumPrice = () => {
+        let sum = 0
+        listAllCart.forEach(item => {
+            sum += item.sum_price
+        })
+        return sum
+    }
+
     // const handleClickPushPage = (item) => {
 
     // }
@@ -116,10 +139,12 @@ function ShoppingCart() {
                                     {
                                         listAllCart && listAllCart.length > 0 &&
                                         listAllCart.map(item => (
-                                            <tr>
+                                            <tr key={item.id}>
                                                 <td>
                                                     <div className='product-wrap'>
-                                                        <div className='icon-close'>
+                                                        <div
+                                                            onClick={() => handleDeleteCart(item.id)}
+                                                            className='icon-close'>
                                                             <i className='bx bx-x-circle'></i>
                                                         </div>
                                                         <div className='product-img'>
@@ -138,7 +163,15 @@ function ShoppingCart() {
                                                 </td>
                                                 <td>
                                                     <div className='product-price'>
-                                                        <span>{item.price}</span>
+                                                        <span>
+                                                            <NumberFormat
+                                                                value={item.price}
+                                                                className="foo"
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                suffix={'VND'}
+                                                            />
+                                                        </span>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -154,7 +187,15 @@ function ShoppingCart() {
                                                 </td>
                                                 <td>
                                                     <div className='price-sum'>
-                                                        <span>{item.sum_price}</span>
+                                                        <span>
+                                                            <NumberFormat
+                                                                value={item.sum_price}
+                                                                className="foo"
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                suffix={'VND'}
+                                                            />
+                                                        </span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -174,11 +215,19 @@ function ShoppingCart() {
                             <div className='checkout'>
                                 <div className='number'>
                                     <span className='label'>Số lượng</span>
-                                    <span className='num'>3</span>
+                                    <span className='num'>{sumSo_luong()}</span>
                                 </div>
                                 <div className='sum'>
                                     <span className='label'>Tổng phụ</span>
-                                    <span className='price'>29.370.000VND</span>
+                                    <span className='price'>
+                                        <NumberFormat
+                                            value={sumPrice()}
+                                            className="foo"
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            suffix={'VND'}
+                                        />
+                                    </span>
                                 </div>
                                 <button className='checkout_btn'>Tiến hành thanh toán</button>
                             </div>

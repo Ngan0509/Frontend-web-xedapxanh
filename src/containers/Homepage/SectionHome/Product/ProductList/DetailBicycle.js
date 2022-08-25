@@ -37,6 +37,7 @@ function DetailBicycle() {
 
     useEffect(() => {
         dispatch(actions.fetchCategoryStart('BICYCLE'))
+        dispatch(actions.fetchAllCartStart('All'))
     }, [dispatch])
 
     useEffect(() => {
@@ -51,7 +52,6 @@ function DetailBicycle() {
         })
     }, [category, categoryData, lang, detailBicycle])
 
-    console.log("detailBicycle", detailBicycle)
     useEffect(() => {
         async function fetchData() {
             // You can await here
@@ -76,6 +76,36 @@ function DetailBicycle() {
     const handleClickViewMore = (id) => {
         id === 'markdown' && setIsShowMarkDown(state => !state)
         id === 'specification' && setIsShowSpecification(state => !state)
+
+    }
+
+    const [so_luong, setSo_luong] = useState(1)
+
+    const handleClickMinus = () => {
+        if (so_luong > 1) {
+            setSo_luong(state => state - 1)
+        }
+    }
+
+    const handleClickPlus = () => {
+        setSo_luong(state => state + 1)
+    }
+
+    const handleCreateCart = async () => {
+        const sum_price = detailBicycle.price_new * so_luong
+        const data = {
+            product_id: id,
+            type: 'BICYCLE',
+            so_luong,
+            price: detailBicycle.price_new,
+            sum_price
+        }
+
+        const resp = await userService.handleCreateNewCart(data)
+        if (resp && resp.errCode === 0) {
+            alert(`Đã thêm ${so_luong} sản phẩm vào giỏ hàng`)
+        }
+        dispatch(actions.fetchAllCartStart('All'))
 
     }
 
@@ -202,7 +232,7 @@ function DetailBicycle() {
                             </div>
                             <div className='col-7 infor_buy-product'>
                                 <div className='title_product'>
-                                    <span>Xe Đạp {detailBicycle.name}</span>
+                                    <span>{category} {detailBicycle.name}</span>
                                 </div>
                                 <div className='price_product'>
                                     <div className="priceOld">
@@ -232,9 +262,17 @@ function DetailBicycle() {
                                 </div>
                                 <div className='numProduct_add-to-cart'>
                                     <div className='number_product'>
-                                        <input type="number" value={0} min={1} />
+                                        <button
+                                            onClick={() => handleClickMinus()}
+                                            className='minus'>-</button>
+                                        <span>{so_luong}</span>
+                                        <button
+                                            onClick={() => handleClickPlus()}
+                                            className='plus'>+</button>
                                     </div>
-                                    <button className='add_to_cart'>Thêm vào giỏ</button>
+                                    <button
+                                        onClick={() => handleCreateCart()}
+                                        className='add_to_cart'>Thêm vào giỏ</button>
                                 </div>
                                 <div className='promotion'>
                                     <div className='label'>
@@ -253,20 +291,24 @@ function DetailBicycle() {
                         <div className='row product_infor_more'>
                             <div className='col-7 markdown'>
                                 <h4>Thông tin mô tả</h4>
-                                <div className={`${isShowMarkDown ? 'markdown_content active' : 'markdown_content'}`}>
-                                    {
-                                        !_.isEmpty(detailBicycle) && detailBicycle.markdownData && !_.isEmpty(detailBicycle.markdownData) &&
-                                        <div dangerouslySetInnerHTML={{ __html: detailBicycle.markdownData.contentHTML }} />
-                                    }
-                                </div>
-                                <div
-                                    onClick={() => handleClickViewMore('markdown')}
-                                    className='view-more'>
-                                    {
-                                        isShowMarkDown ? 'Rút gọn' : 'Xem thêm'
-                                    }
+                                {
+                                    !_.isEmpty(detailBicycle) && detailBicycle.markdownData && !_.isEmpty(detailBicycle.markdownData) ?
+                                        <>
+                                            <div className={`${isShowMarkDown ? 'markdown_content active' : 'markdown_content'}`}>
+                                                <div dangerouslySetInnerHTML={{ __html: detailBicycle.markdownData.contentHTML }} />
+                                            </div>
+                                            <div
+                                                onClick={() => handleClickViewMore('markdown')}
+                                                className='view-more'>
+                                                {
+                                                    isShowMarkDown ? 'Rút gọn' : 'Xem thêm'
+                                                }
 
-                                </div>
+                                            </div>
+                                        </>
+                                        :
+                                        <span>Không có thông tin mô tả</span>
+                                }
                             </div>
                             <div className='col-5 specification'>
                                 <h4>Thông số kỹ thuật xe đạp {detailBicycle.name}</h4>

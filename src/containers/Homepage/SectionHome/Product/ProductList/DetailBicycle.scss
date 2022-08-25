@@ -82,10 +82,14 @@
                                 margin-top: 20px;
 
                                 .number_product {
-                                    input {
-                                        width: 100px;
-                                        padding: 8px;
-                                        font-size: 18px;
+
+                                    span,
+                                    .minus,
+                                    .plus {
+                                        display: inline-block;
+                                        padding: 4px 8px;
+                                        font-size: 16px;
+                                        border: 1px solid #ccc;
                                     }
                                 }
 

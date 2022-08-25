@@ -229,24 +229,59 @@
                         }
 
                         .cart_have-product {
-                            padding: 16px 0 8px;
+                            h5 {
+                                color: #333;
+                                font-size: 18px;
+                                padding: 8px 16px;
+                                border-bottom: 1px solid var(--border-color);
+                                margin-bottom: 0;
+                            }
 
                             .product_list {
                                 padding-left: 0;
 
                                 .product_list-item {
                                     display: flex;
-                                    align-items: center;
-                                    margin-bottom: 16px;
+                                    padding: 8px 16px;
+                                    cursor: pointer;
+
+                                    &.product_list-item:hover {
+                                        background-color: #eee;
+                                    }
+
+                                    &.product_list-item:nth-child(2n) {
+                                        background-color: #f7f7f7;
+                                    }
 
                                     .product_img {
                                         width: 80px;
                                         height: 80px;
                                         margin-right: 16px;
+                                        border: 1px solid red;
                                     }
 
                                     .product_info {
                                         color: var(--text-color);
+                                        flex: 1;
+
+                                        .product_title {
+                                            color: var(--primary-color);
+                                        }
+
+                                        .product_price {
+                                            display: flex;
+                                            justify-content: space-between;
+                                            margin-top: 16px;
+
+                                            .old_price {
+                                                text-decoration: line-through;
+                                            }
+
+                                            .new_price {
+                                                font-weight: 600;
+                                                color: var(--primary-color);
+                                            }
+                                        }
                                     }
                                 }
 
