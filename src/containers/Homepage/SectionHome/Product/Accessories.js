@@ -127,7 +127,7 @@ function Accessories() {
         if (!e.currentTarget.classList.contains('active')) {
             e.currentTarget.classList.add('active')
 
-            itemFilter.type === 'BICYCLE_AS' && filters.current.accessories_id.push(itemFilter.keyMap)
+            filters.current.accessories_id.push(itemFilter.keyMap)
 
             setSaveFilters({
                 accessories_id: filters.current.accessories_id
@@ -149,7 +149,7 @@ function Accessories() {
         } else {
             e.currentTarget.classList.remove('active')
 
-            if (itemFilter.type === "BICYCLE_AS" && filters.current.accessories_id.indexOf(itemFilter.keyMap) > -1) {
+            if (filters.current.accessories_id.indexOf(itemFilter.keyMap) > -1) {
                 filters.current.accessories_id = filters.current.accessories_id.filter(item => item !== itemFilter.keyMap)
             }
 

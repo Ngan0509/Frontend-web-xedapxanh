@@ -1,9 +1,13 @@
 
 export const selectorIsLoggedIn = (state) => state.user.isLoggedIn
 
+export const selectorIsLoggedInClient = (state) => state.client.isLoggedIn
+
 export const selectorLanguages = (state) => state.app.language
 
 export const selectorUserInfo = (state) => state.user.userInfo
+
+export const selectorClientInfo = (state) => state.client.clientInfo
 
 export const selectorAllcodeData = (state) => state.admin.allcodeData
 

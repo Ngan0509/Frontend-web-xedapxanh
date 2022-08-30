@@ -17,6 +17,8 @@ import CustomScrollbars from '../../../components/CustomScrollbars';
 
 function Header() {
     const lang = useSelector(selectors.selectorLanguages)
+    const isLoggedInClient = useSelector(selectors.selectorIsLoggedInClient)
+    const clientInfoSelect = useSelector(selectors.selectorClientInfo)
     const allCartData = useSelector(selectors.selectorAllCartData)
 
     const dispatch = useDispatch()
@@ -36,6 +38,12 @@ function Header() {
         setListAllCart(allCartData)
     }, [allCartData])
 
+    const [clientInfo, setClientInfo] = useState([]);
+    // get clientInfo
+    useEffect(() => {
+        setClientInfo(clientInfoSelect)
+    }, [clientInfoSelect])
+
     let history = useHistory();
 
     const handleClickAdmin = () => {
@@ -52,6 +60,19 @@ function Header() {
 
     const handleClickViewCart = () => {
         history.push("/home/cart/shoppingcart")
+    }
+
+    const handlePushSignUp = () => {
+        history.push("/home/signup")
+    }
+
+    const handlePushLogIn = () => {
+        history.push("/home/login")
+    }
+
+    const handleClickLogout = () => {
+        dispatch(actions.clientProcessLogout())
+        history.push('/home')
     }
     return (
         <div id="Header">
@@ -86,16 +107,31 @@ function Header() {
                                 <i className='bx bx-headphone'></i>
                                 <FormattedMessage id='headerHome.contact' />
                             </li>
-                            <li className='user_not-login'>
-                                <span><FormattedMessage id='headerHome.signup' /></span>
-                                <span><FormattedMessage id='headerHome.login' /></span>
-                            </li>
-                            {/* <li className='user_login'>
-                                <span className='user_img'>
-                                    <img src={avatar} alt='user' />
-                                </span>
-                                <span className='user_name'>Lê Ngân</span>
-                            </li> */}
+                            {
+                                !isLoggedInClient ?
+                                    <li className='user_not-login'>
+                                        <span
+                                            onClick={() => handlePushSignUp()}
+                                        >
+                                            <FormattedMessage id='headerHome.signup' />
+                                        </span>
+                                        <span
+                                            onClick={() => handlePushLogIn()}
+                                        >
+                                            <FormattedMessage id='headerHome.login' />
+                                        </span>
+                                    </li>
+                                    :
+                                    <li className='user_login'>
+                                        <span className='user_img'>
+                                            <img src={avatar} alt='user' />
+                                        </span>
+                                        <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
+                                        <span className="btn-logout" onClick={() => handleClickLogout()}>
+                                            <i className="fas fa-sign-out-alt"></i>
+                                        </span>
+                                    </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -124,73 +160,77 @@ function Header() {
                             <span className='cart_icon'>
                                 <i className='bx bx-cart'></i>
                                 <FormattedMessage id="headerHome.cart" />
-                                <span className='amount'>3</span>
+                                <span className='amount'>{listAllCart.length}</span>
                             </span>
                             <div className='cart_info'>
-                                {/* <div className='cart_not-product'>
-                                    <div className='cart_not-product-img'>
-                                        <img src={shoppingBag} alt='shopping-bag' />
-                                    </div>
-                                    <span>Chưa có sản phẩm trong giỏ hàng</span>
-                                </div> */}
-                                <div className='cart_have-product'>
-                                    <h5>Danh sách sản phẩm</h5>
-                                    <CustomScrollbars style={{ height: '300px', width: '100%' }}>
-                                        <ul className='product_list'>
-                                            {
-                                                listAllCart && listAllCart.length > 0 &&
-                                                listAllCart.map(item => (
-                                                    <li key={item.id} className='product_list-item'>
-                                                        <div className='product_img'>
-                                                            <img src={
-                                                                item.productData && !_.isEmpty(item.productData) && item.productData.image
-                                                            } alt='product' />
-                                                        </div>
-                                                        <div className='product_info'>
-                                                            <div className='product_title'>
-                                                                {
-                                                                    item.productData && !_.isEmpty(item.productData) && item.productData.name
-                                                                }
-                                                            </div>
+                                {
+                                    listAllCart && listAllCart.length > 0 ?
+                                        <div className='cart_have-product'>
+                                            <h5>Danh sách sản phẩm</h5>
+                                            <CustomScrollbars style={{ height: '300px', width: '100%' }}>
+                                                <ul className='product_list'>
+                                                    {
+                                                        listAllCart && listAllCart.length > 0 &&
+                                                        listAllCart.map(item => (
+                                                            <li key={item.id} className='product_list-item'>
+                                                                <div className='product_img'>
+                                                                    <img src={
+                                                                        item.productData && !_.isEmpty(item.productData) && item.productData.image
+                                                                    } alt='product' />
+                                                                </div>
+                                                                <div className='product_info'>
+                                                                    <div className='product_title'>
+                                                                        {
+                                                                            item.productData && !_.isEmpty(item.productData) && item.productData.name
+                                                                        }
+                                                                    </div>
 
-                                                            <div className='product_price'>
-                                                                <span className='old_price'>
-                                                                    <NumberFormat
-                                                                        value=
-                                                                        {
-                                                                            item.productData && !_.isEmpty(item.productData) && item.productData.price_old
-                                                                        }
-                                                                        className="foo"
-                                                                        displayType={'text'}
-                                                                        thousandSeparator={true}
-                                                                        suffix={'VND'}
-                                                                    />
-                                                                </span>
-                                                                <span className='new_price'>
-                                                                    <NumberFormat
-                                                                        value=
-                                                                        {
-                                                                            item.productData && !_.isEmpty(item.productData) && item.productData.price_new
-                                                                        }
-                                                                        className="foo"
-                                                                        displayType={'text'}
-                                                                        thousandSeparator={true}
-                                                                        suffix={'VND'}
-                                                                    />
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                ))
-                                            }
-                                        </ul>
-                                    </CustomScrollbars>
-                                    <button
-                                        onClick={() => handleClickViewCart()}
-                                        className='btn btn-view_cart'>
-                                        <FormattedMessage id="headerHome.view-cart" />
-                                    </button>
-                                </div>
+                                                                    <div className='product_price'>
+                                                                        <span className='old_price'>
+                                                                            <NumberFormat
+                                                                                value=
+                                                                                {
+                                                                                    item.productData && !_.isEmpty(item.productData) && item.productData.price_old
+                                                                                }
+                                                                                className="foo"
+                                                                                displayType={'text'}
+                                                                                thousandSeparator={true}
+                                                                                suffix={'VND'}
+                                                                            />
+                                                                        </span>
+                                                                        <span className='new_price'>
+                                                                            <NumberFormat
+                                                                                value=
+                                                                                {
+                                                                                    item.productData && !_.isEmpty(item.productData) && item.productData.price_new
+                                                                                }
+                                                                                className="foo"
+                                                                                displayType={'text'}
+                                                                                thousandSeparator={true}
+                                                                                suffix={'VND'}
+                                                                            />
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        ))
+                                                    }
+                                                </ul>
+                                            </CustomScrollbars>
+                                            <button
+                                                onClick={() => handleClickViewCart()}
+                                                className='btn btn-view_cart'>
+                                                <FormattedMessage id="headerHome.view-cart" />
+                                            </button>
+                                        </div>
+                                        :
+                                        <div className='cart_not-product'>
+                                            <div className='cart_not-product-img'>
+                                                <img src={shoppingBag} alt='shopping-bag' />
+                                            </div>
+                                            <span>Chưa có sản phẩm trong giỏ hàng</span>
+                                        </div>
+                                }
                             </div>
                         </div>
                     </div>

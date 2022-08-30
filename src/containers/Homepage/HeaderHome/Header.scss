@@ -94,6 +94,11 @@
                 .user_login {
                     display: flex;
 
+                    &:hover {
+                        opacity: 1;
+                        cursor: default;
+                    }
+
                     .user_img {
                         width: 30px;
                         height: 30px;
@@ -101,11 +106,31 @@
                         border-radius: 50%;
                         overflow: hidden;
                         border: 1px solid var(--border-color);
+                        cursor: pointer;
                     }
 
                     .user_name {
                         margin-left: 8px;
                         align-self: flex-start;
+                        cursor: pointer;
+
+                        &:hover {
+                            opacity: 0.85;
+                        }
+                    }
+
+                    .btn-logout {
+                        margin-left: 8px;
+                        color: #fff;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #fff;
+                        }
+
+                        i {
+                            font-size: 18px;
+                        }
                     }
                 }
             }

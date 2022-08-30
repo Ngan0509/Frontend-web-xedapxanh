@@ -2,32 +2,32 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    userInfo: null
+    clientInfo: null
 }
 
-const userReducer = (state = initialState, action) => {
+const clientReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.USER_LOGIN_SUCCESS:
+        case actionTypes.CLIENT_LOGIN_SUCCESS:
             return {
                 ...state,
                 isLoggedIn: true,
-                userInfo: action.userInfo
+                clientInfo: action.clientInfo
             }
-        case actionTypes.USER_LOGIN_FAIL:
+        case actionTypes.CLIENT_LOGIN_FAIL:
             return {
                 ...state,
                 isLoggedIn: false,
-                userInfo: null
+                clientInfo: null
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.CLIENT_PROCESS_LOGOUT:
             return {
                 ...state,
                 isLoggedIn: false,
-                userInfo: null
+                clientInfo: null
             }
         default:
             return state;
     }
 }
 
-export default userReducer;
+export default clientReducer;

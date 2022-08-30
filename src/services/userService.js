@@ -5,6 +5,15 @@ const handleLogin = (email, password) => {
     return axios.post('/api/login', { email, password })
 }
 
+const handleLogInClient = (email, password) => {
+    console.log(email, password)
+    return axios.post('/api/login-client', { email, password })
+}
+
+const handleSignUpClient = (data) => {
+    return axios.post('/api/signup-client', data)
+}
+
 const handleGetAllUser = (inputId) => {
     return axios.get(`/api/get-all-user?id=${inputId}`)
 }
@@ -116,5 +125,6 @@ export {
     handleGetAllAccessory, handleCreateNewAccessory, handleDeleteNewAccessory, handleUpdateNewAccessory,
     handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter,
     handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
-    handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart
+    handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
+    handleLogInClient, handleSignUpClient
 }

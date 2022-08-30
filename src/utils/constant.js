@@ -13,6 +13,8 @@ export const path = {
     CHECKOUTDETAILS: '/home/cart/checkoutdetails',
     ORDERCOMPLETE: '/home/cart/ordercomplete',
     CART: '/home/cart',
+    LOGINCLIENT: '/home/login',
+    SIGNUPCLIENT: '/home/signup'
 };
 
 export const LANGUAGES = {
