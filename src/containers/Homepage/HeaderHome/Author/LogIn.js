@@ -20,7 +20,10 @@ function Login() {
 
     useEffect(() => {
         return () => {
-            setForm({})
+            setForm({
+                email: '',
+                password: '',
+            })
             setIsShowPass(false)
             setErrorMessage('')
             setBlurId('')
@@ -63,7 +66,7 @@ function Login() {
             setErrorMessage('Trường này không được để trống')
         } else {
             if (id === 'email') {
-                const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
+                const regex = /^[a-z][a-z0-9]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
                 if (regex.test(copyForm[id])) {
                     isValid = false
                     setBlurId('')
@@ -98,7 +101,8 @@ function Login() {
     const [errMessageLogin, setErrorMessageLogin] = useState('')
 
     // submit
-    const handleOnSubmit = async () => {
+    const handleOnSubmit = async (e) => {
+        e.preventDefault()
         setErrorMessageLogin('')
         let keys = Object.keys(form)
 
@@ -114,7 +118,7 @@ function Login() {
             }
             if (data && data.errCode === 0 && !_.isEmpty(data.user)) {
                 dispatch(actions.clientLoginSuccess(data.user))
-                history.push("/home")
+                history.push("/home/cart/checkoutdetails")
             }
         } catch (error) {
             if (error.response) {
@@ -139,18 +143,24 @@ function Login() {
     const handleShowPassword = () => {
         setIsShowPass(state => !state)
     }
-    // const handleClickPushPage = (item) => {
 
-    // }
+    const handlePushPageSignUp = () => {
+        history.push("/home/signup")
+    }
     return (
         <div id="Login">
             <Header />
             <div className="login_bg">
                 <div className="login">
-                    <div className='login_content'>
-                        <h3 className="heading">Đăng Nhập</h3>
+                    <form className='login_content'>
+                        <h3 className="login-heading">Đăng Nhập</h3>
 
-                        <div className="spacer"></div>
+                        <div className="not-account">
+                            Bạn chưa có tài khoản?
+                            <span
+                                onClick={handlePushPageSignUp}
+                            >Đăng ký ở đây</span>
+                        </div>
 
                         <div className={`${blurId === 'email' ? 'form-group invalid' : 'form-group'}`}>
                             <label className="form-label">Email</label>
@@ -177,6 +187,7 @@ function Login() {
                                     onKeyDown={handleOnkeyDownLogin}
                                     onChange={(e) => handleOnChange(e, 'password')}
                                     className='form-control'
+                                    autocomplete="on"
                                 />
                                 <span
                                     onClick={handleShowPassword}
@@ -197,10 +208,10 @@ function Login() {
                         </div>
 
                         <button
-                            onClick={() => handleOnSubmit()}
+                            onClick={(e) => handleOnSubmit(e)}
                             className="form-submit">Đăng nhập</button>
 
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

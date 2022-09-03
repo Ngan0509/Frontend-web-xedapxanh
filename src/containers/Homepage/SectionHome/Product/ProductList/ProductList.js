@@ -19,6 +19,9 @@ function ProductList(props) {
     let history = useHistory();
 
     let { id } = useParams()
+    if (!id) {
+        id = 'All'
+    }
     const { items } = props
     console.log("items", items)
 
@@ -29,7 +32,7 @@ function ProductList(props) {
         <div id="ProductList">
             <div className="productList">
                 {
-                    ((id === '1' || id === '2' || id === '3') &&
+                    ((id === '1' || id === '2' || id === '3' || id === 'All') &&
                         <div className='bicycleList'>
                             <div className="row">
                                 {

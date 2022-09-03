@@ -30,6 +30,18 @@ function DetailBicycle() {
     const dispatch = useDispatch()
     let history = useHistory();
 
+    useEffect(() => {
+        return () => {
+            setCategory('')
+            setDetailBicycle({})
+            setIsShowMarkDown(false)
+            setIsShowSpecification(false)
+            setSo_luong(1)
+            setNav1()
+            setNav2()
+        };
+    }, []);
+
     let { id } = useParams()
 
     const [category, setCategory] = useState('')
@@ -82,16 +94,21 @@ function DetailBicycle() {
     const [so_luong, setSo_luong] = useState(1)
 
     const handleClickMinus = () => {
+        setIsClickAddCart(false)
         if (so_luong > 1) {
             setSo_luong(state => state - 1)
         }
     }
 
     const handleClickPlus = () => {
+        setIsClickAddCart(false)
         setSo_luong(state => state + 1)
     }
 
+    const [isClickAddCart, setIsClickAddCart] = useState(false)
+
     const handleCreateCart = async () => {
+        setIsClickAddCart(true)
         const sum_price = detailBicycle.price_new * so_luong
         const data = {
             product_id: id,
@@ -107,6 +124,27 @@ function DetailBicycle() {
         }
         dispatch(actions.fetchAllCartStart('All'))
 
+    }
+
+    const handleClickCheckout = async () => {
+        if (isClickAddCart) {
+            history.push("/home/cart/shoppingcart")
+        } else {
+            const sum_price = detailBicycle.price_new * so_luong
+            const data = {
+                product_id: id,
+                type: 'BICYCLE',
+                so_luong,
+                price: detailBicycle.price_new,
+                sum_price
+            }
+
+            const resp = await userService.handleCreateNewCart(data)
+            if (resp && resp.errCode === 0) {
+                history.push("/home/cart/shoppingcart")
+            }
+            dispatch(actions.fetchAllCartStart('All'))
+        }
     }
 
     const [nav1, setNav1] = useState();
@@ -285,7 +323,9 @@ function DetailBicycle() {
                                         <li>Giảm 17% giá bán lẻ khi mua 7 món phụ kiện trở lên</li>
                                     </ul>
                                 </div>
-                                <button className='buy_btn'>Mua ngay</button>
+                                <button
+                                    onClick={handleClickCheckout}
+                                    className='buy_btn'>Mua ngay</button>
                             </div>
                         </div>
                         <div className='row product_infor_more'>

@@ -118,6 +118,18 @@ const handleGetTypeAllCode = () => {
     return axios.get('/api/get-type-allcode')
 }
 
+const handleGetAllCheckout = (inputId) => {
+    return axios.get(`/api/get-all-checkout?id=${inputId}`)
+}
+
+const handleCreateNewCheckout = (data) => {
+    return axios.post('/api/create-new-checkout', data)
+}
+
+const handleUpdateStatusIdCheckout = (data) => {
+    return axios.post('/api/update-statusId-checkout', data)
+}
+
 export {
     handleLogin, getAllCodeService, getCategory, handleGetAllUser, handleGetTypeAllCode,
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
@@ -126,5 +138,5 @@ export {
     handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter,
     handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
     handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
-    handleLogInClient, handleSignUpClient
+    handleLogInClient, handleSignUpClient, handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout
 }

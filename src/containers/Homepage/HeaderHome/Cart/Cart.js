@@ -26,6 +26,11 @@ function Cart() {
     // const handleClickPushPage = (item) => {
 
     // }
+
+    const handleClick = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <div id="Cart">
             <Header />
@@ -40,7 +45,7 @@ function Cart() {
                             Checkout Details
                         </NavLink>
                         <i className='bx bx-chevron-right'></i>
-                        <NavLink to={path.ORDERCOMPLETE} activeClassName="active">
+                        <NavLink onClick={handleClick} to={path.ORDERCOMPLETE} activeClassName="active">
                             Order Complete
                         </NavLink>
                     </div>

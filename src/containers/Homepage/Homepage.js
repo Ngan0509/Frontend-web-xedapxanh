@@ -7,6 +7,7 @@
 import Header from './HeaderHome/Header'
 import Sliders from './HeaderHome/Sliders'
 import Category from './HeaderHome/Category'
+import AllBicycle from './SectionHome/AllBicycle'
 import Knowledge from './SectionHome/Knowledge'
 import ShopSystem from './SectionHome/ShopSystem'
 import Footer from './FooterHome/Footer'
@@ -45,6 +46,7 @@ function Homepage() {
             <Header />
             <Sliders />
             <Category />
+            <AllBicycle />
             <Knowledge settings={settings} />
             <ShopSystem />
             <Footer />

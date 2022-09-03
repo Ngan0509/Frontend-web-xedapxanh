@@ -105,14 +105,20 @@ export const fetchAllcodeUserStart = () => {
             dispatch({ type: actionTypes.FETCH_ALLCODEUSER_START })
             let respRole = await userService.getAllCodeService('ROLE')
             let respGender = await userService.getAllCodeService('GENDER')
+            let respDelivery = await userService.getAllCodeService('DELIVERY')
+            let respPayment = await userService.getAllCodeService('PAYMENT')
 
             if (
                 respRole && respRole.errCode === 0 &&
-                respGender && respGender.errCode === 0
+                respGender && respGender.errCode === 0 &&
+                respDelivery && respDelivery.errCode === 0 &&
+                respPayment && respPayment.errCode === 0
             ) {
                 let data = {
                     listRole: respRole.data,
                     listGender: respGender.data,
+                    listDelivery: respDelivery.data,
+                    listPayment: respPayment.data,
                 }
 
                 dispatch(fetchAllcodeUserSuccess(data))

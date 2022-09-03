@@ -14,6 +14,12 @@ function Category() {
     const dispatch = useDispatch()
     let history = useHistory();
 
+    useEffect(() => {
+        return () => {
+            setListCategory([])
+        };
+    }, []);
+
     const [listCategory, setListCategory] = useState([]);
 
     useEffect(() => {

@@ -21,12 +21,18 @@ function Signup() {
 
     useEffect(() => {
         return () => {
-            setForm({})
+            setForm({
+                fullname: '',
+                email: '',
+                password: '',
+                password2: '',
+                phoneNumber: '',
+            })
             setIsShowPass(false)
             setErrorMessage('')
             setBlurId('')
             setListGender([])
-            setSelects({})
+            setSelects({ gender: '' })
         };
     }, []);
 

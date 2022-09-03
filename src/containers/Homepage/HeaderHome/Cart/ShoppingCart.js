@@ -14,10 +14,18 @@ import NumberFormat from 'react-number-format';
 
 function ShoppingCart() {
     const lang = useSelector(selectors.selectorLanguages)
+    const isLoggedInClient = useSelector(selectors.selectorIsLoggedInClient)
     const allCartData = useSelector(selectors.selectorAllCartData)
 
     const dispatch = useDispatch()
     let history = useHistory();
+
+    useEffect(() => {
+        return () => {
+            setListAllCart([])
+            setArrCartId([])
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(actions.fetchAllCartStart('All'))
@@ -117,9 +125,14 @@ function ShoppingCart() {
         return sum
     }
 
-    // const handleClickPushPage = (item) => {
-
-    // }
+    const handleClickCheckout = () => {
+        if (isLoggedInClient) {
+            history.push("/home/cart/checkoutdetails")
+        } else {
+            alert("Bạn cần phải đăng nhập thì mới có thể thanh toán")
+            history.push("/home/login");
+        }
+    }
     return (
         <div id="ShoppingCart">
             <div className="shoppingCart_bg">
@@ -229,7 +242,12 @@ function ShoppingCart() {
                                         />
                                     </span>
                                 </div>
-                                <button className='checkout_btn'>Tiến hành thanh toán</button>
+                                <button
+                                    onClick={handleClickCheckout}
+                                    className='checkout_btn'
+                                >
+                                    Tiến hành thanh toán
+                                </button>
                             </div>
                         </div>
                     </div>
