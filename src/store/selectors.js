@@ -27,6 +27,8 @@ export const selectorAllFilterData = (state) => state.admin.allFilterData
 
 export const selectorAllCartData = (state) => state.admin.allCartData
 
+export const selectorAllCheckoutData = (state) => state.admin.allCheckoutData
+
 
 
 

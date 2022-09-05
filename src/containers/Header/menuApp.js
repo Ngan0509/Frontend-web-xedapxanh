@@ -28,13 +28,32 @@ export const adminMenu = [
             }
         ]
     },
+    { //Quản lý người dùng
+        name: 'menu.admin.order-manage', menus: [
+            {
+                name: 'menu.admin.order-manage-s2', link: '/system/admin/order-manage-s2'
+            },
+            {
+                name: 'menu.admin.order-manage', link: '/system/admin/order-manage'
+            },
+            {
+                name: 'menu.admin.order-manage-s6', link: '/system/admin/order-manage-s6'
+            }
+        ]
+    }
 ];
 
 export const shipperMenu = [
     { //Quản lý người dùng
-        name: 'menu.shipper.user', menus: [
+        name: 'menu.shipper.order-manage-shipper', menus: [
             {
-                name: 'menu.shipper.user', link: '/system/shipper/user-manage'
+                name: 'menu.shipper.order-manage-shipper-s3', link: '/system/shipper/order-manage-shipper/s3'
+            },
+            {
+                name: 'menu.shipper.order-manage-shipper-s4', link: '/system/shipper/order-manage-shipper/s4'
+            },
+            {
+                name: 'menu.shipper.order-manage-shipper-s5', link: '/system/shipper/order-manage-shipper/s5'
             }
         ]
     }

@@ -28,8 +28,8 @@ function OrderComplete() {
             if (location && location.search) {
                 let urlParams = new URLSearchParams(location.search)
                 let token = urlParams.get('token')
-
-                let resp = await userService.handleUpdateStatusIdCheckout({ token })
+                let statusId = 'S1'
+                let resp = await userService.handleUpdateStatusIdCheckout({ token, statusId })
                 if (resp && resp.errCode === 0) {
                     setNotify('Đặt hàng thành công')
                     alert(resp.errMessage)

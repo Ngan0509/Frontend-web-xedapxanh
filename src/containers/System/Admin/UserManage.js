@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../store/selectors"
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils/constant'
 import Select from 'react-select';
 import * as userService from '../../../services/userService'
+import useFetch from '../../../customizes/useFetch';
 
 // import Slider from "react-slick";
 import './Manage.scss'
@@ -13,8 +14,32 @@ function UserManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const allCodeUserData = useSelector(selectors.selectorAllcodeUserData)
     const allUserData = useSelector(selectors.selectorAllUserData)
+    let { data: cityData } = useFetch('https://provinces.open-api.vn/api/')
+    let { data: districData } = useFetch('https://provinces.open-api.vn/api/d/')
 
     const dispatch = useDispatch()
+
+    const buildInputData = useCallback((inputData, type) => {
+        if (inputData && inputData.length > 0) {
+            let result = inputData.map((item) => {
+                let value, label
+
+                if (type === 'CITY' || type === 'DISTRIC') {
+                    label = lang === LANGUAGES.VI ? item.name : item.name
+                    value = item.codename
+                } else {
+                    label = lang === LANGUAGES.VI ? item.valueVi : item.valueEn
+                    value = item.keyMap
+                }
+
+                return {
+                    label: label,
+                    value: value
+                }
+            })
+            return result
+        }
+    }, [lang])
 
     // input onChange
     const [form, setForm] = useState({
@@ -38,6 +63,28 @@ function UserManage() {
     const [listGender, setListGender] = useState([]);
     const [listAllUser, setListAllUser] = useState([]);
 
+    const [listCity, setListCity] = useState([]);
+    const [listDistrict, setListDistrict] = useState([]);
+    const [listProvince, setListProvince] = useState([])
+
+    // Config API data province
+    useEffect(() => {
+        let result = cityData.map(city => {
+            let districtArr = []
+            districData.forEach(district => {
+                if (city.code === district.province_code) {
+                    districtArr.push(district)
+                }
+            })
+            return {
+                ...city,
+                districts: districtArr
+            }
+        })
+        setListProvince(result)
+        setListCity(buildInputData(result, 'CITY'))
+    }, [cityData, districData, buildInputData])
+
     // dispatch actions
     useEffect(() => {
         dispatch(actions.fetchAllcodeUserStart())
@@ -46,29 +93,10 @@ function UserManage() {
 
     // Get Allcodeuser cho user
     useEffect(() => {
-        const buildInputData = (inputData, type) => {
-            if (inputData && inputData.length > 0) {
-                let result = inputData.map((item) => {
-                    let value, label
-                    if (type === "CATEGORY") {
-                        label = lang === LANGUAGES.VI ? item.nameVi : item.nameEn
-                        value = item.id
-                    } else {
-                        label = lang === LANGUAGES.VI ? item.valueVi : item.valueEn
-                        value = item.keyMap
-                    }
-                    return {
-                        label: label,
-                        value: value
-                    }
-                })
-                return result
-            }
-        }
         setListRole(buildInputData(allCodeUserData.listRole))
         setListGender(buildInputData(allCodeUserData.listGender))
 
-    }, [allCodeUserData, lang])
+    }, [allCodeUserData, buildInputData])
 
     // get AllUser
     useEffect(() => {
@@ -78,12 +106,32 @@ function UserManage() {
     // select onChange
     const [selects, setSelects] = useState({
         role: '',
-        gender: ''
+        gender: '',
+        city: '',
+        district: ''
     })
 
     const { role, gender } = selects
     const handleChangeSelect = (selectedOption, name) => {
         let stateName = name.name;
+        let copySelects = { ...selects }
+        copySelects[stateName] = selectedOption
+
+        setSelects({ ...copySelects })
+    }
+
+    const { city, district } = selects
+    const handleChangeSelectCity = (selectedOption, name) => {
+        let stateName = name.name;
+        if (stateName === 'city') {
+            let districtArr = []
+            listProvince.forEach(province => {
+                if (selectedOption.value === province.codename) {
+                    districtArr = province.districts
+                }
+            })
+            setListDistrict(buildInputData(districtArr, 'DISTRIC'))
+        }
         let copySelects = { ...selects }
         copySelects[stateName] = selectedOption
 
@@ -100,7 +148,9 @@ function UserManage() {
         })
         setSelects({
             role: '',
-            gender: ''
+            gender: '',
+            city: '',
+            district: ''
         })
         setIsEdit(false)
         setId('')
@@ -111,7 +161,9 @@ function UserManage() {
                 id,
                 ...form,
                 role: role.value,
-                gender: gender.value
+                gender: gender.value,
+                city_id: city.value,
+                district_id: district.value
             }
             console.log("dataEdit", dataEdit)
             const resp = await userService.handleUpdateNewUser(dataEdit)
@@ -125,7 +177,9 @@ function UserManage() {
             let data = {
                 ...form,
                 role: role.value,
-                gender: gender.value
+                gender: gender.value,
+                city_id: city.value,
+                district_id: district.value
             }
             console.log("data", data)
             const resp = await userService.handleCreateNewUser(data)
@@ -164,10 +218,14 @@ function UserManage() {
         })
         let role = listRole.find(item => item.value === adminData.roleId)
         let gender = listGender.find(item => item.value === adminData.genderId)
+        let city = listCity.find(item => item.value === adminData.city_id)
+        let district = listDistrict.find(item => item.value === adminData.district_id)
 
         setSelects({
             role,
-            gender
+            gender,
+            city,
+            district
         })
     }
 
@@ -240,6 +298,30 @@ function UserManage() {
                             name="gender"
                             onChange={handleChangeSelect}
                             options={listGender}
+                        />
+                    </div>
+
+                    <div className='col-4 form-group'>
+                        <label>
+                            Thành phố
+                        </label>
+                        <Select
+                            value={city}
+                            name="city"
+                            onChange={handleChangeSelectCity}
+                            options={listCity}
+                        />
+                    </div>
+
+                    <div className='col-4 form-group'>
+                        <label>
+                            Quận
+                        </label>
+                        <Select
+                            value={district}
+                            name="district"
+                            onChange={handleChangeSelectCity}
+                            options={listDistrict}
                         />
                     </div>
 

@@ -32,10 +32,16 @@
             "bicycle-markdown": "Thông tin mô tả",
             "bicycle-specifications": "Thông số kỹ thuật",
             "accessories-manage": "Quản lý phụ kiện",
-            "filter-manage": "Quản lý bộ lọc sản phẩm"
+            "filter-manage": "Quản lý bộ lọc sản phẩm",
+            "order-manage": "Quản lý đơn hàng",
+            "order-manage-s2": "Đơn hàng cần xác nhận",
+            "order-manage-s6": "Đơn hàng đã giao"
         },
         "shipper": {
-            "user": "Người dùng"
+            "order-manage-shipper": "Quản lý đơn hàng cho Shipper",
+            "order-manage-shipper-s3": "Đơn hàng cần giao",
+            "order-manage-shipper-s4": "Đơn hàng đã lấy",
+            "order-manage-shipper-s5": "Đơn hàng đang giao"
         }
     },
     "bicycle-manage": {

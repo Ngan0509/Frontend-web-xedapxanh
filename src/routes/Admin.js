@@ -8,6 +8,7 @@ import FilterManage from '../containers/System/Admin/FilterManage';
 import Header from '../containers/Header/Header';
 import MarkdownManage from '../containers/System/Admin/MardownManage';
 import SpecificationsManage from '../containers/System/Admin/SpecificationsManage';
+import OrderManage from '../containers/System/Admin/OrderManage';
 
 class Admin extends Component {
     render() {
@@ -23,6 +24,9 @@ class Admin extends Component {
                             <Route path="/system/admin/bicycle-specifications" component={SpecificationsManage} />
                             <Route path="/system/admin/accessories-manage" component={AccessoriesManage} />
                             <Route path="/system/admin/filter-manage" component={FilterManage} />
+                            <Route path="/system/admin/order-manage-s2" component={OrderManage} />
+                            <Route path="/system/admin/order-manage" component={OrderManage} />
+                            <Route path="/system/admin/order-manage-s6" component={OrderManage} />
                         </Switch>
                     </div>
                 </div>

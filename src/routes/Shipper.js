@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Route, Switch } from 'react-router-dom';
-import UserManage from '../containers/System/Shipper/UserManage';
 import Header from '../containers/Header/Header';
+import OrderManageShipper from '../containers/System/Shipper/OrderManageShipper';
+import { pathSystem } from '../utils'
 
 class Shipper extends Component {
     render() {
@@ -12,7 +13,9 @@ class Shipper extends Component {
                 <div className="system-container">
                     <div className="system-list">
                         <Switch>
-                            <Route path="/system/shipper/user-manage" component={UserManage} />
+                            <Route path={pathSystem.ORDERS3} component={OrderManageShipper} />
+                            <Route path={pathSystem.ORDERS4} component={OrderManageShipper} />
+                            <Route path={pathSystem.ORDERS5} component={OrderManageShipper} />
                         </Switch>
                     </div>
                 </div>

@@ -17,6 +17,15 @@ export const path = {
     SIGNUPCLIENT: '/home/signup'
 };
 
+export const pathSystem = {
+    ORDERAll: '/system/admin/order-manage',
+    ORDERS6: '/system/admin/order-manage-s6',
+    ORDERS2: '/system/admin/order-manage-s2',
+    ORDERS3: '/system/shipper/order-manage-shipper/s3',
+    ORDERS4: '/system/shipper/order-manage-shipper/s4',
+    ORDERS5: '/system/shipper/order-manage-shipper/s5',
+}
+
 export const LANGUAGES = {
     VI: 'vi',
     EN: 'en'

@@ -80,19 +80,82 @@ h3 {
     }
 }
 
+.modal-body {
+    .container {
+        .container-row {
+            .client_info {
+                border: 1px solid #ccc;
+                padding: 16px;
+
+                h6 {
+                    color: blue;
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                }
+            }
+
+            .product {
+                margin-top: 24px;
+
+                h6 {
+                    color: green;
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                }
+
+                .product_list {
+                    padding-left: 0;
+                    list-style: none;
+
+                    li {
+                        padding: 8px 16px;
+                        display: flex;
+                        justify-content: space-between;
+
+                        .image-name {
+                            display: flex;
+
+                            .image-product {
+                                width: 60px;
+                                border: 1px solid #ccc;
+                                margin-right: 16px;
+                            }
+
+                            .name-product {
+                                font-size: 16px;
+                                color: blue;
+                            }
+
+                            .so_luong {
+                                display: inline-block;
+                                margin-left: 16px;
+                                color: orange;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 #UserManage,
 #BicycleManage,
 #AccessoriesManage,
 #FilterManage,
 #MarkdownManage,
-#SpecificationsManage {
+#SpecificationsManage,
+#OrderManage,
+#OrderManageShipper {
 
     .userManage,
     .bicycleManage,
     .accessoriesManage,
     .filterManage,
     .markdownManage,
-    .specificationsManage {
+    .specificationsManage,
+    .orderManage,
+    .orderManageShipper {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
@@ -143,6 +206,27 @@ h3 {
 
         .btn-create {
             margin-top: 32px;
+        }
+
+        .order-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+
+            li {
+                padding: 16px;
+
+                .client_info-shipper {
+                    border: 1px solid #ccc;
+                    padding: 16px;
+
+                    h6 {
+                        color: blue;
+                        font-weight: 600;
+                        margin-bottom: 16px;
+                    }
+                }
+            }
         }
 
     }

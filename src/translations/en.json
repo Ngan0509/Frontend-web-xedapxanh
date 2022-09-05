@@ -32,10 +32,16 @@
             "bicycle-markdown": "Markdown",
             "bicycle-specifications": "Specifications",
             "accessories-manage": "Accessories manage",
-            "filter-manage": "Filter product manage"
+            "filter-manage": "Filter product manage",
+            "order-manage": "Order Manage",
+            "order-manage-s2": "Orders need to be confirmed",
+            "order-manage-s6": "Order delivered"
         },
         "shipper": {
-            "user": "Users System"
+            "order-manage-shipper": "Order Manage for Shipper",
+            "order-manage-shipper-s3": "Orders to be delivered",
+            "order-manage-shipper-s4": "Orders have been taken",
+            "order-manage-shipper-s5": "Orders are being delivered"
         }
     },
     "bicycle-manage": {

@@ -300,3 +300,30 @@ export const fetchAllCartSuccess = (AllCartData) => ({
 export const fetchAllCartFailed = () => ({
     type: actionTypes.FETCH_ALL_CART_FAILED
 })
+
+//-------------------------------------------------------
+export const fetchAllCheckoutStart = (inputId, role) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_CHECKOUT_START })
+            let resp = await userService.handleGetAllCheckout(inputId, role)
+            console.log('resp all Checkout', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllCheckoutSuccess(resp.data))
+            } else {
+                dispatch(fetchAllCheckoutFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllCheckoutFailed())
+        }
+    }
+}
+
+export const fetchAllCheckoutSuccess = (AllCheckoutData) => ({
+    type: actionTypes.FETCH_ALL_CHECKOUT_SUCCESS,
+    data: AllCheckoutData
+})
+
+export const fetchAllCheckoutFailed = () => ({
+    type: actionTypes.FETCH_ALL_CHECKOUT_FAILED
+})

@@ -9,7 +9,8 @@ const initialState = {
     allBicycleData: [],
     allAccessoriesData: [],
     allFilterData: [],
-    allCartData: []
+    allCartData: [],
+    allCheckoutData: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -127,6 +128,19 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allCartData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALL_CHECKOUT_SUCCESS:
+            return {
+                ...state,
+                allCheckoutData: action.data
+            }
+        case actionTypes.FETCH_ALL_CHECKOUT_FAILED:
+            return {
+                ...state,
+                allCheckoutData: []
             }
         default:
             return state;

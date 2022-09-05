@@ -118,8 +118,8 @@ const handleGetTypeAllCode = () => {
     return axios.get('/api/get-type-allcode')
 }
 
-const handleGetAllCheckout = (inputId) => {
-    return axios.get(`/api/get-all-checkout?id=${inputId}`)
+const handleGetAllCheckout = (inputId, role) => {
+    return axios.get(`/api/get-all-checkout?id=${inputId}&role=${role}`)
 }
 
 const handleCreateNewCheckout = (data) => {
