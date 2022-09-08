@@ -27,6 +27,8 @@ import Login from "./Auth/Login"
 import LogIn from "./Homepage/HeaderHome/Author/LogIn";
 import SignUp from "./Homepage/HeaderHome/Author/SignUp";
 
+import DetailOrder from './Homepage/HeaderHome/DetailOrder/DetailOrder';
+
 class App extends Component {
 
     handlePersistorState = () => {
@@ -67,6 +69,7 @@ class App extends Component {
                                     <Route path={path.DETAILBICYCLE} component={(DetailBicycle)} />
                                     <Route path={path.ACCESSORIES} component={(Accessories)} />
                                     <Route path={path.CART} component={(Cart)} />
+                                    <Route path={path.DETAILORDER} component={(DetailOrder)} />
                                     <Route path={path.LOGINCLIENT} component={(LogIn)} />
                                     <Route path={path.SIGNUPCLIENT} component={(SignUp)} />
                                 </Switch>

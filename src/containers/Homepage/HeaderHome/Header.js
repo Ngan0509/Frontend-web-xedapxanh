@@ -8,12 +8,16 @@ import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils/constant'
 import './Header.scss'
 import logo from '../../../assets/images/logo-xe-dap.png'
-import avatar from '../../../assets/images/avatar.webp'
 import shoppingBag from '../../../assets/images/shopping-bag.png'
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
 
 import CustomScrollbars from '../../../components/CustomScrollbars';
+
+import {
+    NavLink
+} from "react-router-dom";
+import { path } from '../../../utils'
 
 function Header() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -101,7 +105,8 @@ function Header() {
         history.push("/home/login")
     }
 
-    const handleClickLogout = () => {
+    const handleClickLogout = (e) => {
+        e.preventDefault()
         dispatch(actions.clientProcessLogout())
         history.push('/home')
     }
@@ -160,13 +165,25 @@ function Header() {
                                         </li>
                                         :
                                         <li className='user_login'>
-                                            <span className='user_img'>
-                                                <img src={avatar} alt='user' />
-                                            </span>
-                                            <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
-                                            <span className="btn-logout" onClick={() => handleClickLogout()}>
-                                                <i className="fas fa-sign-out-alt"></i>
-                                            </span>
+                                            <div className='wrap'>
+                                                <span className='user_img'>
+                                                    <img src={!_.isEmpty(clientInfo) ? clientInfo.image : undefined} alt='user' />
+                                                </span>
+                                                <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
+                                            </div>
+                                            <ul className='user_box'>
+                                                <li>
+                                                    <NavLink to={path.ACCOUNT} activeClassName="active" exact={true}>
+                                                        Tài khoản
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink to={path.ORDERS} activeClassName="active" exact={true}>
+                                                        Đơn hàng
+                                                    </NavLink>
+                                                </li>
+                                                <li onClick={(e) => handleClickLogout(e)}><a>Đăng xuất</a></li>
+                                            </ul>
                                         </li>
                                 }
                             </ul>

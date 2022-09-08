@@ -13,6 +13,10 @@ export const path = {
     CHECKOUTDETAILS: '/home/cart/checkoutdetails',
     ORDERCOMPLETE: '/home/cart/ordercomplete',
     CART: '/home/cart',
+    DETAILORDER: '/home/detailOrder',
+    ACCOUNT: '/home/detailOrder/account',
+    ORDERS: '/home/detailOrder/orders',
+    NOTIFY: '/home/detailOrder/notify',
     LOGINCLIENT: '/home/login',
     SIGNUPCLIENT: '/home/signup'
 };

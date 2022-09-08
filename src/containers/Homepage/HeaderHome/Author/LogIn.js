@@ -187,7 +187,7 @@ function Login() {
                                     onKeyDown={handleOnkeyDownLogin}
                                     onChange={(e) => handleOnChange(e, 'password')}
                                     className='form-control'
-                                    autocomplete="on"
+                                    autoComplete="on"
                                 />
                                 <span
                                     onClick={handleShowPassword}

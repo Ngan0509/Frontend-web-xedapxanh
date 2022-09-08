@@ -14,6 +14,14 @@ const handleSignUpClient = (data) => {
     return axios.post('/api/signup-client', data)
 }
 
+const handleDeleteNewClient = (clientId) => {
+    return axios.delete(`/api/delete-client?id=${clientId}`)
+}
+
+const handleUpdateNewClient = (editData) => {
+    return axios.put('/api/update-client', editData)
+}
+
 const handleGetAllUser = (inputId) => {
     return axios.get(`/api/get-all-user?id=${inputId}`)
 }
@@ -138,5 +146,6 @@ export {
     handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter,
     handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
     handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
-    handleLogInClient, handleSignUpClient, handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout
+    handleLogInClient, handleSignUpClient, handleDeleteNewClient, handleUpdateNewClient,
+    handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout
 }
