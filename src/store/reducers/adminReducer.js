@@ -10,7 +10,9 @@ const initialState = {
     allAccessoriesData: [],
     allFilterData: [],
     allCartData: [],
-    allCheckoutData: []
+    allCheckoutData: [],
+    allCommentData: [],
+    allStoreData: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -142,6 +144,33 @@ const adminReducer = (state = initialState, action) => {
                 ...state,
                 allCheckoutData: []
             }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALL_COMMENT_SUCCESS:
+            return {
+                ...state,
+                allCommentData: action.data
+            }
+        case actionTypes.FETCH_ALL_COMMENT_FAILED:
+            return {
+                ...state,
+                allCommentData: []
+            }
+
+        //---------------------------------------
+
+        case actionTypes.FETCH_ALL_STORE_SUCCESS:
+            return {
+                ...state,
+                allStoreData: action.data
+            }
+        case actionTypes.FETCH_ALL_STORE_FAILED:
+            return {
+                ...state,
+                allStoreData: []
+            }
+
         default:
             return state;
     }

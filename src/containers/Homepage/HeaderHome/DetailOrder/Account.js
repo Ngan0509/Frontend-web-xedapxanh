@@ -135,14 +135,14 @@ function Account() {
         <div id="Account">
             <div className="account_bg">
                 <div className="account">
-                    <h5>Hồ sơ của tôi</h5>
-                    <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+                    <h5><FormattedMessage id="order-manage.account" /></h5>
+                    <p><FormattedMessage id="order-manage.manage-profile" /></p>
 
                     <div className='row info'>
                         <div className='col-9 form'>
                             <div className='row'>
                                 <div className='col-12 form-group'>
-                                    <label>Họ tên</label>
+                                    <label><FormattedMessage id="user-manage.fullname" /></label>
                                     <input
                                         value={fullname}
                                         type='text'
@@ -152,7 +152,7 @@ function Account() {
                                 </div>
 
                                 <div className='gender form-group'>
-                                    <label>Giới tính: </label>
+                                    <label><FormattedMessage id="user-manage.sex" />: </label>
 
                                     {
                                         listGender && listGender.length > 0 &&
@@ -172,7 +172,7 @@ function Account() {
 
                                 <div className='birthday form-group'>
                                     <label>
-                                        Ngày sinh
+                                        <FormattedMessage id="user-manage.birthday" />
                                     </label>
                                     <DatePicker
                                         onChange={handleChangeDate}
@@ -184,7 +184,7 @@ function Account() {
                                 <button
                                     onClick={handleSubmit}
                                     className='btn-save'>
-                                    Lưu
+                                    <FormattedMessage id="headerHome.save" />
                                 </button>
 
                             </div>

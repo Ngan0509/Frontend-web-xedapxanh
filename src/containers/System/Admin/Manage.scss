@@ -117,8 +117,17 @@ h3 {
 
                             .image-product {
                                 width: 60px;
+                                height: 60px;
                                 border: 1px solid #ccc;
                                 margin-right: 16px;
+                                overflow: hidden;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: contain;
+                                    object-position: center;
+                                }
                             }
 
                             .name-product {
@@ -146,7 +155,8 @@ h3 {
 #MarkdownManage,
 #SpecificationsManage,
 #OrderManage,
-#OrderManageShipper {
+#OrderManageShipper,
+#StoreManage {
 
     .userManage,
     .bicycleManage,
@@ -155,7 +165,8 @@ h3 {
     .markdownManage,
     .specificationsManage,
     .orderManage,
-    .orderManageShipper {
+    .orderManageShipper,
+    .storeManage {
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;

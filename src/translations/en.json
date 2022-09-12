@@ -9,9 +9,15 @@
         "search": "Search...",
         "login": "Log in",
         "signup": "Sign up",
+        "logout": "Log out",
         "view-cart": "View cart",
         "checkout": "Checkout",
-        "store-system": "Store system"
+        "store-system": "Store system",
+        "account": "Account",
+        "order": "Orders",
+        "save": "Save",
+        "back-home": "Back to home page",
+        "update-cart": "Cart update"
     },
     "menu": {
         "system": {
@@ -35,7 +41,8 @@
             "filter-manage": "Filter product manage",
             "order-manage": "Order Manage",
             "order-manage-s2": "Orders need to be confirmed",
-            "order-manage-s6": "Order delivered"
+            "order-manage-s6": "Order delivered",
+            "store-manage": "Store manage"
         },
         "shipper": {
             "order-manage-shipper": "Order Manage for Shipper",
@@ -73,7 +80,10 @@
         "bike-type": "Bike type",
         "brake-type": "Brake type",
         "weight": "Weight",
-        "origin": "Origin"
+        "origin": "Origin",
+        "bicycle": "Bicycles",
+        "sort": "Sort: ",
+        "so_luong": "Amount"
     },
     "user-manage": {
         "create-user": "Create user",
@@ -93,6 +103,38 @@
         "reason": "Reason",
         "birthday": "Birthday",
         "time": "Time",
-        "actions": "Actions"
+        "actions": "Actions",
+        "create-store": "Create store",
+        "update-store": "Update store",
+        "city": "City",
+        "district": "District"
+    },
+    "store-manage": {
+        "name": "Store's name",
+        "address": "Store's address",
+        "phoneNumber": "Phone Number"
+    },
+    "order-manage": {
+        "detail-order": "Detail Order",
+        "list-product": "Product's list",
+        "order-date": "Order's date",
+        "status": "Status",
+        "info-client": "Client's info",
+        "address-client": "Client's address",
+        "method-ship": "Ship's method",
+        "method-payment": "Payment's method",
+        "sum-price": "Price's sum",
+        "view-detail": "View detail",
+        "not-order": "Not have orders",
+        "account": "My account",
+        "order": "Order",
+        "notify": "Notify",
+        "manage-profile": "Manage profile information for account security",
+        "noi_nhan": "Recipients's address",
+        "ghi_chu": "Note",
+        "make-payment": "Make payment",
+        "notice": "The cart is currently empty, please add items to the cart",
+        "notice2": "Please login to pay",
+        "sum-price-all": "All sum's price"
     }
 }

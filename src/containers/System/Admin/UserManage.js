@@ -303,7 +303,7 @@ function UserManage() {
 
                     <div className='col-4 form-group'>
                         <label>
-                            Thành phố
+                            <FormattedMessage id="user-manage.city" />
                         </label>
                         <Select
                             value={city}
@@ -315,7 +315,7 @@ function UserManage() {
 
                     <div className='col-4 form-group'>
                         <label>
-                            Quận
+                            <FormattedMessage id="user-manage.district" />
                         </label>
                         <Select
                             value={district}

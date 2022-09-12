@@ -138,6 +138,42 @@ const handleUpdateStatusIdCheckout = (data) => {
     return axios.post('/api/update-statusId-checkout', data)
 }
 
+const handleGetAllComment = (product_id, type) => {
+    return axios.get(`/api/get-all-comment?product_id=${product_id}&type=${type}`)
+}
+
+const handleCreateNewComment = (data) => {
+    return axios.post('/api/create-new-comment', data)
+}
+
+const handleDeleteNewComment = (commentId) => {
+    return axios.delete(`/api/delete-comment?id=${commentId}`)
+}
+
+const handleUpdateNewComment = (editData) => {
+    return axios.put('/api/update-comment', editData)
+}
+
+const handleGetAllStore = (inputId) => {
+    return axios.get(`/api/get-all-store?id=${inputId}`)
+}
+
+const handleCreateNewStore = (data) => {
+    return axios.post('/api/create-new-store', data)
+}
+
+const handleDeleteNewStore = (storeId) => {
+    return axios.delete(`/api/delete-store?id=${storeId}`)
+}
+
+const handleUpdateNewStore = (editData) => {
+    return axios.put('/api/update-store', editData)
+}
+
+const handleCreateNewFavorite = (data) => {
+    return axios.post('/api/create-new-favorite', data)
+}
+
 export {
     handleLogin, getAllCodeService, getCategory, handleGetAllUser, handleGetTypeAllCode,
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
@@ -147,5 +183,8 @@ export {
     handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
     handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
     handleLogInClient, handleSignUpClient, handleDeleteNewClient, handleUpdateNewClient,
-    handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout
+    handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout,
+    handleGetAllComment, handleCreateNewComment, handleDeleteNewComment, handleUpdateNewComment,
+    handleGetAllStore, handleCreateNewStore, handleUpdateNewStore, handleDeleteNewStore,
+    handleCreateNewFavorite
 }

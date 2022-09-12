@@ -18,14 +18,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // import { SampleNextArrow, SamplePrevArrow } from '../../../ArrowButtons/ArrowButtons'
 import _ from 'lodash'
-import logoTempest from '../../../../../assets/images/E6TkEIRUcAMnlfa.jpg'
+import xedap from '../../../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 import './DetailBicycle.scss'
 import NumberFormat from 'react-number-format';
 import { useEffect, useState } from 'react';
+import avatar from '../../../../../assets/images/avatar.webp'
+
+import LoadingOverlay from 'react-loading-overlay';
+LoadingOverlay.propTypes = undefined
 
 function DetailBicycle() {
     const lang = useSelector(selectors.selectorLanguages)
     const categoryData = useSelector(selectors.selectorCategoryData)
+    const clientInfoSelect = useSelector(selectors.selectorClientInfo)
+    const isLoggedInClient = useSelector(selectors.selectorIsLoggedInClient)
+    const allCommentData = useSelector(selectors.selectorAllCommentData)
 
     const dispatch = useDispatch()
     let history = useHistory();
@@ -149,329 +156,568 @@ function DetailBicycle() {
 
     const [nav1, setNav1] = useState();
     const [nav2, setNav2] = useState();
+
+    const [contentComment, setContentComment] = useState('')
+
+    const handleClickComment = async () => {
+        if (isLoggedInClient) {
+            let fullname = !_.isEmpty(clientInfoSelect) && clientInfoSelect.fullname
+            let phoneNumber = !_.isEmpty(clientInfoSelect) && clientInfoSelect.phoneNumber
+            let client_id = !_.isEmpty(clientInfoSelect) && clientInfoSelect.id
+            let date = new Date().getTime().toString()
+            const data = {
+                product_id: id,
+                client_id,
+                type: 'BICYCLE',
+                fullname,
+                date,
+                content: contentComment,
+                phoneNumber
+            }
+
+            const dataEdit = {
+                ...data,
+                id: commentId
+            }
+
+            let resp;
+            if (isEdit) {
+                resp = await userService.handleUpdateNewComment(dataEdit)
+            } else {
+                resp = await userService.handleCreateNewComment(data)
+            }
+            if (resp && resp.errCode === 0) {
+                dispatch(actions.fetchAllCommentStart(id, 'BICYCLE'))
+            } else {
+                alert(resp.errMessage)
+            }
+
+            setIsEdit(false)
+            setCommentId(null)
+            setContentComment('')
+        } else {
+            alert("Bạn cần phải đăng nhập mới bình luận được")
+            history.push("/home/login");
+        }
+    }
+
+    useEffect(() => {
+        dispatch(actions.fetchAllCommentStart(id, 'BICYCLE'))
+    }, [dispatch, id])
+
+    const [listAllComment, setListAllComment] = useState([]);
+    console.log("listAllComment", listAllComment)
+
+    // get AllComment
+    useEffect(() => {
+        setListAllComment(allCommentData.reverse().slice(0, 3))
+    }, [allCommentData])
+
+    const [isEdit, setIsEdit] = useState(false)
+    const [commentId, setCommentId] = useState(null)
+
+    const handleEditComment = (item) => {
+        setIsEdit(true)
+        setCommentId(item.id)
+        setContentComment(item.content)
+    }
+
+    const handleDeleteComment = async (comment_id) => {
+        const resp = await userService.handleDeleteNewComment(comment_id)
+        if (resp && resp.errCode === 0) {
+            alert(resp.errMessage)
+        } else {
+            alert(resp.errMessage)
+        }
+    }
+
+    const [isShowLoading, setIsShowLoading] = useState(true)
+
+    useEffect(() => {
+        async function fetchData() {
+            setIsShowLoading(false)
+        }
+        // fetchData()
+        const myTimeOut = setTimeout(fetchData, 1500)
+        return () => {
+            clearTimeout(myTimeOut)
+        }
+    }, [])
+
+    const arrStar = [{ num: 1, isYellow: false }, { num: 2, isYellow: false }, { num: 3, isYellow: false }, { num: 4, isYellow: false }, { num: 5, isYellow: false }]
+
+    const [listStar, setListStar] = useState(arrStar)
+
+    const handleMouseOverStar = (item) => {
+        let result = listStar.map(star => {
+            if (star.num <= item.num) {
+                star.isYellow = true
+            } else {
+                star.isYellow = false
+            }
+            return star
+        })
+        setListStar(result)
+    }
+
+    const handleClickStar = async (item) => {
+        if (isLoggedInClient) {
+            let client_id = !_.isEmpty(clientInfoSelect) && clientInfoSelect.id
+            const data = {
+                product_id: id,
+                client_id,
+                num_star: item.num
+            }
+            const resp = await userService.handleCreateNewFavorite(data)
+            if (resp && resp.errCode === 0) {
+                alert("Đánh giá sản phẩm thành công")
+            } else {
+                alert(resp.errMessage)
+            }
+
+            let result = listStar.map(star => {
+                if (star.num <= item.num) {
+                    star.isYellow = true
+                } else {
+                    star.isYellow = false
+                }
+                return star
+            })
+
+            setListStar(result)
+        } else {
+            alert("Bạn cần phải đăng nhập mới đánh giá được")
+            history.push("/home/login");
+        }
+    }
+
     return (
         <div id="DetailBicycle">
             <Header />
-            <div className='detailBicycle_bg'>
-                <div className='detailBicycle'>
-                    <div className='link'>
-                        <span
-                            onClick={() => handleClickLogoHome()}
-                            className='home-link'>Home</span>/
-                        <span className='bicycle-link'>{category}</span>
-                    </div>
+            <LoadingOverlay
+                active={isShowLoading}
+                spinner
+                text='Loading...'
+            >
+                <div className='detailBicycle_bg'>
+                    <div className='detailBicycle'>
+                        <div className='link'>
+                            <span
+                                onClick={() => handleClickLogoHome()}
+                                className='home-link'>Home</span>/
+                            <span className='bicycle-link'>{category}</span>
+                        </div>
 
-                    <div className='infor_buy'>
-                        <div className='row product_infor'>
-                            <div className='col-5 image_product'>
-                                <div className='row'>
-                                    <Slider
-                                        asNavFor={nav2} ref={c => setNav1(c)}
-                                    >
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                        <div className='infor_buy'>
+                            <div className='row product_infor'>
+                                <div className='col-5 image_product'>
+                                    <div className='row'>
+                                        <Slider
+                                            asNavFor={nav2} ref={c => setNav1(c)}
+                                        >
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-main'>
-                                                <img src={logoTempest} alt='slider-main' />
+                                            <div className='col'>
+                                                <div className='image_slider-main'>
+                                                    <img src={xedap} alt='slider-main' />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Slider>
-                                </div>
-                                <div className='row'>
-                                    <Slider
-                                        asNavFor={nav1}
-                                        ref={c => setNav2(c)}
-                                        slidesToShow={4}
-                                        swipeToSlide={true}
-                                        focusOnSelect={true}
-                                        arrows={false}
-                                    >
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-                                        <div className='col'>
-                                            <div className='image_slider-child'>
-                                                <img src={logoTempest} alt='slider-child' />
-                                            </div>
-                                        </div>
-
-                                    </Slider>
-                                </div>
-                            </div>
-                            <div className='col-7 infor_buy-product'>
-                                <div className='title_product'>
-                                    <span>{category} {detailBicycle.name}</span>
-                                </div>
-                                <div className='price_product'>
-                                    <div className="priceOld">
-                                        <span className="price">
-                                            <NumberFormat
-                                                value={detailBicycle.price_old}
-                                                className="foo"
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={'VND'}
-                                            />
-                                        </span>
-                                        <span className="discout">{detailBicycle.discout}%</span>
+                                        </Slider>
                                     </div>
+                                    <div className='row'>
+                                        <Slider
+                                            asNavFor={nav1}
+                                            ref={c => setNav2(c)}
+                                            slidesToShow={4}
+                                            swipeToSlide={true}
+                                            focusOnSelect={true}
+                                            arrows={false}
+                                        >
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
+                                            <div className='col'>
+                                                <div className='image_slider-child'>
+                                                    <img src={xedap} alt='slider-child' />
+                                                </div>
+                                            </div>
 
-                                    <div className="priceNew">
-                                        <span className="price">
-                                            <NumberFormat
-                                                value={detailBicycle.price_new}
-                                                className="foo"
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={'VND'}
-                                            />
-                                        </span>
+                                        </Slider>
                                     </div>
                                 </div>
-                                <div className='numProduct_add-to-cart'>
-                                    <div className='number_product'>
+                                <div className='col-7 infor_buy-product'>
+                                    <div className='title_product'>
+                                        <span>{category} {detailBicycle.name}</span>
+                                    </div>
+                                    <div className='price_product'>
+                                        <div className="priceOld">
+                                            <span className="price">
+                                                <NumberFormat
+                                                    value={detailBicycle.price_old}
+                                                    className="foo"
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={'VND'}
+                                                />
+                                            </span>
+                                            <span className="discout">{detailBicycle.discout}%</span>
+                                        </div>
+
+                                        <div className="priceNew">
+                                            <span className="price">
+                                                <NumberFormat
+                                                    value={detailBicycle.price_new}
+                                                    className="foo"
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={'VND'}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className='numProduct_add-to-cart'>
+                                        <div className='number_product'>
+                                            <button
+                                                onClick={() => handleClickMinus()}
+                                                className='minus'>-</button>
+                                            <span>{so_luong}</span>
+                                            <button
+                                                onClick={() => handleClickPlus()}
+                                                className='plus'>+</button>
+                                        </div>
                                         <button
-                                            onClick={() => handleClickMinus()}
-                                            className='minus'>-</button>
-                                        <span>{so_luong}</span>
-                                        <button
-                                            onClick={() => handleClickPlus()}
-                                            className='plus'>+</button>
+                                            onClick={() => handleCreateCart()}
+                                            className='add_to_cart'>Thêm vào giỏ</button>
+                                    </div>
+                                    <div className='promotion'>
+                                        <div className='label'>
+                                            KHUYẾN MÃI KHI MUA XE ĐẠP ONLINE
+                                        </div>
+                                        <ul className='list'>
+                                            <li>Miễn phí giao hàng khi mua xe đạp</li>
+                                            <li>Giảm 10% giá bán lẻ khi mua 3 món phụ kiện trở lên</li>
+                                            <li>Giảm 15% giá bán lẻ khi mua 5 món phụ kiện trở lên</li>
+                                            <li>Giảm 17% giá bán lẻ khi mua 7 món phụ kiện trở lên</li>
+                                        </ul>
                                     </div>
                                     <button
-                                        onClick={() => handleCreateCart()}
-                                        className='add_to_cart'>Thêm vào giỏ</button>
+                                        onClick={handleClickCheckout}
+                                        className='buy_btn'>Mua ngay</button>
                                 </div>
-                                <div className='promotion'>
-                                    <div className='label'>
-                                        KHUYẾN MÃI KHI MUA XE ĐẠP ONLINE
+                            </div>
+                            <div className='row product_infor_more'>
+                                <div className='col-7'>
+                                    <div className='markdown'>
+                                        <h4>Thông tin mô tả</h4>
+                                        {
+                                            !_.isEmpty(detailBicycle) && detailBicycle.markdownData && !_.isEmpty(detailBicycle.markdownData) ?
+                                                <>
+                                                    <div className={`${isShowMarkDown ? 'markdown_content active' : 'markdown_content'}`}>
+                                                        <div dangerouslySetInnerHTML={{ __html: detailBicycle.markdownData.contentHTML }} />
+                                                    </div>
+                                                    <div
+                                                        onClick={() => handleClickViewMore('markdown')}
+                                                        className='view-more'>
+                                                        {
+                                                            isShowMarkDown ? 'Rút gọn' : 'Xem thêm'
+                                                        }
+
+                                                    </div>
+                                                </>
+                                                :
+                                                <span>Không có thông tin mô tả</span>
+                                        }
                                     </div>
-                                    <ul className='list'>
-                                        <li>Miễn phí giao hàng khi mua xe đạp</li>
-                                        <li>Giảm 10% giá bán lẻ khi mua 3 món phụ kiện trở lên</li>
-                                        <li>Giảm 15% giá bán lẻ khi mua 5 món phụ kiện trở lên</li>
-                                        <li>Giảm 17% giá bán lẻ khi mua 7 món phụ kiện trở lên</li>
-                                    </ul>
+
+                                    <div className='comment'>
+                                        <h5>
+                                            Đánh giá sản phẩm
+                                            <div className='favorite'>
+                                                {
+                                                    listStar && listStar.length > 0 &&
+                                                    listStar.map(item => (
+                                                        <span
+                                                            onMouseOver={() => handleMouseOverStar(item)}
+                                                            onClick={() => handleClickStar(item)}
+                                                            key={item.num} className={`${item.isYellow ? 'icon-star active' : 'icon-star'}`}>
+                                                            <i className='bx bxs-leaf'></i>
+                                                        </span>
+                                                    ))
+                                                }
+                                            </div>
+                                            <span>(Click vào để đánh giá !!!)</span>
+                                        </h5>
+                                        <div className='comment_input'>
+                                            <div className='textarea'>
+                                                <textarea
+                                                    onChange={(e) => setContentComment(e.target.value)}
+                                                    value={contentComment} autoFocus className='form-control' />
+                                            </div>
+                                            <button
+                                                onClick={() => handleClickComment()}
+                                                className='comment-btn'>{isEdit ? 'Sửa bình luận' : 'Bình luận'}</button>
+                                        </div>
+
+                                        <ul className='list-comment'>
+                                            {
+                                                listAllComment && listAllComment.length > 0 &&
+                                                listAllComment.map(item => (
+                                                    <li key={item.id}>
+                                                        <div className='info'>
+                                                            <div className='image-name'>
+                                                                <div className='image'>
+                                                                    <img src={avatar} alt='avatar' />
+                                                                </div>
+                                                                <div className='name'>
+                                                                    {item.fullname}
+                                                                </div>
+                                                                <div className='favorite'>
+                                                                    {
+                                                                        arrStar && arrStar.length > 0 &&
+                                                                        arrStar
+                                                                            .map(star => {
+                                                                                if (item.num_star > 0 && star.num <= item.num_star) {
+                                                                                    star.isYellow = true
+                                                                                } else {
+                                                                                    star.isYellow = false
+                                                                                }
+                                                                                return star
+                                                                            })
+                                                                            .map(star => (
+                                                                                <span
+                                                                                    key={star.num} className={`${star.isYellow ? 'icon-star active' : 'icon-star'}`}>
+                                                                                    <i className='bx bxs-leaf'></i>
+                                                                                </span>
+                                                                            ))
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className='date-icon'>
+                                                                <div className='date'>{item.date}</div>
+                                                                <div className='icon-wrap'>
+                                                                    {
+                                                                        isLoggedInClient &&
+                                                                        <span className='icon'>
+                                                                            <i className='bx bx-dots-vertical-rounded'></i>
+                                                                        </span>
+                                                                    }
+                                                                    <div className='box'>
+                                                                        <span
+                                                                            onClick={() => handleEditComment(item)}
+                                                                        >Sửa</span>
+                                                                        <span
+                                                                            onClick={() => handleDeleteComment(item.id)}
+                                                                        >Xóa</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div className='comment-client'>
+                                                            <p className='text'>{item.content}</p>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
-                                <button
-                                    onClick={handleClickCheckout}
-                                    className='buy_btn'>Mua ngay</button>
-                            </div>
-                        </div>
-                        <div className='row product_infor_more'>
-                            <div className='col-7 markdown'>
-                                <h4>Thông tin mô tả</h4>
-                                {
-                                    !_.isEmpty(detailBicycle) && detailBicycle.markdownData && !_.isEmpty(detailBicycle.markdownData) ?
-                                        <>
-                                            <div className={`${isShowMarkDown ? 'markdown_content active' : 'markdown_content'}`}>
-                                                <div dangerouslySetInnerHTML={{ __html: detailBicycle.markdownData.contentHTML }} />
-                                            </div>
-                                            <div
-                                                onClick={() => handleClickViewMore('markdown')}
-                                                className='view-more'>
-                                                {
-                                                    isShowMarkDown ? 'Rút gọn' : 'Xem thêm'
-                                                }
+                                <div className='col-5'>
+                                    <div className='specification'>
+                                        <h4>Thông số kỹ thuật xe đạp {detailBicycle.name}</h4>
+                                        {
+                                            !_.isEmpty(detailBicycle) && detailBicycle.specificationsData && !_.isEmpty(detailBicycle.specificationsData) ?
 
-                                            </div>
-                                        </>
-                                        :
-                                        <span>Không có thông tin mô tả</span>
-                                }
-                            </div>
-                            <div className='col-5 specification'>
-                                <h4>Thông số kỹ thuật xe đạp {detailBicycle.name}</h4>
-                                {
-                                    !_.isEmpty(detailBicycle) && detailBicycle.specificationsData && !_.isEmpty(detailBicycle.specificationsData) ?
+                                                <>
+                                                    <div className={`${isShowSpecification ? 'table active' : 'table'}`}>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Chất liệu sơn</td>
+                                                                    <td>{detailBicycle.specificationsData.chat_lieu_son}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Độ tuổi</td>
+                                                                    <td>{detailBicycle.specificationsData.do_tuoi}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Chiều cao</td>
+                                                                    <td>{detailBicycle.specificationsData.chieu_cao}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Kích thước Trọng lượng</td>
+                                                                    <td>{detailBicycle.specificationsData.kich_thuoc_trong_luong}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tải trọng</td>
+                                                                    <td>{detailBicycle.specificationsData.tai_trong}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tải trọng yên phụ</td>
+                                                                    <td>{detailBicycle.specificationsData.tai_trong_yen_phu}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Thương hiệu</td>
+                                                                    <td>{detailBicycle.specificationsData.thuong_hieu}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Nơi sản xuất</td>
+                                                                    <td>{detailBicycle.specificationsData.noi_san_xuat}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sườn xe</td>
+                                                                    <td>{detailBicycle.specificationsData.suon_xe}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Phuộc</td>
+                                                                    <td>{detailBicycle.specificationsData.phuoc}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Kích cỡ bánh xe</td>
+                                                                    <td>{detailBicycle.specificationsData.kich_co_banh_xe}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Vành</td>
+                                                                    <td>{detailBicycle.specificationsData.vanh}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Lốp xe</td>
+                                                                    <td>{detailBicycle.specificationsData.lop_xe}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Loại van bơm</td>
+                                                                    <td>{detailBicycle.specificationsData.loai_van_bom}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Bộ đĩa</td>
+                                                                    <td>{detailBicycle.specificationsData.bo_dia}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Bộ thắng</td>
+                                                                    <td>{detailBicycle.specificationsData.bo_thang}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tay thắng</td>
+                                                                    <td>{detailBicycle.specificationsData.tay_thang}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Loại phanh thắng</td>
+                                                                    <td>{detailBicycle.specificationsData.loai_phanh_thang}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Bộ líp</td>
+                                                                    <td>{detailBicycle.specificationsData.bo_lip}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Ghi đông</td>
+                                                                    <td>{detailBicycle.specificationsData.ghi_dong}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Chất liệu yên</td>
+                                                                    <td>{detailBicycle.specificationsData.chat_lieu_yen}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Chất liệu cốt</td>
+                                                                    <td>{detailBicycle.specificationsData.chat_lieu_cot}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Hãng</td>
+                                                                    <td>{detailBicycle.specificationsData.hang}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
 
-                                        <>
-                                            <div className={`${isShowSpecification ? 'table active' : 'table'}`}>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Chất liệu sơn</td>
-                                                            <td>{detailBicycle.specificationsData.chat_lieu_son}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Độ tuổi</td>
-                                                            <td>{detailBicycle.specificationsData.do_tuoi}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Chiều cao</td>
-                                                            <td>{detailBicycle.specificationsData.chieu_cao}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Kích thước Trọng lượng</td>
-                                                            <td>{detailBicycle.specificationsData.kich_thuoc_trong_luong}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tải trọng</td>
-                                                            <td>{detailBicycle.specificationsData.tai_trong}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tải trọng yên phụ</td>
-                                                            <td>{detailBicycle.specificationsData.tai_trong_yen_phu}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Thương hiệu</td>
-                                                            <td>{detailBicycle.specificationsData.thuong_hieu}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Nơi sản xuất</td>
-                                                            <td>{detailBicycle.specificationsData.noi_san_xuat}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Sườn xe</td>
-                                                            <td>{detailBicycle.specificationsData.suon_xe}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Phuộc</td>
-                                                            <td>{detailBicycle.specificationsData.phuoc}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Kích cỡ bánh xe</td>
-                                                            <td>{detailBicycle.specificationsData.kich_co_banh_xe}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Vành</td>
-                                                            <td>{detailBicycle.specificationsData.vanh}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Lốp xe</td>
-                                                            <td>{detailBicycle.specificationsData.lop_xe}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Loại van bơm</td>
-                                                            <td>{detailBicycle.specificationsData.loai_van_bom}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Bộ đĩa</td>
-                                                            <td>{detailBicycle.specificationsData.bo_dia}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Bộ thắng</td>
-                                                            <td>{detailBicycle.specificationsData.bo_thang}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tay thắng</td>
-                                                            <td>{detailBicycle.specificationsData.tay_thang}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Loại phanh thắng</td>
-                                                            <td>{detailBicycle.specificationsData.loai_phanh_thang}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Bộ líp</td>
-                                                            <td>{detailBicycle.specificationsData.bo_lip}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Ghi đông</td>
-                                                            <td>{detailBicycle.specificationsData.ghi_dong}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Chất liệu yên</td>
-                                                            <td>{detailBicycle.specificationsData.chat_lieu_yen}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Chất liệu cốt</td>
-                                                            <td>{detailBicycle.specificationsData.chat_lieu_cot}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Hãng</td>
-                                                            <td>{detailBicycle.specificationsData.hang}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                    <div
+                                                        onClick={() => handleClickViewMore('specification')}
+                                                        className='view-more'>
+                                                        {
+                                                            isShowSpecification ? 'Ẩn chi tiết thông số' : 'Xem chi tiết thông số'
+                                                        }
 
-                                            <div
-                                                onClick={() => handleClickViewMore('specification')}
-                                                className='view-more'>
-                                                {
-                                                    isShowSpecification ? 'Ẩn chi tiết thông số' : 'Xem chi tiết thông số'
-                                                }
-
-                                            </div>
-                                        </>
-                                        :
-                                        <span>Không có thông số kỹ thuật</span>
-                                }
+                                                    </div>
+                                                </>
+                                                :
+                                                <span>Không có thông số kỹ thuật</span>
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </LoadingOverlay>
             <Footer />
         </div>
     )

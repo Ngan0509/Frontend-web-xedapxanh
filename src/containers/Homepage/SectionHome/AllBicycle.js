@@ -322,7 +322,8 @@ function AllBicycle() {
 
     const [sortSelect, setSortSelect] = useState({
         id: '',
-        name: 'Nổi bật'
+        nameVi: 'Nổi bật',
+        nameEn: 'Outstanding'
     })
 
     const handleClickSortSelect = (itemSort) => {
@@ -371,27 +372,33 @@ function AllBicycle() {
     const selectSorts = [
         {
             id: 'outstanding',
-            name: 'Nổi bật'
+            nameVi: 'Nổi bật',
+            nameEn: 'Outstanding'
         },
         {
             id: 'new products',
-            name: 'Hàng mới về'
+            nameVi: 'Hàng mới về',
+            nameEn: 'New products',
         },
         {
             id: 'selling',
-            name: 'Bán chạy'
+            nameVi: 'Bán chạy',
+            nameEn: 'Selling',
         },
         {
             id: '%discout',
-            name: '%Giảm giá'
+            nameVi: '%Giảm giá',
+            nameEn: '%Discout',
         },
         {
             id: 'desc',
-            name: 'Cao đến thấp'
+            nameVi: 'Cao đến thấp',
+            nameEn: 'Desc',
         },
         {
             id: 'asc',
-            name: 'Thấp đến cao'
+            nameVi: 'Thấp đến cao',
+            nameEn: 'Asc',
         }
     ]
 
@@ -448,7 +455,7 @@ function AllBicycle() {
                     <div className="bicycle_filter-more">
                         <div className="bicycle_amount">
                             <span>{listAllBicycle.length}</span>
-                            Xe đạp
+                            <FormattedMessage id="bicycle-manage.bicycle" />
                         </div>
                         <div className="bicycle_discout">
                             <input
@@ -463,9 +470,9 @@ function AllBicycle() {
                         <div className="sort-select ">
                             <p
                                 onClick={(e) => handleClickShowFilterBox(e)}
-                                className="click-sort">Xếp theo:
+                                className="click-sort"><FormattedMessage id="bicycle-manage.sort" />
                                 <span className="sort-show">
-                                    {sortSelect.name}
+                                    {lang === LANGUAGES.VI ? sortSelect.nameVi : sortSelect.nameEn}
                                 </span>
                             </p>
                             <div className="sort-select-main">
@@ -477,7 +484,7 @@ function AllBicycle() {
                                             key={item.id}
                                             onClick={() => handleClickSortSelect(item)}
                                         >
-                                            {item.name}
+                                            {lang === LANGUAGES.VI ? item.nameVi : item.nameEn}
                                         </p>
                                     ))
                                 }

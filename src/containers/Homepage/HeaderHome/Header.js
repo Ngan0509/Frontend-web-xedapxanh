@@ -11,6 +11,7 @@ import logo from '../../../assets/images/logo-xe-dap.png'
 import shoppingBag from '../../../assets/images/shopping-bag.png'
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
+import xedap from '../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 
 import CustomScrollbars from '../../../components/CustomScrollbars';
 
@@ -174,15 +175,15 @@ function Header() {
                                             <ul className='user_box'>
                                                 <li>
                                                     <NavLink to={path.ACCOUNT} activeClassName="active" exact={true}>
-                                                        Tài khoản
+                                                        <FormattedMessage id="headerHome.account" />
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink to={path.ORDERS} activeClassName="active" exact={true}>
-                                                        Đơn hàng
+                                                        <FormattedMessage id="headerHome.order" />
                                                     </NavLink>
                                                 </li>
-                                                <li onClick={(e) => handleClickLogout(e)}><a>Đăng xuất</a></li>
+                                                <li onClick={(e) => handleClickLogout(e)}><a href='/home'><FormattedMessage id="headerHome.logout" /></a></li>
                                             </ul>
                                         </li>
                                 }
@@ -221,7 +222,7 @@ function Header() {
                                                     <li key={item.id}>
                                                         <div className='image-name'>
                                                             <div className='image-product'>
-                                                                <img src={item.image} alt='product' />
+                                                                <img src={item.image || xedap} alt='product' />
                                                             </div>
                                                             <div className='name-product'>
                                                                 {item.name}
@@ -261,7 +262,7 @@ function Header() {
                                     {
                                         listAllCart && listAllCart.length > 0 ?
                                             <div className='cart_have-product'>
-                                                <h5>Danh sách sản phẩm</h5>
+                                                <h5><FormattedMessage id="order-manage.list-product" /></h5>
                                                 <CustomScrollbars style={{ height: '250px', width: '100%' }}>
                                                     <ul className='product_list'>
                                                         {
@@ -269,9 +270,7 @@ function Header() {
                                                             listAllCart.map(item => (
                                                                 <li key={item.id} className='product_list-item'>
                                                                     <div className='product_img'>
-                                                                        <img src={
-                                                                            item.productData && !_.isEmpty(item.productData) && item.productData.image
-                                                                        } alt='product' />
+                                                                        <img src={(item.productData && !_.isEmpty(item.productData) && item.productData.image) || xedap} alt='product' />
                                                                     </div>
                                                                     <div className='product_info'>
                                                                         <div className='product_title'>

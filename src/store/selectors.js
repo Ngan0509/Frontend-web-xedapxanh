@@ -29,6 +29,11 @@ export const selectorAllCartData = (state) => state.admin.allCartData
 
 export const selectorAllCheckoutData = (state) => state.admin.allCheckoutData
 
+export const selectorAllCommentData = (state) => state.admin.allCommentData
+
+export const selectorAllStoreData = (state) => state.admin.allStoreData
+
+
 
 
 

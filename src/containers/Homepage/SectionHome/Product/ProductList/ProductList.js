@@ -7,7 +7,7 @@ import { useParams } from 'react-router';
 
 // import Slider from "react-slick";
 import _ from 'lodash'
-import logoTempest from '../../../../../assets/images/E6TkEIRUcAMnlfa.jpg'
+import xedap from '../../../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 import './ProductList.scss'
 import NumberFormat from 'react-number-format';
 import { useHistory } from "react-router-dom";
@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 function ProductList(props) {
     const lang = useSelector(selectors.selectorLanguages)
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     let history = useHistory();
 
     let { id } = useParams()
@@ -28,6 +28,9 @@ function ProductList(props) {
     const handleClickPushDetailBicycle = (item) => {
         history.push(`/home/bicycle/detail/${item.id}`);
     }
+
+    const arrStar = [{ num: 1, isYellow: false }, { num: 2, isYellow: false }, { num: 3, isYellow: false }, { num: 4, isYellow: false }, { num: 5, isYellow: false }]
+
     return (
         <div id="ProductList">
             <div className="productList">
@@ -44,7 +47,7 @@ function ProductList(props) {
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">
-                                                        <img src={logoTempest} alt="productList_item" />
+                                                        <img src={(item.image) || xedap} alt="productList_item" />
                                                     </div>
 
                                                     <div className='product_info'>
@@ -95,22 +98,25 @@ function ProductList(props) {
                                                 </div>
 
                                                 <div className='product_info-more'>
-                                                    <div className="evaluate">
-                                                        <span className="icon-star">
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                        <span className="icon-star">
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                        <span className="icon-star">
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                        <span className="icon-star">
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                        <span className="icon-star">
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
+                                                    <div className='favorite'>
+                                                        {
+                                                            arrStar && arrStar.length > 0 &&
+                                                            arrStar
+                                                                .map(star => {
+                                                                    if (item.num_star_avg > 0 && star.num <= item.num_star_avg) {
+                                                                        star.isYellow = true
+                                                                    } else {
+                                                                        star.isYellow = false
+                                                                    }
+                                                                    return star
+                                                                })
+                                                                .map(star => (
+                                                                    <span
+                                                                        key={star.num} className={`${star.isYellow ? 'icon-star active' : 'icon-star'}`}>
+                                                                        <i className='bx bxs-leaf'></i>
+                                                                    </span>
+                                                                ))
+                                                        }
                                                     </div>
 
                                                     <ul className="desc_list">
@@ -129,7 +135,6 @@ function ProductList(props) {
                                                             }
                                                         </li>
                                                         <li><FormattedMessage id="bicycle-manage.weight" />: 120kg</li>
-                                                        <li><FormattedMessage id="bicycle-manage.origin" />: Việt Nam</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -149,7 +154,7 @@ function ProductList(props) {
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">
-                                                        <img src={logoTempest} alt="productList_item" />
+                                                        <img src={(item.image) || xedap} alt="productList_item" />
                                                     </div>
 
                                                     <div className='product_info'>

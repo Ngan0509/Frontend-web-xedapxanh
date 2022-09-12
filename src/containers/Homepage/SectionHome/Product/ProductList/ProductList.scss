@@ -70,14 +70,15 @@
             .product_info-more {
                 padding: 0 16px 4px;
 
-                .evaluate {
+                .favorite {
+                    margin-left: 8px;
+
                     .icon-star {
-                        font-size: 18px;
+                        font-size: 15px;
                         color: #ccc;
-                        cursor: pointer;
                     }
 
-                    .icon-star:hover {
+                    .icon-star.active {
                         color: var(--primary-color);
                     }
                 }

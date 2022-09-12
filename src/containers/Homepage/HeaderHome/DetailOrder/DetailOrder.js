@@ -1,16 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
-import * as actions from "../../../../store/actions";
-import { LANGUAGES } from '../../../../utils/constant'
+
 import { useEffect, useState } from 'react';
 import { Switch, useHistory, Route } from "react-router-dom";
 import Header from '../Header';
 import '../../Homepage.scss'
 import './DetailOrder.scss'
 import _ from 'lodash';
-import avatar from '../../../../assets/images/avatar.webp'
-import * as userService from '../../../../services/userService'
 
 import Notify from '../DetailOrder/Notify'
 import Orders from '../DetailOrder/Orders'
@@ -34,14 +31,6 @@ function DetailOrder() {
         setClientInfo(clientInfoSelect)
     }, [clientInfoSelect])
 
-    // const handleClickPushPage = (item) => {
-
-    // }
-
-    const handleClick = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <div id="DetailOrder">
             <Header />
@@ -60,17 +49,17 @@ function DetailOrder() {
                             <div className='topnav'>
                                 <div className='account'>
                                     <NavLink to={path.ACCOUNT} activeClassName="active" exact={true}>
-                                        Tài khoản của tôi
+                                        <FormattedMessage id="order-manage.account" />
                                     </NavLink>
                                 </div>
                                 <div className='order'>
                                     <NavLink to={path.ORDERS} activeClassName="active" exact={true}>
-                                        Đơn hàng
+                                        <FormattedMessage id="order-manage.order" />
                                     </NavLink>
                                 </div>
                                 <div className='notify'>
                                     <NavLink to={path.NOTIFY} activeClassName="active" exact={true}>
-                                        Thông báo
+                                        <FormattedMessage id="order-manage.notify" />
                                     </NavLink>
                                 </div>
                             </div>

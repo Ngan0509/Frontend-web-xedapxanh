@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
 import "./Cart.scss"
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import logoTempest from '../../../../assets/images/E6TkEIRUcAMnlfa.jpg'
+import xedap from '../../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 import * as userService from "../../../../services/userService"
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
@@ -133,6 +133,10 @@ function ShoppingCart() {
             history.push("/home/login");
         }
     }
+
+    const handlePushPageHome = () => {
+        history.push("/home");
+    }
     return (
         <div id="ShoppingCart">
             <div className="shoppingCart_bg">
@@ -142,10 +146,10 @@ function ShoppingCart() {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Tổng</th>
+                                        <th><FormattedMessage id="bicycle-manage.productName" /></th>
+                                        <th><FormattedMessage id="bicycle-manage.priceNew" /></th>
+                                        <th><FormattedMessage id="bicycle-manage.so_luong" /></th>
+                                        <th><FormattedMessage id="order-manage.sum-price" /></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -161,9 +165,7 @@ function ShoppingCart() {
                                                             <i className='bx bx-x-circle'></i>
                                                         </div>
                                                         <div className='product-img'>
-                                                            <img src={
-                                                                item.productData && !_.isEmpty(item.productData) && item.productData.image
-                                                            } alt='product' />
+                                                            <img src={(item.productData && !_.isEmpty(item.productData) && item.productData.image) || xedap} alt='product' />
                                                         </div>
                                                         <div className='product-title'>
                                                             <span>
@@ -218,20 +220,22 @@ function ShoppingCart() {
                             </table>
 
                             <div className='btn-wrap'>
-                                <button className='home_btn'>Trở về trang chủ</button>
+                                <button
+                                    onClick={() => handlePushPageHome()}
+                                    className='home_btn'><FormattedMessage id="headerHome.back-home" /></button>
                                 <button
                                     onClick={() => handleUpdateCart()}
-                                    className='update_btn'>Cập nhật giỏ hàng</button>
+                                    className='update_btn'><FormattedMessage id="headerHome.update-cart" /></button>
                             </div>
                         </div>
                         <div className='col-5'>
                             <div className='checkout'>
                                 <div className='number'>
-                                    <span className='label'>Số lượng</span>
+                                    <span className='label'><FormattedMessage id="bicycle-manage.so_luong" /></span>
                                     <span className='num'>{sumSo_luong()}</span>
                                 </div>
                                 <div className='sum'>
-                                    <span className='label'>Tổng phụ</span>
+                                    <span className='label'><FormattedMessage id="order-manage.sum-price-all" /></span>
                                     <span className='price'>
                                         <NumberFormat
                                             value={sumPrice()}
@@ -246,7 +250,7 @@ function ShoppingCart() {
                                     onClick={handleClickCheckout}
                                     className='checkout_btn'
                                 >
-                                    Tiến hành thanh toán
+                                    <FormattedMessage id="order-manage.make-payment" />
                                 </button>
                             </div>
                         </div>

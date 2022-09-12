@@ -9,6 +9,7 @@ import Header from '../containers/Header/Header';
 import MarkdownManage from '../containers/System/Admin/MardownManage';
 import SpecificationsManage from '../containers/System/Admin/SpecificationsManage';
 import OrderManage from '../containers/System/Admin/OrderManage';
+import StoreManage from '../containers/System/Admin/StoreManage';
 
 class Admin extends Component {
     render() {
@@ -27,6 +28,7 @@ class Admin extends Component {
                             <Route path="/system/admin/order-manage-s2" component={OrderManage} />
                             <Route path="/system/admin/order-manage" component={OrderManage} />
                             <Route path="/system/admin/order-manage-s6" component={OrderManage} />
+                            <Route path="/system/admin/store-manage" component={StoreManage} />
                         </Switch>
                     </div>
                 </div>

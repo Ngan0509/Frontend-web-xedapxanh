@@ -13,6 +13,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 // import Slider from "react-slick";
 import './Manage.scss'
+import _ from 'lodash';
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -81,7 +82,7 @@ function MarkdownManage() {
     const handleChangeSelect = async (selectedBicycle) => {
         let resp = await userService.handleGetDetailBicycle(selectedBicycle.value)
         console.log("handleGetDetailBicycle", resp)
-        if (resp && resp.errCode === 0 && resp.data && resp.data.markdownData) {
+        if (resp && resp.errCode === 0 && resp.data && !_.isEmpty(resp.data.markdownData)) {
             let markdown = resp.data.markdownData
 
             setForm({
@@ -96,7 +97,7 @@ function MarkdownManage() {
                 contentMarkdown: ''
             })
             setHasOldData(false)
-
+            console.log("abc")
         }
         setSelects({
             selectedBicycle

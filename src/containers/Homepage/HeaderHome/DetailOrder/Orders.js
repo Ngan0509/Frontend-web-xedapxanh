@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
@@ -9,6 +9,7 @@ import _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import React from 'react';
 import * as userService from '../../../../services/userService'
+import xedap from '../../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 
 function Orders() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -161,23 +162,23 @@ function Orders() {
                                         <li key={item.id}>
                                             <div className='row'>
                                                 <div className='col-5 info'>
-                                                    <p><span>Tình trạng: </span>
+                                                    <p><span><FormattedMessage id="order-manage.status" />: </span>
                                                         {
                                                             !_.isEmpty(item.statusData) && lang === LANGUAGES.VI ?
                                                                 item.statusData.valueVi :
                                                                 item.statusData.valueEn
                                                         }
                                                     </p>
-                                                    <p><span>Nơi nhận: </span>{item.noi_nhan}</p>
-                                                    <p><span>Ghi chú: </span>{item.ghi_chu}</p>
-                                                    <p><span>Phương thức giao hàng: </span>
+                                                    <p><span><FormattedMessage id="order-manage.noi_nhan" />: </span>{item.noi_nhan}</p>
+                                                    <p><span><FormattedMessage id="order-manage.ghi_chu" />: </span>{item.ghi_chu}</p>
+                                                    <p><span><FormattedMessage id="order-manage.method-ship" />: </span>
                                                         {
                                                             !_.isEmpty(item.deliveryData) && lang === LANGUAGES.VI ?
                                                                 item.deliveryData.valueVi :
                                                                 item.deliveryData.valueEn
                                                         }
                                                     </p>
-                                                    <p><span>Phương thức thanh toán: </span>
+                                                    <p><span><FormattedMessage id="order-manage.method-payment" />: </span>
                                                         {
                                                             !_.isEmpty(item.paymentData) && lang === LANGUAGES.VI ?
                                                                 item.paymentData.valueVi :
@@ -194,7 +195,7 @@ function Orders() {
                                                                 <li key={order.id}>
                                                                     <div className='image-name'>
                                                                         <div className='image-product'>
-                                                                            <img src={!_.isEmpty(order.productData) && order.productData.image} alt='product' />
+                                                                            <img src={(!_.isEmpty(order.productData) && order.productData.image) || xedap} alt='product' />
                                                                         </div>
                                                                         <div className='name-product'>
                                                                             {!_.isEmpty(order.productData) && order.productData.name}
@@ -216,7 +217,7 @@ function Orders() {
                                                         }
                                                     </ul>
                                                     <div className='sum_price'>
-                                                        <span>Tổng giá: </span>
+                                                        <span><FormattedMessage id="order-manage.sum-price" />: </span>
                                                         <NumberFormat
                                                             value={item.sum_price}
                                                             className="foo"

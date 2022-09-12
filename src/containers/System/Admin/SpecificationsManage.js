@@ -9,6 +9,7 @@ import { LANGUAGES } from '../../../utils/constant'
 import * as userService from '../../../services/userService'
 // import Slider from "react-slick";
 import './Manage.scss'
+import _ from 'lodash';
 function SpecificationsManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const allBicycleData = useSelector(selectors.selectorAllBicycleData)
@@ -98,7 +99,7 @@ function SpecificationsManage() {
     const handleChangeSelect = async (selectedBicycle) => {
         let resp = await userService.handleGetDetailBicycle(selectedBicycle.value)
         console.log("handleGetDetailBicycle", resp)
-        if (resp && resp.errCode === 0 && resp.data && resp.data.specificationsData) {
+        if (resp && resp.errCode === 0 && resp.data && !_.isEmpty(resp.data.specificationsData)) {
             let specifications = resp.data.specificationsData
 
             setForm({

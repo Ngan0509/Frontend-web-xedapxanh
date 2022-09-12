@@ -9,9 +9,15 @@
         "search": "Tìm kiếm...",
         "login": "Đăng nhập",
         "signup": "Đăng ký",
+        "logout": "Đăng xuất",
         "view-cart": "Xem giỏ hàng",
         "checkout": "Thanh toán",
-        "store-system": "Hệ thống cửa hàng"
+        "store-system": "Hệ thống cửa hàng",
+        "account": "Tài khoản",
+        "order": "Đơn hàng",
+        "save": "Lưu",
+        "back-home": "Trở về trang chủ",
+        "update-cart": "Cập nhật giỏ hàng"
     },
     "menu": {
         "system": {
@@ -35,7 +41,8 @@
             "filter-manage": "Quản lý bộ lọc sản phẩm",
             "order-manage": "Quản lý đơn hàng",
             "order-manage-s2": "Đơn hàng cần xác nhận",
-            "order-manage-s6": "Đơn hàng đã giao"
+            "order-manage-s6": "Đơn hàng đã giao",
+            "store-manage": "Quản lý cửa hàng"
         },
         "shipper": {
             "order-manage-shipper": "Quản lý đơn hàng cho Shipper",
@@ -73,7 +80,10 @@
         "bike-type": "Loại xe",
         "brake-type": "Loại thắng",
         "weight": "Tải trọng",
-        "origin": "Xuất xứ"
+        "origin": "Xuất xứ",
+        "bicycle": "Xe đạp",
+        "sort": "Xếp theo: ",
+        "so_luong": "Số lương"
     },
     "user-manage": {
         "create-user": "Tạo người dùng",
@@ -93,6 +103,38 @@
         "reason": "Lý do",
         "birthday": "Ngày sinh",
         "time": "Thời gian",
-        "actions": "Thao tác"
+        "actions": "Thao tác",
+        "create-store": "Tạo cửa hàng",
+        "update-store": "Cập nhật cửa hàng",
+        "city": "Thành phố",
+        "district": "Quận"
+    },
+    "store-manage": {
+        "name": "Tên cửa hàng",
+        "address": "Địa chỉ cửa hàng",
+        "phoneNumber": "Số điện thoại"
+    },
+    "order-manage": {
+        "detail-order": "Chi tiết đơn hàng",
+        "list-product": "Danh sách sản phẩm",
+        "order-date": "Ngày đặt hàng",
+        "status": "Tình trạng",
+        "info-client": "Thông tin khách hàng",
+        "address-client": "Địa chỉ khách hàng",
+        "method-ship": "Phương thức giao hàng",
+        "method-payment": "Phương thức thanh toán",
+        "sum-price": "Tổng giá",
+        "view-detail": "Xem chi tiết",
+        "not-order": "Không có đơn hàng",
+        "account": "Tài khoản của tôi",
+        "order": "Đơn hàng",
+        "notify": "Thông báo",
+        "manage-profile": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "noi_nhan": "Địa chỉ nơi nhận",
+        "ghi_chu": "Ghi chú",
+        "make-payment": "Tiến hành thanh toán",
+        "notice": "Hiện giỏ hàng không có hàng, vui lòng thêm hàng vào giỏ",
+        "notice2": "Vui lòng đăng nhập để thanh toán",
+        "sum-price-all": "Tổng phụ"
     }
 }

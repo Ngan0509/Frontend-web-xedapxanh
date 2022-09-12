@@ -8,6 +8,10 @@ export const adminMenu = [
 
             {
                 name: 'menu.admin.filter-manage', link: '/system/admin/filter-manage'
+            },
+
+            {
+                name: 'menu.admin.store-manage', link: '/system/admin/store-manage'
             }
         ]
     },

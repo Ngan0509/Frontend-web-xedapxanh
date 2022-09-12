@@ -327,3 +327,57 @@ export const fetchAllCheckoutSuccess = (AllCheckoutData) => ({
 export const fetchAllCheckoutFailed = () => ({
     type: actionTypes.FETCH_ALL_CHECKOUT_FAILED
 })
+
+//-------------------------------------------------------
+export const fetchAllCommentStart = (product_id, type) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_COMMENT_START })
+            let resp = await userService.handleGetAllComment(product_id, type)
+            console.log('resp all Comment', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllCommentSuccess(resp.data))
+            } else {
+                dispatch(fetchAllCommentFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllCommentFailed())
+        }
+    }
+}
+
+export const fetchAllCommentSuccess = (AllCommentData) => ({
+    type: actionTypes.FETCH_ALL_COMMENT_SUCCESS,
+    data: AllCommentData
+})
+
+export const fetchAllCommentFailed = () => ({
+    type: actionTypes.FETCH_ALL_COMMENT_FAILED
+})
+
+//-------------------------------------------------------
+export const fetchAllStoreStart = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: actionTypes.FETCH_ALL_STORE_START })
+            let resp = await userService.handleGetAllStore(inputId)
+            console.log('resp all Store', resp.data)
+            if (resp && resp.errCode === 0) {
+                dispatch(fetchAllStoreSuccess(resp.data))
+            } else {
+                dispatch(fetchAllStoreFailed())
+            }
+        } catch (error) {
+            dispatch(fetchAllStoreFailed())
+        }
+    }
+}
+
+export const fetchAllStoreSuccess = (AllStoreData) => ({
+    type: actionTypes.FETCH_ALL_STORE_SUCCESS,
+    data: AllStoreData
+})
+
+export const fetchAllStoreFailed = () => ({
+    type: actionTypes.FETCH_ALL_STORE_FAILED
+})

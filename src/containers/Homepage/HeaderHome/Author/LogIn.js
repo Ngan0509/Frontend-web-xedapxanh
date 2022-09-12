@@ -118,7 +118,7 @@ function Login() {
             }
             if (data && data.errCode === 0 && !_.isEmpty(data.user)) {
                 dispatch(actions.clientLoginSuccess(data.user))
-                history.push("/home/cart/checkoutdetails")
+                history.goBack()
             }
         } catch (error) {
             if (error.response) {

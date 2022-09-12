@@ -159,6 +159,158 @@
                             height: auto;
                         }
 
+                        .comment {
+                            margin-top: 30px;
+
+                            h5 {
+                                display: flex;
+                                align-items: center;
+
+                                span {
+                                    font-size: 14px;
+                                    color: #666;
+                                    margin-left: 4px;
+                                }
+                            }
+
+                            .favorite {
+                                margin-left: 8px;
+
+                                .icon-star {
+                                    font-size: 18px;
+                                    color: #ccc;
+                                    cursor: pointer;
+                                }
+
+                                .icon-star.active {
+                                    color: var(--primary-color);
+                                }
+
+                                .icon-star:hover {
+                                    color: var(--primary-color);
+                                }
+                            }
+
+                            .comment_input {
+                                margin-top: 16px;
+                                text-align: right;
+
+                                textarea {
+                                    width: 100%;
+                                    height: 80px;
+                                }
+
+                                .comment-btn {
+                                    border: none;
+                                    outline: none;
+                                    padding: 4px 8px;
+                                    color: #fff;
+                                    background-color: var(--primary-color);
+                                    border-radius: 4px;
+                                    margin-top: 16px;
+                                }
+                            }
+
+                            .list-comment {
+                                list-style: none;
+                                padding-left: 0;
+                                margin-top: 16px;
+
+                                li {
+                                    background-color: rgba(54, 239, 54, 0.1);
+                                    padding: 16px;
+                                    margin-bottom: 8px;
+
+                                    .info {
+                                        display: flex;
+                                        justify-content: space-between;
+
+                                        .image-name {
+                                            display: flex;
+
+                                            .image {
+                                                width: 40px;
+                                                height: 40px;
+                                                border-radius: 50%;
+                                                overflow: hidden;
+                                            }
+
+                                            .name {
+                                                font-weight: 600;
+                                                margin-left: 16px;
+                                            }
+
+                                            .favorite {
+                                                margin-left: 8px;
+
+                                                .icon-star {
+                                                    font-size: 15px;
+                                                    color: #ccc;
+                                                }
+
+                                                .icon-star.active {
+                                                    color: var(--primary-color);
+                                                }
+                                            }
+                                        }
+
+                                        .date-icon {
+                                            display: flex;
+                                            align-items: flex-start;
+
+                                            .icon-wrap {
+                                                position: relative;
+
+                                                .icon {
+                                                    position: relative;
+                                                    top: -4px;
+                                                    margin-left: 8px;
+                                                    cursor: pointer;
+                                                    font-size: 22px;
+                                                }
+
+                                                &:hover .box {
+                                                    opacity: 1;
+                                                    visibility: visible;
+                                                }
+
+                                                .box {
+                                                    opacity: 0;
+                                                    visibility: hidden;
+                                                    position: absolute;
+                                                    top: 24px;
+                                                    right: 10px;
+                                                    width: 60px;
+                                                    background-color: #fff;
+                                                    border: 1px solid var(--border-color);
+
+                                                    span {
+                                                        cursor: pointer;
+                                                        display: block;
+                                                        padding: 4px 8px;
+                                                    }
+
+                                                    span:hover {
+                                                        color: var(--primary-color);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .comment-client {
+                                        padding-left: 56px;
+
+                                        .answer-btn {
+                                            text-align: right;
+                                        }
+
+                                    }
+                                }
+                            }
+
+                        }
+
                         .table {
                             height: 300px;
                             overflow: hidden;

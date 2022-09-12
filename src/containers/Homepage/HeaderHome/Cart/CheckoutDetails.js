@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
@@ -279,11 +279,11 @@ function CheckoutDetails() {
             {
                 (
                     listAllCart && listAllCart.length === 0 &&
-                    <span className='notice'>Hiện giỏ hàng không có hàng, vui lòng thêm hàng vào giỏ</span>
+                    <span className='notice'><FormattedMessage id="order-manage.notice" /></span>
                 ) ||
                 (
                     !isLoggedInClient &&
-                    <span className='notice'>Vui lòng đăng nhập để thanh toán</span>
+                    <span className='notice'><FormattedMessage id="order-manage.notice2" /></span>
                 ) ||
                 <div id="CheckoutDetails">
                     <div className="checkoutDetails_bg">
@@ -293,7 +293,7 @@ function CheckoutDetails() {
                                     <div className='row'>
                                         <div className='col-6 form-group'>
                                             <label>
-                                                Thành phố
+                                                <FormattedMessage id="user-manage.city" />
                                             </label>
                                             <Select
                                                 value={city}
@@ -308,7 +308,7 @@ function CheckoutDetails() {
 
                                         <div className='col-6 form-group'>
                                             <label>
-                                                Quận
+                                                <FormattedMessage id="user-manage.district" />
                                             </label>
                                             <Select
                                                 value={district}
@@ -321,7 +321,7 @@ function CheckoutDetails() {
                                             </span>
                                         </div>
                                         <div className='col-12 form-group'>
-                                            <label>Địa chỉ nơi nhận</label>
+                                            <label><FormattedMessage id="order-manage.noi_nhan" /></label>
                                             <input
                                                 onBlur={() => handleOnBlur('noi_nhan')}
                                                 value={noi_nhan}
@@ -335,7 +335,7 @@ function CheckoutDetails() {
                                         </div>
 
                                         <div className='col-12 form-group'>
-                                            <label>Ghi chú</label>
+                                            <label><FormattedMessage id="order-manage.ghi_chu" /></label>
                                             <textarea
                                                 onBlur={() => handleOnBlur('ghi_chu')}
                                                 rows={4}
@@ -352,10 +352,10 @@ function CheckoutDetails() {
                                 </div>
                                 <div className='col-5'>
                                     <div className='detail_checkout'>
-                                        <h5>ĐƠN HÀNG CỦA BẠN</h5>
+                                        <h5><FormattedMessage id="order-manage.order" /></h5>
                                         <div className='label'>
-                                            <span>SẢN PHẨM</span>
-                                            <span>TỔNG</span>
+                                            <span><FormattedMessage id="bicycle-manage.productName" /></span>
+                                            <span><FormattedMessage id="order-manage.sum-price" /></span>
                                         </div>
 
                                         <ul className='list_product'>
@@ -384,7 +384,7 @@ function CheckoutDetails() {
                                         </ul>
 
                                         <div className='sum_price_all'>
-                                            <span className='sum_price_all-label'>Tổng phụ</span>
+                                            <span className='sum_price_all-label'><FormattedMessage id="order-manage.sum-price-all" /></span>
                                             <span>
                                                 <NumberFormat
                                                     value={sumPrice()}
@@ -397,7 +397,7 @@ function CheckoutDetails() {
                                         </div>
 
                                         <div className='delivery'>
-                                            <h5>GIAO HÀNG</h5>
+                                            <h5><FormattedMessage id="order-manage.method-ship" /></h5>
 
                                             {
                                                 listDelivery && listDelivery.length > 0 &&
@@ -419,7 +419,7 @@ function CheckoutDetails() {
                                         </div>
 
                                         <div className='payment'>
-                                            <h5>PHƯƠNG THỨC THANH TOÁN</h5>
+                                            <h5><FormattedMessage id="order-manage.method-payment" /></h5>
                                             {
                                                 listPayment && listPayment.length > 0 &&
                                                 listPayment.map(item => (
@@ -442,7 +442,7 @@ function CheckoutDetails() {
                                         <button
                                             onClick={handleSubmit}
                                             className='btn-checkout'>
-                                            Thanh toán
+                                            <FormattedMessage id="order-manage.make-payment" />
                                         </button>
                                     </div>
                                 </div>

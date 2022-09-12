@@ -3,6 +3,7 @@
 // import { FormattedMessage } from 'react-intl';
 // import * as actions from "../../store/actions";
 // import { LANGUAGES } from '../../utils/constant'
+// import { useEffect, useState } from 'react'
 
 import Header from './HeaderHome/Header'
 import Sliders from './HeaderHome/Sliders'
@@ -41,6 +42,7 @@ function Homepage() {
 
     settings = { ...settings, ...settingsArrow }
 
+
     return (
         <div id="Homepage">
             <Header />
@@ -51,6 +53,7 @@ function Homepage() {
             <ShopSystem />
             <Footer />
         </div>
+
     )
 }
 

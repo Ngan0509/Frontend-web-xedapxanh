@@ -9,6 +9,7 @@ import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { pathSystem } from '../../../utils'
+import xedap from '../../../assets/images/RINCON-2-2022-grey-fix.jpg'
 
 // import Slider from "react-slick";
 import '../Admin/Manage.scss'
@@ -83,13 +84,13 @@ function OrderManage() {
                 className='modal_user-container'
             >
                 <ModalHeader>
-                    Chi tiết đơn hàng
+                    <FormattedMessage id="order-manage.detail-order" />
                 </ModalHeader>
                 <ModalBody>
                     <div className="container">
                         <div className="container-row">
                             <div className='product'>
-                                <h6>Danh sách sản phẩm</h6>
+                                <h6><FormattedMessage id="order-manage.list-product" /></h6>
                                 <ul className='product_list'>
                                     {
                                         !_.isEmpty(detailInfo) && detailInfo.orderDetailArr && detailInfo.orderDetailArr.length > 0 &&
@@ -97,7 +98,7 @@ function OrderManage() {
                                             <li key={order.id}>
                                                 <div className='image-name'>
                                                     <div className='image-product'>
-                                                        <img src={!_.isEmpty(order.productData) && order.productData.image} alt='product' />
+                                                        <img src={(!_.isEmpty(order.productData) && order.productData.image) || xedap} alt='product' />
                                                     </div>
                                                     <div className='name-product'>
                                                         {!_.isEmpty(order.productData) && order.productData.name}
@@ -165,9 +166,9 @@ function OrderManage() {
                                     <li key={item.id}>
                                         <div className='row client_info-shipper'>
                                             <div className='col'>
-                                                <h6>Ngày đặt hàng</h6>
+                                                <h6><FormattedMessage id="order-manage.order-date" /></h6>
                                                 <p className='date'>{moment(new Date(Number(item.date))).format('DD/MM/YYYY')}</p>
-                                                <h6>Tình trạng</h6>
+                                                <h6><FormattedMessage id="order-manage.status" /></h6>
                                                 <p className='status'>
                                                     {
                                                         !_.isEmpty(item.statusData) && lang === LANGUAGES.VI ?
@@ -175,20 +176,20 @@ function OrderManage() {
                                                             item.statusData.valueEn
                                                     }
                                                 </p>
-                                                <h6>Thông tin khách hàng</h6>
+                                                <h6><FormattedMessage id="order-manage.info-client" /></h6>
                                                 <p className='email'>Email: {!_.isEmpty(item.clientData) && item.clientData.email}</p>
                                                 <p className='fullname'>Họ tên: {!_.isEmpty(item.clientData) && item.clientData.fullname}</p>
                                                 <p className='phoneNumber'>Số điện thoại: {!_.isEmpty(item.clientData) && item.clientData.phoneNumber}</p>
                                             </div>
                                             <div className='col'>
-                                                <h6>Địa chỉ khách hàng</h6>
+                                                <h6><FormattedMessage id="order-manage.address-client" /></h6>
                                                 <p className='noi_nhan'>Nơi nhận: {item.noi_nhan}</p>
                                                 <p className='ghi_chú'>Ghi chú: {item.ghi_chu}</p>
                                                 <p className='city_id'>ID thành phố: {item.city_id}</p>
                                                 <p className='district_id'>ID quận: {item.district_id}</p>
                                             </div>
                                             <div className='col'>
-                                                <h6>Phương thức giao hàng: </h6>
+                                                <h6><FormattedMessage id="order-manage.method-ship" /></h6>
                                                 <p className='delivery'>
                                                     {
                                                         !_.isEmpty(item.deliveryData) && lang === LANGUAGES.VI ?
@@ -196,7 +197,7 @@ function OrderManage() {
                                                             item.deliveryData.valueEn
                                                     }
                                                 </p>
-                                                <h6>Phương thức thanh toán: </h6>
+                                                <h6><FormattedMessage id="order-manage.method-payment" /></h6>
                                                 <p className='payment'>
                                                     {
                                                         !_.isEmpty(item.paymentData) && lang === LANGUAGES.VI ?
@@ -204,7 +205,7 @@ function OrderManage() {
                                                             item.paymentData.valueEn
                                                     }
                                                 </p>
-                                                <h6>Tổng giá: </h6>
+                                                <h6><FormattedMessage id="order-manage.sum-price" /></h6>
                                                 <p className='sum_price'>
                                                     <NumberFormat
                                                         value={item.sum_price}
@@ -217,13 +218,13 @@ function OrderManage() {
                                                 <button
                                                     onClick={() => handleViewDetail(item)}
                                                     className='view-detail'>
-                                                    Xem chi tiết
+                                                    <FormattedMessage id="order-manage.view-detail" />
                                                 </button>
                                             </div>
                                         </div>
                                     </li>
                                 )) :
-                                <span className='notify'>Không có đơn hàng !!!</span>
+                                <span className='notify'><FormattedMessage id="order-manage.not-order" /> !!!</span>
                         }
                     </ul>
                 </div>
