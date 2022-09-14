@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
-import * as selectors from "../../../../store/selectors"
+// import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
-import { LANGUAGES } from '../../../../utils/constant'
+// import { LANGUAGES } from '../../../../utils/constant'
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import Header from '../Header';
@@ -13,7 +13,7 @@ import _ from 'lodash';
 import * as userService from "../../../../services/userService"
 
 function Login() {
-    const lang = useSelector(selectors.selectorLanguages)
+    // const lang = useSelector(selectors.selectorLanguages)
 
     const dispatch = useDispatch()
     let history = useHistory();
@@ -66,6 +66,7 @@ function Login() {
             setErrorMessage('Trường này không được để trống')
         } else {
             if (id === 'email') {
+                //eslint-disable-next-line
                 const regex = /^[a-z][a-z0-9]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
                 if (regex.test(copyForm[id])) {
                     isValid = false

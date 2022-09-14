@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Buffer } from 'buffer';
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../store/selectors"
 import * as actions from "../../../store/actions";
-import { LANGUAGES } from '../../../utils/constant'
+// import { LANGUAGES } from '../../../utils/constant'
 import * as userService from '../../../services/userService'
 import CommonUtils from '../../../utils/CommonUtils';
 
@@ -12,7 +11,7 @@ import CommonUtils from '../../../utils/CommonUtils';
 // import Slider from "react-slick";
 import './Manage.scss'
 function StoreManage() {
-    const lang = useSelector(selectors.selectorLanguages)
+    // const lang = useSelector(selectors.selectorLanguages)
     const allStoreData = useSelector(selectors.selectorAllStoreData)
 
     const dispatch = useDispatch()
@@ -117,17 +116,13 @@ function StoreManage() {
     const [id, setId] = useState('')
 
     const handleEditNewStore = (storeData) => {
-        let imageBase64 = ''
-        if (storeData.image) {
-            imageBase64 = new Buffer(storeData.image, 'base64').toString('binary')
-        }
         setIsEdit(true)
         setId(storeData.id)
         setForm({
             name: storeData.name,
             address: storeData.address,
             phoneNumber: storeData.phoneNumber,
-            previewImg: imageBase64
+            previewImg: storeData.image
         })
 
     }

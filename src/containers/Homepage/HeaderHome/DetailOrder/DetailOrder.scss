@@ -61,6 +61,14 @@
 
                         .account_bg {
                             .account {
+                                .form-message {
+                                    font-size: 1.2rem;
+                                    line-height: 1.6rem;
+                                    padding: 4px 0 0;
+                                    color: #f33a58;
+                                    text-align: left;
+                                }
+
                                 h5 {
                                     font-size: var(--title-size);
                                     color: var(--primary-color);

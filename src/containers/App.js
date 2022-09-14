@@ -17,6 +17,7 @@ import Shipper from '../routes/Shipper';
 import Homepage from './Homepage/Homepage';
 import Bicycle from './Homepage/SectionHome/Product/Bicycle';
 import DetailBicycle from './Homepage/SectionHome/Product/ProductList/DetailBicycle';
+import DetailAccessories from './Homepage/SectionHome/Product/ProductList/DetailAccessories';
 import Accessories from './Homepage/SectionHome/Product/Accessories';
 
 import Cart from './Homepage/HeaderHome/Cart/Cart';
@@ -67,6 +68,7 @@ class App extends Component {
                                     <Route path={path.HOMEPAGE} exact component={(Homepage)} />
                                     <Route path={path.BICYCLE} exact component={(Bicycle)} />
                                     <Route path={path.DETAILBICYCLE} component={(DetailBicycle)} />
+                                    <Route path={path.DETAILACCESSORY} component={(DetailAccessories)} />
                                     <Route path={path.ACCESSORIES} component={(Accessories)} />
                                     <Route path={path.CART} component={(Cart)} />
                                     <Route path={path.DETAILORDER} component={(DetailOrder)} />

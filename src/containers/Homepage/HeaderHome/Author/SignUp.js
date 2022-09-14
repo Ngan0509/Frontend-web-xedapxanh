@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
@@ -122,6 +122,7 @@ function Signup() {
             setErrorMessage('Trường này không được để trống')
         } else {
             if (id === 'email') {
+                //eslint-disable-next-line
                 const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
                 if (regex.test(copyForm[id])) {
                     isValid = false

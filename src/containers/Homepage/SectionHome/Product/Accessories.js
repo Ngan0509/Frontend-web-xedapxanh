@@ -216,7 +216,7 @@ function Accessories() {
                                         onClick={(e) => handleClickShowFilterBox(e)}
                                         className="filter_label">
                                         {
-                                            lang === LANGUAGES.VI ? item.nameVi : item.nameEn
+                                            lang === LANGUAGES.VI ? `Bộ lọc: ${item.nameVi}` : `Filter: ${item.nameEn}`
                                         }
                                         <span className='icon-arrow'>
                                             <i className='bx bxs-down-arrow'></i>

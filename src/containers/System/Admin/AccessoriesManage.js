@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'
 import Select from 'react-select';
@@ -61,6 +60,22 @@ function AccessoriesManage() {
         }
     }
 
+    //check input
+    const checkUserInput = () => {
+        let isValid = true
+        let arrInputs = ["productName", "priceNew", "category", "accessories_id"]
+        let data = { ...form, ...selects }
+        for (let i = 0; i < arrInputs.length; i++) {
+            console.log('input changed: ', data[arrInputs[i]])
+            if (!data[arrInputs[i]] && data[arrInputs[i]] !== 0) {
+                isValid = false
+                alert(`Missing required parameter: ${arrInputs[i]}`)
+                break
+            }
+        }
+        return isValid
+    }
+
     // array
     const [listCategory, setListCategory] = useState([]);
     const [listAllAccessories, setListAllAccessories] = useState([]);
@@ -120,6 +135,9 @@ function AccessoriesManage() {
 
     // create product
     const handleOnSubmit = async () => {
+        let isValid = checkUserInput()
+        if (!isValid) return
+
         if (isEdit) {
             let dataEdit = {
                 id,
@@ -180,16 +198,12 @@ function AccessoriesManage() {
     const [id, setId] = useState('')
 
     const handleEditNewAccesssory = (accessoriesData) => {
-        let imageBase64 = ''
-        if (accessoriesData.image) {
-            imageBase64 = new Buffer(accessoriesData.image, 'base64').toString('binary')
-        }
         setIsEdit(true)
         setId(accessoriesData.id)
         setForm({
             productName: accessoriesData.name,
             priceNew: accessoriesData.price_new,
-            previewImg: imageBase64,
+            previewImg: accessoriesData.image
         })
         let category = listCategory.find(item => item.value === accessoriesData.category_id)
         let accessories_id = listAccessories.find(item => item.value === accessoriesData.accessories_id)

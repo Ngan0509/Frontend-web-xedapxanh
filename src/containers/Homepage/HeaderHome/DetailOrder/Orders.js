@@ -4,7 +4,7 @@ import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
 import { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import React from 'react';
@@ -17,7 +17,7 @@ function Orders() {
     const clientInfoSelect = useSelector(selectors.selectorClientInfo)
 
     const dispatch = useDispatch()
-    let history = useHistory();
+    // let history = useHistory();
     let client_id = !_.isEmpty(clientInfoSelect) && clientInfoSelect.id
     //dispatch actions
     useEffect(() => {

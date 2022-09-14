@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
-import * as selectors from "../../../../store/selectors"
-import * as actions from "../../../../store/actions";
-import { LANGUAGES } from '../../../../utils/constant'
+// import * as selectors from "../../../../store/selectors"
+// import * as actions from "../../../../store/actions";
+// import { LANGUAGES } from '../../../../utils/constant'
 import "./Cart.scss"
-import { useEffect, useState } from 'react';
-import { Switch, useHistory, Route } from "react-router-dom";
+// import { useEffect, useState } from 'react';
+import { Switch, Route } from "react-router-dom";
 import Header from '../Header';
 import '../../Homepage.scss'
 
@@ -18,10 +18,10 @@ import {
 import { path } from '../../../../utils'
 
 function Cart() {
-    const lang = useSelector(selectors.selectorLanguages)
+    // const lang = useSelector(selectors.selectorLanguages)
 
-    const dispatch = useDispatch()
-    let history = useHistory();
+    // const dispatch = useDispatch()
+    // let history = useHistory();
 
     // const handleClickPushPage = (item) => {
 

@@ -9,7 +9,7 @@ import "./ShopSystem.scss"
 import shoppingBag from '../../../assets/images/shopping-bag.png'
 
 function ShopSystem() {
-    const lang = useSelector(selectors.selectorLanguages)
+    // const lang = useSelector(selectors.selectorLanguages)
     const allStoreData = useSelector(selectors.selectorAllStoreData)
 
     const dispatch = useDispatch()

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../../store/selectors"
 // import * as actions from "../../../../../store/actions";
@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 function ProductList(props) {
     const lang = useSelector(selectors.selectorLanguages)
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     let history = useHistory();
 
     let { id } = useParams()
@@ -27,6 +27,10 @@ function ProductList(props) {
 
     const handleClickPushDetailBicycle = (item) => {
         history.push(`/home/bicycle/detail/${item.id}`);
+    }
+
+    const handleClickPushDetailAccessories = (item) => {
+        history.push(`/home/accessories/detail/${item.id}`);
     }
 
     const arrStar = [{ num: 1, isYellow: false }, { num: 2, isYellow: false }, { num: 3, isYellow: false }, { num: 4, isYellow: false }, { num: 5, isYellow: false }]
@@ -52,7 +56,10 @@ function ProductList(props) {
 
                                                     <div className='product_info'>
                                                         <div className="name">
-                                                            {item.name}
+                                                            {
+                                                                item.categoryData && !_.isEmpty(item.categoryData) &&
+                                                                    lang === LANGUAGES.VI ? `${item.categoryData.valueVi} ${item.name}` : `${item.categoryData.valueEn} ${item.name}`
+                                                            }
                                                         </div>
 
                                                         <div className="label">
@@ -150,7 +157,9 @@ function ProductList(props) {
                                 {
                                     items && items.length > 0 &&
                                     items.map(item => (
-                                        <div key={item.id} className="col-3">
+                                        <div
+                                            onClick={() => handleClickPushDetailAccessories(item)}
+                                            key={item.id} className="col-3">
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">
@@ -159,7 +168,10 @@ function ProductList(props) {
 
                                                     <div className='product_info'>
                                                         <div className="name">
-                                                            {item.name}
+                                                            {
+                                                                item.categoryData && !_.isEmpty(item.categoryData) &&
+                                                                    lang === LANGUAGES.VI ? `${item.categoryData.valueVi} ${item.name}` : `${item.categoryData.valueEn} ${item.name}`
+                                                            }
                                                         </div>
 
                                                         <div className="priceNew">

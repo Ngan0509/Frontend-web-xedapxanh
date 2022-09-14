@@ -1,8 +1,12 @@
-#DetailBicycle {
-    .detailBicycle_bg {
+#DetailBicycle,
+#DetailAccessories {
+
+    .detailBicycle_bg,
+    .detailAccessories_bg {
         padding: 30px 0;
 
-        .detailBicycle {
+        .detailBicycle,
+        .detailAccessories {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;

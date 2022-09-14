@@ -70,6 +70,10 @@ const handleGetAllAccessory = (inputId) => {
     return axios.get(`/api/get-all-accessory?id=${inputId}`)
 }
 
+const handleGetDetailAccessory = (inputId) => {
+    return axios.get(`/api/get-detail-accessory?id=${inputId}`)
+}
+
 const handleCreateNewAccessory = (data) => {
     return axios.post('/api/create-new-accessory', data)
 }
@@ -186,5 +190,5 @@ export {
     handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout,
     handleGetAllComment, handleCreateNewComment, handleDeleteNewComment, handleUpdateNewComment,
     handleGetAllStore, handleCreateNewStore, handleUpdateNewStore, handleDeleteNewStore,
-    handleCreateNewFavorite
+    handleCreateNewFavorite, handleGetDetailAccessory
 }

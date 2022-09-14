@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'
 import Select from 'react-select';
@@ -91,7 +90,7 @@ function BicycleManage() {
         let data = { ...form, ...selects }
         for (let i = 0; i < arrInputs.length; i++) {
             console.log('input changed: ', data[arrInputs[i]])
-            if (!data[arrInputs[i]]) {
+            if (!data[arrInputs[i]] && data[arrInputs[i]] !== 0) {
                 isValid = false
                 alert(`Missing required parameter: ${arrInputs[i]}`)
                 break
@@ -256,10 +255,6 @@ function BicycleManage() {
     const [id, setId] = useState('')
 
     const handleEditNewBicycle = (bicycleData) => {
-        let imageBase64 = ''
-        if (bicycleData.image) {
-            imageBase64 = new Buffer(bicycleData.image, 'base64').toString('binary')
-        }
         setIsEdit(true)
         setId(bicycleData.id)
         setForm({
@@ -267,7 +262,7 @@ function BicycleManage() {
             priceNew: bicycleData.price_new,
             priceOld: bicycleData.price_old,
             discout: bicycleData.discout,
-            previewImg: imageBase64
+            previewImg: bicycleData.image
         })
         let category = listCategory.find(item => item.value === bicycleData.category_id)
         let priceSpace = listPriceSpace.find(item => item.value === bicycleData.price_space_id)

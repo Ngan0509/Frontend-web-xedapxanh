@@ -4,7 +4,7 @@ import * as selectors from "../../../../store/selectors"
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from '../../../../utils/constant'
 import { useEffect, useState, useCallback } from 'react';
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import CommonUtils from '../../../../utils/CommonUtils';
 import DatePicker from '../../../../components/Input/DatePicker';
 import _ from 'lodash';
@@ -16,7 +16,7 @@ function Account() {
     const clientInfoSelect = useSelector(selectors.selectorClientInfo)
 
     const dispatch = useDispatch()
-    let history = useHistory();
+    // let history = useHistory();
 
     const [clientInfo, setClientInfo] = useState({});
     // get clientInfo
@@ -36,6 +36,7 @@ function Account() {
         if (!_.isEmpty(clientInfo)) {
             let image = clientInfo.image
             setPreviewImg(image)
+            setForm(f => ({ ...f, fullname: clientInfo.fullname }))
         }
     }, [clientInfo])
 
@@ -43,8 +44,38 @@ function Account() {
 
     const handleOnChange = (e, id) => {
         let copyForm = { ...form }
+        copyForm[id] !== '' && setErrorMessage('')
+        copyForm[id] !== '' && setBlurId('')
         copyForm[id] = e.target.value
         setForm({ ...copyForm })
+
+    }
+
+    const [errMessage, setErrorMessage] = useState('')
+    const [blurId, setBlurId] = useState('')
+    const handleOnBlur = (id) => {
+        validator(id)
+    }
+
+    const validator = (id) => {
+        let isValid = false
+        let copyForm = {
+            fullname,
+            birthday,
+            genderId
+        }
+
+        if (copyForm[id] === '') {
+            isValid = true
+            setBlurId(id)
+            setErrorMessage('Trường này không được để trống')
+        } else {
+            isValid = false
+            setBlurId('')
+            setErrorMessage('')
+        }
+
+        return isValid
 
     }
 
@@ -92,15 +123,28 @@ function Account() {
     const [genderId, setGenderId] = useState('')
 
     const handleChangeGender = (value) => {
+        setBlurId('')
+        setErrorMessage('')
         setGenderId(value)
     }
 
     const handleChangeDate = (date) => {
+        setBlurId('')
+        setErrorMessage('')
         setForm({ ...form, birthday: date[0] })
     }
 
     const handleSubmit = async () => {
         let birthdaye = new Date(birthday).getTime()
+
+        let keys = Object.keys({
+            fullname,
+            birthday,
+            genderId
+        })
+
+        let result = keys.every(key => validator(key) === false)
+        if (!result) return
 
         const data = {
             id: clientInfo.id,
@@ -145,10 +189,14 @@ function Account() {
                                     <label><FormattedMessage id="user-manage.fullname" /></label>
                                     <input
                                         value={fullname}
+                                        onBlur={() => handleOnBlur('fullname')}
                                         type='text'
                                         onChange={(e) => handleOnChange(e, 'fullname')}
                                         className='form-control'
                                     />
+                                    <span className="form-message">
+                                        {blurId === 'fullname' && errMessage}
+                                    </span>
                                 </div>
 
                                 <div className='gender form-group'>
@@ -168,6 +216,9 @@ function Account() {
                                             </div>
                                         ))
                                     }
+                                    <span className="form-message">
+                                        {blurId === 'genderId' && errMessage}
+                                    </span>
                                 </div>
 
                                 <div className='birthday form-group'>
@@ -179,6 +230,9 @@ function Account() {
                                         className="form-control"
                                         value={birthday}
                                     />
+                                    <span className="form-message">
+                                        {blurId === 'birthday' && errMessage}
+                                    </span>
                                 </div>
 
                                 <button

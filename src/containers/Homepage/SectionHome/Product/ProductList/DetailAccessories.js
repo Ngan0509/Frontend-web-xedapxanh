@@ -27,7 +27,7 @@ import avatar from '../../../../../assets/images/avatar.webp'
 import LoadingOverlay from 'react-loading-overlay';
 LoadingOverlay.propTypes = undefined
 
-function DetailBicycle() {
+function DetailAccessories() {
     const lang = useSelector(selectors.selectorLanguages)
     const categoryData = useSelector(selectors.selectorCategoryData)
     const clientInfoSelect = useSelector(selectors.selectorClientInfo)
@@ -40,9 +40,7 @@ function DetailBicycle() {
     useEffect(() => {
         return () => {
             setCategory('')
-            setDetailBicycle({})
-            setIsShowMarkDown(false)
-            setIsShowSpecification(false)
+            setDetailAccessories({})
             setSo_luong(1)
             setNav1()
             setNav2()
@@ -52,31 +50,31 @@ function DetailBicycle() {
     let { id } = useParams()
 
     const [category, setCategory] = useState('')
-    const [detailBicycle, setDetailBicycle] = useState({})
+    const [detailAccessories, setDetailAccessories] = useState({})
 
     useEffect(() => {
-        dispatch(actions.fetchCategoryStart('BICYCLE'))
+        dispatch(actions.fetchCategoryStart('ACCESSORIES'))
         dispatch(actions.fetchAllCartStart('All'))
     }, [dispatch])
 
     useEffect(() => {
         categoryData.forEach(item => {
             let cate = ''
-            if (!_.isEmpty(detailBicycle)) {
-                if (item.id === detailBicycle.category_id) {
+            if (!_.isEmpty(detailAccessories)) {
+                if (item.id === detailAccessories.category_id) {
                     cate = lang === LANGUAGES.VI ? item.nameVi : item.nameEn
                     setCategory(cate)
                 }
             }
         })
-    }, [category, categoryData, lang, detailBicycle])
+    }, [category, categoryData, lang, detailAccessories])
 
     useEffect(() => {
         async function fetchData() {
             // You can await here
-            let resp = await userService.handleGetDetailBicycle(id)
+            let resp = await userService.handleGetDetailAccessory(id)
             if (resp && resp.errCode === 0 && resp.data) {
-                setDetailBicycle(resp.data)
+                setDetailAccessories(resp.data)
             } else {
                 alert(resp.errMessage)
             }
@@ -87,15 +85,6 @@ function DetailBicycle() {
 
     const handleClickLogoHome = () => {
         history.push("/home");
-    }
-
-    const [isShowMarkDown, setIsShowMarkDown] = useState(false)
-    const [isShowSpecification, setIsShowSpecification] = useState(false)
-
-    const handleClickViewMore = (id) => {
-        id === 'markdown' && setIsShowMarkDown(state => !state)
-        id === 'specification' && setIsShowSpecification(state => !state)
-
     }
 
     const [so_luong, setSo_luong] = useState(1)
@@ -116,12 +105,12 @@ function DetailBicycle() {
 
     const handleCreateCart = async () => {
         setIsClickAddCart(true)
-        const sum_price = detailBicycle.price_new * so_luong
+        const sum_price = detailAccessories.price_new * so_luong
         const data = {
             product_id: id,
-            type: 'BICYCLE',
+            type: 'ACCESSORIES',
             so_luong,
-            price: detailBicycle.price_new,
+            price: detailAccessories.price_new,
             sum_price
         }
 
@@ -137,12 +126,12 @@ function DetailBicycle() {
         if (isClickAddCart) {
             history.push("/home/cart/shoppingcart")
         } else {
-            const sum_price = detailBicycle.price_new * so_luong
+            const sum_price = detailAccessories.price_new * so_luong
             const data = {
                 product_id: id,
-                type: 'BICYCLE',
+                type: 'ACCESSORIES',
                 so_luong,
-                price: detailBicycle.price_new,
+                price: detailAccessories.price_new,
                 sum_price
             }
 
@@ -168,7 +157,7 @@ function DetailBicycle() {
             const data = {
                 product_id: id,
                 client_id,
-                type: 'BICYCLE',
+                type: 'ACCESSORIES',
                 fullname,
                 date,
                 content: contentComment,
@@ -187,7 +176,7 @@ function DetailBicycle() {
                 resp = await userService.handleCreateNewComment(data)
             }
             if (resp && resp.errCode === 0) {
-                dispatch(actions.fetchAllCommentStart(id, 'BICYCLE'))
+                dispatch(actions.fetchAllCommentStart(id, 'ACCESSORIES'))
             } else {
                 alert(resp.errMessage)
             }
@@ -202,7 +191,7 @@ function DetailBicycle() {
     }
 
     useEffect(() => {
-        dispatch(actions.fetchAllCommentStart(id, 'BICYCLE'))
+        dispatch(actions.fetchAllCommentStart(id, 'ACCESSORIES'))
     }, [dispatch, id])
 
     const [listAllComment, setListAllComment] = useState([]);
@@ -244,63 +233,16 @@ function DetailBicycle() {
         }
     }, [])
 
-    const arrStar = [{ num: 1, isYellow: false }, { num: 2, isYellow: false }, { num: 3, isYellow: false }, { num: 4, isYellow: false }, { num: 5, isYellow: false }]
-
-    const [listStar, setListStar] = useState(arrStar)
-
-    const handleMouseOverStar = (item) => {
-        let result = listStar.map(star => {
-            if (star.num <= item.num) {
-                star.isYellow = true
-            } else {
-                star.isYellow = false
-            }
-            return star
-        })
-        setListStar(result)
-    }
-
-    const handleClickStar = async (item) => {
-        if (isLoggedInClient) {
-            let client_id = !_.isEmpty(clientInfoSelect) && clientInfoSelect.id
-            const data = {
-                product_id: id,
-                client_id,
-                num_star: item.num
-            }
-            const resp = await userService.handleCreateNewFavorite(data)
-            if (resp && resp.errCode === 0) {
-                alert("Đánh giá sản phẩm thành công")
-            } else {
-                alert(resp.errMessage)
-            }
-
-            let result = listStar.map(star => {
-                if (star.num <= item.num) {
-                    star.isYellow = true
-                } else {
-                    star.isYellow = false
-                }
-                return star
-            })
-
-            setListStar(result)
-        } else {
-            alert("Bạn cần phải đăng nhập mới đánh giá được")
-            history.push("/home/login");
-        }
-    }
-
     return (
-        <div id="DetailBicycle">
+        <div id="DetailAccessories">
             <Header />
             <LoadingOverlay
                 active={isShowLoading}
                 spinner
                 text='Loading...'
             >
-                <div className='detailBicycle_bg'>
-                    <div className='detailBicycle'>
+                <div className='detailAccessories_bg'>
+                    <div className='detailAccessories'>
                         <div className='link'>
                             <span
                                 onClick={() => handleClickLogoHome()}
@@ -417,26 +359,14 @@ function DetailBicycle() {
                                 </div>
                                 <div className='col-7 infor_buy-product'>
                                     <div className='title_product'>
-                                        <span>{category} {detailBicycle.name}</span>
+                                        <span>{category} {detailAccessories.name}</span>
                                     </div>
                                     <div className='price_product'>
-                                        <div className="priceOld">
-                                            <span className="price">
-                                                <NumberFormat
-                                                    value={detailBicycle.price_old}
-                                                    className="foo"
-                                                    displayType={'text'}
-                                                    thousandSeparator={true}
-                                                    suffix={'VND'}
-                                                />
-                                            </span>
-                                            <span className="discout">{detailBicycle.discout}%</span>
-                                        </div>
 
                                         <div className="priceNew">
                                             <span className="price">
                                                 <NumberFormat
-                                                    value={detailBicycle.price_new}
+                                                    value={detailAccessories.price_new}
                                                     className="foo"
                                                     displayType={'text'}
                                                     thousandSeparator={true}
@@ -478,45 +408,9 @@ function DetailBicycle() {
                             </div>
                             <div className='row product_infor_more'>
                                 <div className='col-7'>
-                                    <div className='markdown'>
-                                        <h4>Thông tin mô tả</h4>
-                                        {
-                                            !_.isEmpty(detailBicycle) && detailBicycle.markdownData && !_.isEmpty(detailBicycle.markdownData) ?
-                                                <>
-                                                    <div className={`${isShowMarkDown ? 'markdown_content active' : 'markdown_content'}`}>
-                                                        <div dangerouslySetInnerHTML={{ __html: detailBicycle.markdownData.contentHTML }} />
-                                                    </div>
-                                                    <div
-                                                        onClick={() => handleClickViewMore('markdown')}
-                                                        className='view-more'>
-                                                        {
-                                                            isShowMarkDown ? 'Rút gọn' : 'Xem thêm'
-                                                        }
-
-                                                    </div>
-                                                </>
-                                                :
-                                                <span>Không có thông tin mô tả</span>
-                                        }
-                                    </div>
-
                                     <div className='comment'>
                                         <h5>
                                             Đánh giá sản phẩm
-                                            <div className='favorite'>
-                                                {
-                                                    listStar && listStar.length > 0 &&
-                                                    listStar.map(item => (
-                                                        <span
-                                                            onMouseOver={() => handleMouseOverStar(item)}
-                                                            onClick={() => handleClickStar(item)}
-                                                            key={item.num} className={`${item.isYellow ? 'icon-star active' : 'icon-star'}`}>
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                    ))
-                                                }
-                                            </div>
-                                            <span>(Click vào để đánh giá !!!)</span>
                                         </h5>
                                         <div className='comment_input'>
                                             <div className='textarea'>
@@ -541,26 +435,6 @@ function DetailBicycle() {
                                                                 </div>
                                                                 <div className='name'>
                                                                     {item.fullname}
-                                                                </div>
-                                                                <div className='favorite'>
-                                                                    {
-                                                                        arrStar && arrStar.length > 0 &&
-                                                                        arrStar
-                                                                            .map(star => {
-                                                                                if (item.num_star > 0 && star.num <= item.num_star) {
-                                                                                    star.isYellow = true
-                                                                                } else {
-                                                                                    star.isYellow = false
-                                                                                }
-                                                                                return star
-                                                                            })
-                                                                            .map(star => (
-                                                                                <span
-                                                                                    key={star.num} className={`${star.isYellow ? 'icon-star active' : 'icon-star'}`}>
-                                                                                    <i className='bx bxs-leaf'></i>
-                                                                                </span>
-                                                                            ))
-                                                                    }
                                                                 </div>
                                                             </div>
                                                             <div className='date-icon'>
@@ -594,124 +468,7 @@ function DetailBicycle() {
                                     </div>
                                 </div>
                                 <div className='col-5'>
-                                    <div className='specification'>
-                                        <h4>Thông số kỹ thuật xe đạp {detailBicycle.name}</h4>
-                                        {
-                                            !_.isEmpty(detailBicycle) && detailBicycle.specificationsData && !_.isEmpty(detailBicycle.specificationsData) ?
-
-                                                <>
-                                                    <div className={`${isShowSpecification ? 'table active' : 'table'}`}>
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Chất liệu sơn</td>
-                                                                    <td>{detailBicycle.specificationsData.chat_lieu_son}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Độ tuổi</td>
-                                                                    <td>{detailBicycle.specificationsData.do_tuoi}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Chiều cao</td>
-                                                                    <td>{detailBicycle.specificationsData.chieu_cao}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Kích thước Trọng lượng</td>
-                                                                    <td>{detailBicycle.specificationsData.kich_thuoc_trong_luong}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Tải trọng</td>
-                                                                    <td>{detailBicycle.specificationsData.tai_trong}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Tải trọng yên phụ</td>
-                                                                    <td>{detailBicycle.specificationsData.tai_trong_yen_phu}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Thương hiệu</td>
-                                                                    <td>{detailBicycle.specificationsData.thuong_hieu}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Nơi sản xuất</td>
-                                                                    <td>{detailBicycle.specificationsData.noi_san_xuat}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Sườn xe</td>
-                                                                    <td>{detailBicycle.specificationsData.suon_xe}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Phuộc</td>
-                                                                    <td>{detailBicycle.specificationsData.phuoc}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Kích cỡ bánh xe</td>
-                                                                    <td>{detailBicycle.specificationsData.kich_co_banh_xe}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Vành</td>
-                                                                    <td>{detailBicycle.specificationsData.vanh}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Lốp xe</td>
-                                                                    <td>{detailBicycle.specificationsData.lop_xe}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Loại van bơm</td>
-                                                                    <td>{detailBicycle.specificationsData.loai_van_bom}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Bộ đĩa</td>
-                                                                    <td>{detailBicycle.specificationsData.bo_dia}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Bộ thắng</td>
-                                                                    <td>{detailBicycle.specificationsData.bo_thang}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Tay thắng</td>
-                                                                    <td>{detailBicycle.specificationsData.tay_thang}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Loại phanh thắng</td>
-                                                                    <td>{detailBicycle.specificationsData.loai_phanh_thang}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Bộ líp</td>
-                                                                    <td>{detailBicycle.specificationsData.bo_lip}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Ghi đông</td>
-                                                                    <td>{detailBicycle.specificationsData.ghi_dong}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Chất liệu yên</td>
-                                                                    <td>{detailBicycle.specificationsData.chat_lieu_yen}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Chất liệu cốt</td>
-                                                                    <td>{detailBicycle.specificationsData.chat_lieu_cot}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Hãng</td>
-                                                                    <td>{detailBicycle.specificationsData.hang}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
-                                                    <div
-                                                        onClick={() => handleClickViewMore('specification')}
-                                                        className='view-more'>
-                                                        {
-                                                            isShowSpecification ? 'Ẩn chi tiết thông số' : 'Xem chi tiết thông số'
-                                                        }
-
-                                                    </div>
-                                                </>
-                                                :
-                                                <span>Không có thông số kỹ thuật</span>
-                                        }
-                                    </div>
+                                    Tin tức
                                 </div>
                             </div>
                         </div>
@@ -723,4 +480,4 @@ function DetailBicycle() {
     )
 }
 
-export default DetailBicycle
+export default DetailAccessories
