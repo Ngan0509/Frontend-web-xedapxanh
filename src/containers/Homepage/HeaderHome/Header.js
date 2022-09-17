@@ -246,10 +246,12 @@ function Header() {
                         </div>
 
                         <div className='news'>
-                            <span className='news_icon'>
+                            <a
+                                href={path.NEWS}
+                                className='news_icon'>
                                 <i className='bx bx-news' ></i>
                                 <FormattedMessage id="headerHome.news" />
-                            </span>
+                            </a>
                         </div>
                         <div className='cart'>
                             <div className='cart_wrap'>

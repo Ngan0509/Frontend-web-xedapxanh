@@ -19,7 +19,8 @@ export const path = {
     ORDERS: '/home/detailOrder/orders',
     NOTIFY: '/home/detailOrder/notify',
     LOGINCLIENT: '/home/login',
-    SIGNUPCLIENT: '/home/signup'
+    SIGNUPCLIENT: '/home/signup',
+    NEWS: '/home/news'
 };
 
 export const pathSystem = {

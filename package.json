@@ -14,6 +14,7 @@
     "bootstrap": "^5.0.1",
     "buffer": "^6.0.3",
     "connected-react-router": "^6.9.1",
+    "dangerously-set-html-content": "^1.0.9",
     "lodash": "^4.17.21",
     "markdown-it": "^12.1.0",
     "moment": "^2.29.0",
@@ -74,5 +75,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html-loader": "^4.1.0"
   }
 }

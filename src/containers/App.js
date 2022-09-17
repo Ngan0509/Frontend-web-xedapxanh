@@ -29,6 +29,7 @@ import LogIn from "./Homepage/HeaderHome/Author/LogIn";
 import SignUp from "./Homepage/HeaderHome/Author/SignUp";
 
 import DetailOrder from './Homepage/HeaderHome/DetailOrder/DetailOrder';
+import News from './Homepage/HeaderHome/News/News'
 
 class App extends Component {
 
@@ -74,6 +75,7 @@ class App extends Component {
                                     <Route path={path.DETAILORDER} component={(DetailOrder)} />
                                     <Route path={path.LOGINCLIENT} component={(LogIn)} />
                                     <Route path={path.SIGNUPCLIENT} component={(SignUp)} />
+                                    <Route path={path.NEWS} component={(News)} />
                                 </Switch>
 
                             </CustomScrollbars>
