@@ -23,7 +23,6 @@ function ProductList(props) {
         id = 'All'
     }
     const { items } = props
-    console.log("items", items)
 
     const handleClickPushDetailBicycle = (item) => {
         history.push(`/home/bicycle/detail/${item.id}`);
@@ -47,7 +46,7 @@ function ProductList(props) {
                                     items.map(item => (
                                         <div
                                             onClick={() => handleClickPushDetailBicycle(item)}
-                                            key={item.id} className="col-3">
+                                            key={item.id} className="col-lg-3 col-md-4 col-sm-6 col">
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">
@@ -159,7 +158,7 @@ function ProductList(props) {
                                     items.map(item => (
                                         <div
                                             onClick={() => handleClickPushDetailAccessories(item)}
-                                            key={item.id} className="col-3">
+                                            key={item.id} className="col-lg-3 col-md-4 col-sm-6 col">
                                             <div className="productList_item">
                                                 <div className='productList_item-wrap'>
                                                     <div className="image">

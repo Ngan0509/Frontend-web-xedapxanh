@@ -48,7 +48,7 @@ function Category() {
                                 listCategory.map((item) => (
                                     <div
                                         key={item.id}
-                                        className="col-4"
+                                        className="col-lg-4 col-md-6 col-sm-6 col-12"
                                         onClick={() => handleClickPushPage(item)}
                                     >
                                         <li>

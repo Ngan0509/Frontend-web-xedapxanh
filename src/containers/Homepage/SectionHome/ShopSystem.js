@@ -37,7 +37,7 @@ function ShopSystem() {
                         {
                             listAllStore && listAllStore.length > 0 &&
                             listAllStore.map(item => (
-                                <div key={item.id} className="col">
+                                <div key={item.id} className="col-lg-4 col-md-6 col-12">
                                     <div className="shopSystem_item">
                                         <div className="shopSystem_image">
                                             <img src={shoppingBag} alt="shopSystem" />

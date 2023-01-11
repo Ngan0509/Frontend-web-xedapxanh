@@ -41,6 +41,7 @@ function DetailAccessories() {
         return () => {
             setCategory('')
             setDetailAccessories({})
+            setUploadedFiles([])
             setSo_luong(1)
             setNav1()
             setNav2()
@@ -51,10 +52,10 @@ function DetailAccessories() {
 
     const [category, setCategory] = useState('')
     const [detailAccessories, setDetailAccessories] = useState({})
+    const [uploadedFiles, setUploadedFiles] = useState([])
 
     useEffect(() => {
         dispatch(actions.fetchCategoryStart('ACCESSORIES'))
-        dispatch(actions.fetchAllCartStart('All'))
     }, [dispatch])
 
     useEffect(() => {
@@ -69,12 +70,20 @@ function DetailAccessories() {
         })
     }, [category, categoryData, lang, detailAccessories])
 
+    const [isShowLoading, setIsShowLoading] = useState(true)
     useEffect(() => {
         async function fetchData() {
             // You can await here
             let resp = await userService.handleGetDetailAccessory(id)
+            const resp2 = await userService.handleGetMultiImage(id, 'ACCESSORIES')
+            if (resp2 && resp2.errCode === 0) {
+                setUploadedFiles(resp2.data)
+            } else {
+                alert(resp2.errMessage)
+            }
             if (resp && resp.errCode === 0 && resp.data) {
                 setDetailAccessories(resp.data)
+                setIsShowLoading(false)
             } else {
                 alert(resp.errMessage)
             }
@@ -103,43 +112,44 @@ function DetailAccessories() {
 
     const [isClickAddCart, setIsClickAddCart] = useState(false)
 
-    const handleCreateCart = async () => {
-        setIsClickAddCart(true)
+    const [listAllCart, setListAllCart] = useState(() => {
+        const allCartData = JSON.parse(localStorage.getItem("arrCart")) || [];
+        return allCartData;
+    });
+
+    const handleAddCart = () => {
         const sum_price = detailAccessories.price_new * so_luong
         const data = {
+            id: Math.floor(Math.random() * 100),
             product_id: id,
             type: 'ACCESSORIES',
             so_luong,
             price: detailAccessories.price_new,
-            sum_price
+            sum_price,
+            productData: {
+                name: detailAccessories.name,
+                image: detailAccessories.image,
+                price_new: detailAccessories.price_new
+            }
         }
 
-        const resp = await userService.handleCreateNewCart(data)
-        if (resp && resp.errCode === 0) {
-            alert(`Đã thêm ${so_luong} sản phẩm vào giỏ hàng`)
-        }
-        dispatch(actions.fetchAllCartStart('All'))
+        const arrCart = [...listAllCart, data];
 
+        localStorage.setItem("arrCart", JSON.stringify(arrCart));
+        setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || []);
     }
 
-    const handleClickCheckout = async () => {
+    const handleCreateCart = () => {
+        setIsClickAddCart(true)
+        handleAddCart();
+    }
+
+    const handleClickCheckout = () => {
         if (isClickAddCart) {
             history.push("/home/cart/shoppingcart")
         } else {
-            const sum_price = detailAccessories.price_new * so_luong
-            const data = {
-                product_id: id,
-                type: 'ACCESSORIES',
-                so_luong,
-                price: detailAccessories.price_new,
-                sum_price
-            }
-
-            const resp = await userService.handleCreateNewCart(data)
-            if (resp && resp.errCode === 0) {
-                history.push("/home/cart/shoppingcart")
-            }
-            dispatch(actions.fetchAllCartStart('All'))
+            handleAddCart();
+            history.push("/home/cart/shoppingcart")
         }
     }
 
@@ -195,7 +205,6 @@ function DetailAccessories() {
     }, [dispatch, id])
 
     const [listAllComment, setListAllComment] = useState([]);
-    console.log("listAllComment", listAllComment)
 
     // get AllComment
     useEffect(() => {
@@ -220,27 +229,14 @@ function DetailAccessories() {
         }
     }
 
-    const [isShowLoading, setIsShowLoading] = useState(true)
-
-    useEffect(() => {
-        async function fetchData() {
-            setIsShowLoading(false)
-        }
-        // fetchData()
-        const myTimeOut = setTimeout(fetchData, 1500)
-        return () => {
-            clearTimeout(myTimeOut)
-        }
-    }, [])
-
     return (
-        <div id="DetailAccessories">
-            <Header />
-            <LoadingOverlay
-                active={isShowLoading}
-                spinner
-                text='Loading...'
-            >
+        <LoadingOverlay
+            active={isShowLoading}
+            spinner
+            text='Loading...'
+        >
+            <div id="DetailAccessories">
+                <Header allCartData={listAllCart} />
                 <div className='detailAccessories_bg'>
                     <div className='detailAccessories'>
                         <div className='link'>
@@ -252,112 +248,108 @@ function DetailAccessories() {
 
                         <div className='infor_buy'>
                             <div className='row product_infor'>
-                                <div className='col-5 image_product'>
+                                <div className='col-lg-5 col-md-5 col-sm-12 image_product'>
                                     <div className='row'>
-                                        <Slider
-                                            asNavFor={nav2} ref={c => setNav1(c)}
-                                        >
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                        </Slider>
+                                        {
+                                            uploadedFiles.length > 0 ?
+                                                <Slider
+                                                    asNavFor={nav2} ref={c => setNav1(c)}
+                                                >
+                                                    {
+                                                        uploadedFiles && uploadedFiles.length > 0 &&
+                                                        uploadedFiles.map(item => (
+                                                            <div key={item.id} className='col'>
+                                                                <div className='image_slider-main'>
+                                                                    <img src={item.image ? item.image : xedap} alt='slider-main' />
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </Slider>
+                                                :
+                                                <Slider
+                                                    asNavFor={nav2} ref={c => setNav1(c)}
+                                                >
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                </Slider>
+                                        }
                                     </div>
                                     <div className='row'>
-                                        <Slider
-                                            asNavFor={nav1}
-                                            ref={c => setNav2(c)}
-                                            slidesToShow={4}
-                                            swipeToSlide={true}
-                                            focusOnSelect={true}
-                                            arrows={false}
-                                        >
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
+                                        {
+                                            uploadedFiles.length > 0 ?
+                                                <Slider
+                                                    asNavFor={nav1}
+                                                    ref={c => setNav2(c)}
+                                                    slidesToShow={4}
+                                                    swipeToSlide={true}
+                                                    focusOnSelect={true}
+                                                    arrows={false}
+                                                >
+                                                    {
+                                                        uploadedFiles && uploadedFiles.length > 0 &&
+                                                        uploadedFiles.map(item => (
+                                                            <div key={item.id} className='col'>
+                                                                <div className='image_slider-child'>
+                                                                    <img src={item.image ? item.image : xedap} alt='slider-child' />
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
 
-                                        </Slider>
+                                                </Slider>
+                                                :
+                                                <Slider
+                                                    asNavFor={nav1}
+                                                    ref={c => setNav2(c)}
+                                                    slidesToShow={4}
+                                                    swipeToSlide={true}
+                                                    focusOnSelect={true}
+                                                    arrows={false}
+                                                >
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                </Slider>
+                                        }
                                     </div>
                                 </div>
-                                <div className='col-7 infor_buy-product'>
+                                <div className='col-lg-7 col-md-7 col-sm-12 infor_buy-product'>
                                     <div className='title_product'>
                                         <span>{category} {detailAccessories.name}</span>
                                     </div>
@@ -407,7 +399,7 @@ function DetailAccessories() {
                                 </div>
                             </div>
                             <div className='row product_infor_more'>
-                                <div className='col-7'>
+                                <div className='col-lg-7 col-md-7 col-sm-12'>
                                     <div className='comment'>
                                         <h5>
                                             Đánh giá sản phẩm
@@ -467,16 +459,16 @@ function DetailAccessories() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className='col-5'>
+                                <div className='col-lg-5 col-md-5 col-sm-12'>
                                     Tin tức
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </LoadingOverlay>
-            <Footer />
-        </div>
+                <Footer />
+            </div>
+        </LoadingOverlay>
     )
 }
 

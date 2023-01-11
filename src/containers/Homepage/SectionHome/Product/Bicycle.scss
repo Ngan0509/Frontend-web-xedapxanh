@@ -4,7 +4,7 @@
         padding: 30px 0;
 
         .bicycle {
-            width: 100%;
+            width: 95%;
             max-width: 1200px;
             margin: 0 auto;
 
@@ -24,6 +24,7 @@
             }
 
             .bicycle_filter {
+                width: 1000px;
 
                 .item {
                     display: inline-block;
@@ -54,7 +55,7 @@
                         position: absolute;
                         top: 40px;
                         z-index: 100;
-                        width: 550px;
+                        width: 400px;
                         background-color: #fff;
                         box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
                         opacity: 0;
@@ -89,14 +90,6 @@
                                 font-size: 24px;
                                 cursor: pointer;
                             }
-                        }
-
-                        &.left {
-                            left: 0;
-                        }
-
-                        &.right {
-                            right: 0;
                         }
                     }
 
@@ -243,3 +236,107 @@
         }
     }
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    #Bicycle,
+    #Accessories {
+        .bicycle_bg {
+            .bicycle {
+                &>ul {
+                    li {
+
+                        &.previous,
+                        &.next {
+                            margin: 0 8px;
+                            min-width: 30px;
+
+                        }
+
+                        margin: 0 4px;
+                        min-width: 30px;
+
+                        &.selected {
+                            a {
+                                padding: 3px 6px;
+                            }
+                        }
+                    }
+                }
+
+                .bicycle_filter {
+                    width: 335px;
+
+                    .item {
+                        .filter_box {
+                            width: 200px;
+                        }
+                    }
+                }
+
+                .bicycle_filter-more {
+                    position: relative;
+                    margin-bottom: 60px;
+
+                    .sort-select {
+                        float: none;
+                        position: absolute;
+                        top: 40px;
+                        right: unset;
+                        left: 0;
+                        width: 200px;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* All small and medium devices */
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+
+    #Bicycle,
+    #Accessories {
+        .bicycle_bg {
+            .bicycle {
+                .bicycle_filter {
+                    width: 600px;
+
+                    .item {
+                        .filter_box {
+                            width: 350px;
+                        }
+                    }
+                }
+
+                .bicycle_filter-more {
+                    position: relative;
+
+                    .sort-select {
+                        float: none;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        width: 200px;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}

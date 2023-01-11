@@ -7,7 +7,7 @@
 
             .header_news {
                 max-width: 1200px;
-                width: 100%;
+                width: 90%;
                 margin: 0 auto;
 
                 .author,
@@ -64,10 +64,25 @@
                 .home {
                     padding: 16px 0;
 
-                    .logo {
-                        width: 100px;
-                        cursor: pointer;
+                    .logo_wrap {
+                        display: flex;
+                        align-items: center;
+
+                        .menu {
+                            display: none;
+                            margin-right: 30px;
+
+                            .menu-icon {
+                                font-size: 26px;
+                            }
+                        }
+
+                        .logo {
+                            width: 100px;
+                            cursor: pointer;
+                        }
                     }
+
 
                     .nav_list {
                         .wrap {
@@ -126,6 +141,35 @@
 
 
                 }
+
+                .nav_list-mobile {
+                    background-color: #fff;
+                    height: 0;
+                    padding-bottom: 0;
+                    transition: 0.3s;
+
+                    .wrap {
+                        padding: 8px 0;
+
+                        span {
+                            font-size: 16px;
+                            margin: 0 8px;
+                            padding: 0 8px;
+                            letter-spacing: 0.5px;
+                            cursor: pointer;
+                            transition: 0.3s;
+
+                            &:hover {
+                                color: var(--primary-color);
+                            }
+                        }
+                    }
+                }
+
+                .nav_list-mobile.show {
+                    height: auto;
+                    padding-bottom: 8px;
+                }
             }
         }
     }
@@ -174,7 +218,7 @@
                 .slider {
                     background-position: center;
                     background-size: cover;
-                    height: 90vh;
+                    height: 600px;
 
                     &.one {
                         background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/inhype1-photos-11.jpg);
@@ -191,13 +235,12 @@
                     .slider_bg {
                         height: 100%;
                         background-color: rgba(0, 0, 0, 0.4);
-                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 100px;
 
                         .text {
-                            position: absolute;
                             color: #fff;
-                            left: 120px;
-                            top: 180px;
 
                             .slider_title {
                                 cursor: pointer;
@@ -205,13 +248,12 @@
                                 margin-bottom: 24px;
                                 font-size: 34px;
                                 font-weight: 600;
-                                width: 700px;
                                 line-height: 1.5;
                                 color: #fff;
                             }
 
                             .info_other {
-                                color: #ccc;
+                                color: #fff;
                                 font-size: 12px;
                                 letter-spacing: 1px;
                                 font-weight: 600;
@@ -242,6 +284,73 @@
 
     #section_news {
         .section_news {
+            .same {
+                padding: 40px 0;
+                max-width: 1200px;
+                width: 90%;
+                margin: 0 auto;
+
+                .child,
+                .left_child,
+                .right_child {
+                    .image {
+                        background: none;
+                    }
+                }
+
+                .image {
+                    overflow: hidden;
+                    border-radius: 10px;
+                    background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/ofhlstldxzk-1140x694.jpg);
+                    background-position: left;
+                    background-size: cover;
+                    height: 450px;
+                    margin-bottom: 24px;
+
+                    .image_bg {
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.4);
+                        position: relative;
+
+                        .text {
+                            position: absolute;
+                            bottom: 30px;
+                            padding: 0 40px;
+                            color: #fff;
+
+                            .info_other {
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .child_title {
+                cursor: pointer;
+                line-height: 1.5;
+                font-weight: 600;
+                margin-top: 16px;
+            }
+
+            .info_other {
+                margin-top: 16px;
+                font-size: 11px;
+                font-weight: 600;
+
+                .dot {
+                    width: 6px;
+                    height: 6px;
+                    display: inline-block;
+                    border: 1px solid #ddd;
+                    background-color: transparent;
+                    border-radius: 50%;
+                }
+            }
+
+            .desc {
+                margin-top: 16px;
+            }
 
             .section_title {
                 font-size: 28px;
@@ -260,34 +369,13 @@
                 background-color: #fff;
 
                 .list_top-title {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .child {
                         .child_title {
-                            cursor: pointer;
                             font-size: 18px;
-                            line-height: 1.5;
-                            font-weight: 600;
-                            margin-top: 16px;
                         }
 
                         .info_other {
-                            margin-top: 16px;
                             color: #999;
-                            font-size: 11px;
-                            font-weight: 600;
-
-                            .dot {
-                                width: 6px;
-                                height: 6px;
-                                display: inline-block;
-                                border: 1px solid #ddd;
-                                background-color: transparent;
-                                border-radius: 50%;
-                            }
                         }
                     }
                 }
@@ -297,60 +385,14 @@
                 background-color: #fff;
 
                 .resent {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row {
                         --bs-gutter-x: 3.5rem;
 
                         .image {
-                            overflow: hidden;
-                            border-radius: 10px;
-                            background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/ofhlstldxzk-1140x694.jpg);
-                            background-position: left;
-                            background-size: cover;
-                            height: 500px;
-
                             .image_bg {
-                                height: 100%;
-                                background-color: rgba(0, 0, 0, 0.4);
-                                position: relative;
-
                                 .text {
-                                    position: absolute;
-                                    color: #fff;
-                                    left: 50px;
-                                    bottom: 50px;
-                                    width: 500px;
-
-                                    .image_title {
-                                        cursor: pointer;
-                                        font-size: 18px;
-                                        line-height: 1.5;
-                                        font-weight: 600;
-                                        margin-top: 16px;
-                                    }
-
-                                    .info_other {
-                                        margin-top: 16px;
-                                        color: #fff;
-                                        font-size: 11px;
-                                        font-weight: 600;
-
-                                        .dot {
-                                            width: 6px;
-                                            height: 6px;
-                                            display: inline-block;
-                                            border: 1px solid #ddd;
-                                            background-color: transparent;
-                                            border-radius: 50%;
-                                        }
-                                    }
-
-                                    .desc {
-                                        margin-top: 16px;
+                                    .child_title {
+                                        font-size: 22px;
                                     }
                                 }
                             }
@@ -370,27 +412,11 @@
 
                                 li {
                                     .child_title {
-                                        cursor: pointer;
                                         font-size: 18px;
-                                        line-height: 1.5;
-                                        font-weight: 600;
-                                        margin-top: 16px;
                                     }
 
                                     .info_other {
-                                        margin-top: 16px;
                                         color: #999;
-                                        font-size: 11px;
-                                        font-weight: 600;
-
-                                        .dot {
-                                            width: 6px;
-                                            height: 6px;
-                                            display: inline-block;
-                                            border: 1px solid #ddd;
-                                            background-color: transparent;
-                                            border-radius: 50%;
-                                        }
                                     }
                                 }
                             }
@@ -404,11 +430,6 @@
                 background-color: #fff;
 
                 .technology {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.technology_list {
                         --bs-gutter-x: 1.5rem;
                         margin-top: 30px;
@@ -426,31 +447,14 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 20px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
 
                                 .desc {
-                                    margin-top: 16px;
                                     color: #666;
                                 }
                             }
@@ -463,11 +467,6 @@
                 background-color: #f5f5f5;
 
                 .today_highlights {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.today_highlights_list {
                         // --bs-gutter-x: 1.5rem;
                         margin-top: 30px;
@@ -487,27 +486,11 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 20px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
                             }
                         }
@@ -519,57 +502,16 @@
                 background-color: #fff;
 
                 .art_culture {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
 
                     .row.art_culture_list {
                         margin-top: 30px;
                         --bs-gutter-x: 3.5rem;
 
                         .image {
-                            overflow: hidden;
-                            border-radius: 10px;
-                            background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/ofhlstldxzk-1140x694.jpg);
-                            background-position: left;
-                            background-size: cover;
-                            height: 500px;
-
                             .image_bg {
-                                height: 100%;
-                                background-color: rgba(0, 0, 0, 0.4);
-                                position: relative;
-
                                 .text {
-                                    position: absolute;
-                                    color: #fff;
-                                    left: 50px;
-                                    bottom: 50px;
-                                    width: 400px;
-
-                                    .image_title {
-                                        cursor: pointer;
-                                        font-size: 30px;
-                                        line-height: 1.5;
-                                        font-weight: 600;
-                                        margin-top: 16px;
-                                    }
-
-                                    .info_other {
-                                        margin-top: 16px;
-                                        color: #fff;
-                                        font-size: 11px;
-                                        font-weight: 600;
-
-                                        .dot {
-                                            width: 6px;
-                                            height: 6px;
-                                            display: inline-block;
-                                            border: 1px solid #ddd;
-                                            background-color: transparent;
-                                            border-radius: 50%;
-                                        }
+                                    .child_title {
+                                        font-size: 28px;
                                     }
                                 }
                             }
@@ -582,11 +524,6 @@
                 background-color: #fff;
 
                 .selected {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.selected_list {
                         margin-top: 30px;
                         --bs-gutter-x: 4.5rem;
@@ -604,28 +541,11 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 30px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
-                                    width: 700px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
                             }
                         }
@@ -645,11 +565,7 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 16px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
                             }
                         }
@@ -662,10 +578,6 @@
 
                 .travel {
                     border-top: 1px solid #ccc;
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
 
                     .row.travel_list {
                         margin-top: 30px;
@@ -673,47 +585,14 @@
 
                         .image {
                             margin: 16px 0;
-                            overflow: hidden;
-                            border-radius: 10px;
-                            background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/ofhlstldxzk-1140x694.jpg);
-                            background-position: left;
-                            background-size: cover;
                             height: 400px;
 
                             .image_bg {
-                                height: 100%;
-                                background-color: rgba(0, 0, 0, 0.4);
-                                position: relative;
 
                                 .text {
-                                    position: absolute;
-                                    color: #fff;
-                                    left: 50px;
-                                    bottom: 50px;
-                                    width: 300px;
 
-                                    .image_title {
-                                        cursor: pointer;
+                                    .child_title {
                                         font-size: 22px;
-                                        line-height: 1.5;
-                                        font-weight: 600;
-                                        margin-top: 16px;
-                                    }
-
-                                    .info_other {
-                                        margin-top: 16px;
-                                        color: #fff;
-                                        font-size: 11px;
-                                        font-weight: 600;
-
-                                        .dot {
-                                            width: 6px;
-                                            height: 6px;
-                                            display: inline-block;
-                                            border: 1px solid #ddd;
-                                            background-color: transparent;
-                                            border-radius: 50%;
-                                        }
                                     }
                                 }
                             }
@@ -726,10 +605,6 @@
                 background-color: #fff;
 
                 .enough_talk {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
                     text-align: center;
 
                     .enough_title {
@@ -760,18 +635,20 @@
                         background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/inhype1-photos-13.jpg);
                         background-position: center center;
                         background-size: cover;
-                        height: 300px;
+                        height: auto;
 
                         .image_bg {
-                            padding: 60px 0;
+                            padding: 0;
                             color: #fff;
+                            background: none;
 
                             .text {
+                                padding: 60px 40px;
+                                position: initial;
 
                                 h5 {
                                     font-size: 30px;
                                     font-weight: 600;
-                                    margin-bottom: 24px;
                                 }
 
                                 .email_input {
@@ -780,10 +657,14 @@
                                         border-radius: 4px;
                                         outline: none;
                                         border: none;
-                                        width: 300px;
+                                        max-width: 300px;
+                                        width: 90%;
+                                        margin: 0 auto;
+                                        margin-top: 24px;
                                     }
 
                                     button {
+                                        margin-top: 24px;
                                         margin-left: 8px;
                                     }
                                 }
@@ -802,10 +683,6 @@
                 background-color: #fff;
 
                 .categories {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
 
                     .row.categories_list {
                         margin-top: 30px;
@@ -816,19 +693,22 @@
                             background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/inhype1-photos-2.jpg);
                             background-position: center center;
                             background-size: cover;
-                            height: 300px;
+                            height: auto;
                             overflow: hidden;
 
                             .image_bg {
+                                position: initial;
                                 height: 100%;
                                 background-color: rgba(0, 0, 0, 0.4);
-                                position: relative;
                                 display: flex;
                                 flex-direction: column;
                                 justify-content: space-between;
-                                padding: 30px;
+                                padding: 40px 30px;
 
                                 .text {
+                                    position: initial;
+                                    padding: 0;
+
                                     p {
                                         color: #ccc;
                                         font-weight: 600;
@@ -836,6 +716,7 @@
                                 }
 
                                 .view-post {
+                                    margin-top: 100px;
                                     display: inline-block;
                                     width: 120px;
                                     text-align: center;
@@ -861,11 +742,9 @@
 
                 .more-from {
                     padding: 60px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
 
                     .child {
+                        padding: 0 16px;
 
                         .row {
                             --bs-gutter-x: 3.5rem;
@@ -879,40 +758,29 @@
                             }
 
                             .text {
-                                color: #fff;
                                 margin-top: 60px;
-                                width: 450px;
+
+                                h3 {
+                                    margin-bottom: 0;
+                                }
 
                                 .child_title {
-                                    cursor: pointer;
-                                    font-size: 22px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                     color: #fff;
-                                    margin-bottom: 30px;
+                                    font-size: 22px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
-                                    color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
+                                    color: #fff;
                                 }
                             }
 
                             .image {
                                 border-radius: 10px;
                                 overflow: hidden;
+
+                                img {
+                                    object-fit: cover;
+                                }
                             }
 
                         }
@@ -924,17 +792,13 @@
                 background-color: #fff;
 
                 .video {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.video_list {
                         --bs-gutter-x: 0rem;
                         margin-top: 30px;
 
                         .left_child {
                             .image {
+                                border-radius: 0;
                                 border-top-left-radius: 6px;
                                 border-bottom-left-radius: 6px;
                                 background-image: url(https://wp.wp-preview.com/inhype/inhype-1/wp-content/uploads/2019/11/ofhlstldxzk-1140x694.jpg);
@@ -944,40 +808,12 @@
                                 overflow: hidden;
 
                                 .image_bg {
-                                    height: 100%;
-                                    background-color: rgba(0, 0, 0, 0.4);
-                                    position: relative;
 
                                     .text {
-                                        position: absolute;
-                                        color: #fff;
-                                        left: 50px;
-                                        bottom: 50px;
-                                        width: 450px;
-
-                                        .image_title {
-                                            cursor: pointer;
+                                        .child_title {
                                             font-size: 26px;
-                                            line-height: 1.5;
-                                            font-weight: 600;
-                                            margin-top: 16px;
                                         }
 
-                                        .info_other {
-                                            margin-top: 16px;
-                                            color: #fff;
-                                            font-size: 11px;
-                                            font-weight: 600;
-
-                                            .dot {
-                                                width: 6px;
-                                                height: 6px;
-                                                display: inline-block;
-                                                border: 1px solid #ddd;
-                                                background-color: transparent;
-                                                border-radius: 50%;
-                                            }
-                                        }
                                     }
                                 }
                             }
@@ -985,6 +821,8 @@
 
                         .right_child {
                             .image {
+                                border-radius: 0;
+                                margin-bottom: 0;
                                 background-position: left;
                                 background-size: cover;
                                 height: 260px;
@@ -1001,40 +839,12 @@
                                 }
 
                                 .image_bg {
-                                    height: 100%;
-                                    background-color: rgba(0, 0, 0, 0.4);
-                                    position: relative;
 
                                     .text {
-                                        position: absolute;
-                                        color: #fff;
-                                        left: 50px;
-                                        bottom: 50px;
-                                        width: 450px;
-
-                                        .image_title {
-                                            cursor: pointer;
+                                        .child_title {
                                             font-size: 18px;
-                                            line-height: 1.5;
-                                            font-weight: 600;
-                                            margin-top: 16px;
                                         }
 
-                                        .info_other {
-                                            margin-top: 16px;
-                                            color: #fff;
-                                            font-size: 11px;
-                                            font-weight: 600;
-
-                                            .dot {
-                                                width: 6px;
-                                                height: 6px;
-                                                display: inline-block;
-                                                border: 1px solid #ddd;
-                                                background-color: transparent;
-                                                border-radius: 50%;
-                                            }
-                                        }
                                     }
                                 }
                             }
@@ -1048,11 +858,6 @@
                 background-color: #fff;
 
                 .selected_posts {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.selected_posts_list {
                         margin-top: 30px;
                         --bs-gutter-x: 2rem;
@@ -1065,31 +870,14 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 27px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
 
                                 .desc {
-                                    margin-top: 16px;
                                     color: #666;
                                     letter-spacing: 0.5px;
                                 }
@@ -1110,11 +898,7 @@
                                     color: #333;
 
                                     .child_title {
-                                        cursor: pointer;
                                         font-size: 16px;
-                                        line-height: 1.5;
-                                        font-weight: 600;
-                                        margin-top: 16px;
                                     }
                                 }
                             }
@@ -1124,27 +908,11 @@
                             margin-bottom: 24px;
 
                             .child_title {
-                                cursor: pointer;
                                 font-size: 18px;
-                                line-height: 1.5;
-                                font-weight: 600;
-                                margin-top: 16px;
                             }
 
                             .info_other {
-                                margin-top: 16px;
                                 color: #999;
-                                font-size: 11px;
-                                font-weight: 600;
-
-                                .dot {
-                                    width: 6px;
-                                    height: 6px;
-                                    display: inline-block;
-                                    border: 1px solid #ddd;
-                                    background-color: transparent;
-                                    border-radius: 50%;
-                                }
                             }
                         }
 
@@ -1163,31 +931,14 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 26px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
 
                                 .desc {
-                                    margin-top: 16px;
                                     color: #666;
                                 }
                             }
@@ -1200,11 +951,6 @@
                 background-color: #fff;
 
                 .what_trending {
-                    padding: 40px 0;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-
                     .row.what_trending_list {
                         // --bs-gutter-x: 1.5rem;
                         margin-top: 30px;
@@ -1224,27 +970,11 @@
                                 color: #333;
 
                                 .child_title {
-                                    cursor: pointer;
                                     font-size: 20px;
-                                    line-height: 1.5;
-                                    font-weight: 600;
-                                    margin-top: 16px;
                                 }
 
                                 .info_other {
-                                    margin-top: 16px;
                                     color: #999;
-                                    font-size: 11px;
-                                    font-weight: 600;
-
-                                    .dot {
-                                        width: 6px;
-                                        height: 6px;
-                                        display: inline-block;
-                                        border: 1px solid #ddd;
-                                        background-color: transparent;
-                                        border-radius: 50%;
-                                    }
                                 }
                             }
                         }
@@ -1261,7 +991,7 @@
 
             .footer_news {
                 max-width: 1200px;
-                width: 100%;
+                width: 95%;
                 margin: 0 auto;
 
                 .footer_content {
@@ -1367,3 +1097,291 @@
         }
     }
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .app {
+        #slider_news {
+            .slider_news {
+                .sliders {
+                    .slider {
+                        .slider_bg {
+                            padding: 0 30px;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        #section_news {
+            .section_news {
+                .same {
+                    &.more-from {
+                        .child {
+                            .row {
+                                .image {
+                                    margin-top: 30px;
+                                    height: 250px;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    &.video {
+                        .row.video_list {
+                            .left_child {
+                                .image {
+                                    border-radius: 10px;
+
+                                    .image_bg {
+                                        .text {
+                                            .child_title {
+                                                font-size: 18px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .right_child {
+                                .image {
+                                    margin-bottom: 24px;
+                                    border-radius: 10px !important;
+                                }
+                            }
+                        }
+                    }
+
+                    .child {
+                        margin-top: 16px;
+                    }
+
+                    .row.selected_list {
+
+                        .left_child,
+                        .right_child {
+                            .image {
+                                height: 250px !important;
+                            }
+
+                        }
+
+                        .right_child {
+                            margin-top: 30px;
+                        }
+
+                    }
+
+                    &.selected_posts {
+                        .row.selected_posts_list {
+                            .row2 {
+                                .child {
+                                    .image {
+                                        height: 300px;
+                                    }
+                                }
+                            }
+
+                            .child {
+                                margin-top: 30px;
+                            }
+
+                            .row3 {
+                                .image {
+                                    margin-top: 30px;
+                                    height: 400px;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* All devices */
+@media only screen and (min-width: 0px) and (max-width: 991px) {
+    .app {
+        #header_news {
+            .header_news-bg {
+                .header_news {
+                    .author {
+                        display: none;
+                    }
+
+                    .home {
+                        .logo_wrap {
+                            .menu {
+                                display: block;
+                            }
+                        }
+
+                        .nav_list {
+                            display: none;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        #footer_news {
+            .footer_news-bg {
+                .footer_news {
+                    .footer_content {
+                        &>div {
+                            margin-top: 16px;
+                        }
+
+                        .subscribe {
+                            .subscr-box {
+                                text-align: center;
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    }
+}
+
+/* All small and medium devices */
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+    .app {
+        #slider_news {
+            .slider_news {
+                .sliders {
+                    .slider {
+                        .slider_bg {
+                            padding: 0 60px;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        #section_news {
+            .section_news {
+                .same {
+                    &.more-from {
+                        .child {
+                            .row {
+                                .image {
+                                    margin-top: 30px;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    &.video {
+                        .row.video_list {
+                            .left_child {
+                                .image {
+                                    height: 450px;
+                                    border-radius: 10px;
+
+                                    .image_bg {
+                                        .text {
+                                            .child_title {
+                                                font-size: 18px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .right_child {
+                                .image {
+                                    margin-bottom: 24px;
+                                    border-radius: 10px !important;
+                                }
+                            }
+                        }
+                    }
+
+                    .child {
+                        margin-top: 16px;
+                    }
+
+                    .row.selected_list {
+
+                        .left_child,
+                        .right_child {
+                            .image {
+                                height: 500px !important;
+                            }
+
+                        }
+
+                        .right_child {
+                            margin-top: 30px;
+                        }
+
+                    }
+
+                    &.selected_posts {
+                        .row.selected_posts_list {
+                            .row2 {
+                                .child {
+                                    .image {
+                                        height: 450px;
+                                    }
+                                }
+                            }
+
+                            .child {
+                                margin-top: 30px;
+                            }
+
+                            .row3 {
+                                .image {
+                                    margin-top: 30px;
+                                    height: 600px;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}

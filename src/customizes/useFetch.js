@@ -6,7 +6,6 @@ function useFetch(url) {
     useEffect(() => {
         async function fetchData() {
             let resp = await axios.get(url)
-            console.log("resp", resp)
             let data = resp && resp.data ? resp.data : []
 
             setData(data)

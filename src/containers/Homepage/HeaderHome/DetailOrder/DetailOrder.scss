@@ -113,7 +113,7 @@
                                         .btn-save {
                                             width: 100px;
                                             height: 40px;
-                                            background-color: var(--primary-color);
+                                            background-color: orange;
                                             color: #fff;
                                             font-weight: 600;
                                             border: none;
@@ -297,3 +297,102 @@
         }
     }
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #DetailOrder {
+        .detailOrder_bg {
+            .detailOrder {
+                .category {
+                    display: none;
+                }
+
+                .component {
+                    .component_bg {
+                        #Orders {
+                            .orders_bg {
+                                .orders {
+                                    .info_checkout {
+                                        .checkout_list>li {
+                                            .product {
+                                                .product_list {
+                                                    li {
+                                                        display: block;
+
+                                                        .price {
+                                                            margin-top: 16px;
+                                                            text-align: right;
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+
+                }
+            }
+
+        }
+
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* All small and medium devices */
+@media only screen and (max-width: 991px) {
+    #DetailOrder {
+        .detailOrder_bg {
+            .detailOrder {
+                .category {
+                    display: none;
+                }
+
+                .component {
+                    .component_bg {
+                        #Account {
+                            .account_bg {
+                                .account {
+                                    .info {
+                                        .image {
+                                            display: none;
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}

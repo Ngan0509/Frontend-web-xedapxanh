@@ -22,8 +22,21 @@ function MarkdownManage() {
     const lang = useSelector(selectors.selectorLanguages)
     const allBicycleData = useSelector(selectors.selectorAllBicycleData)
 
-
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        return () => {
+            setForm({
+                contentHTML: '',
+                contentMarkdown: ''
+            })
+            setSelects({
+                selectedBicycle: ''
+            })
+            setHasOldData(false)
+            setListAllBicycle([])
+        }
+    }, [])
 
     const [form, setForm] = useState({
         contentHTML: '',
@@ -39,7 +52,6 @@ function MarkdownManage() {
             contentHTML: html,
             contentMarkdown: text
         })
-        console.log('handleEditorChange', html, text);
     }
 
     const [listAllBicycle, setListAllBicycle] = useState([]);
@@ -64,7 +76,6 @@ function MarkdownManage() {
                         value: value
                     }
                 })
-                console.log('result', result)
                 return result
             }
         }
@@ -81,7 +92,6 @@ function MarkdownManage() {
 
     const handleChangeSelect = async (selectedBicycle) => {
         let resp = await userService.handleGetDetailBicycle(selectedBicycle.value)
-        console.log("handleGetDetailBicycle", resp)
         if (resp && resp.errCode === 0 && resp.data && !_.isEmpty(resp.data.markdownData)) {
             let markdown = resp.data.markdownData
 
@@ -97,7 +107,6 @@ function MarkdownManage() {
                 contentMarkdown: ''
             })
             setHasOldData(false)
-            console.log("abc")
         }
         setSelects({
             selectedBicycle

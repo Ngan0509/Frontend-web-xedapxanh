@@ -172,7 +172,7 @@ export const fetchAllUserStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALLUSER_START })
             let resp = await userService.handleGetAllUser(inputId)
-            console.log('resp all user', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllUserSuccess(resp.data))
             } else {
@@ -199,7 +199,7 @@ export const fetchAllBicycleStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALLBICYCLE_START })
             let resp = await userService.handleGetAllBicycle(inputId)
-            console.log('resp all Bicycle', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllBicycleSuccess(resp.data))
             } else {
@@ -226,7 +226,7 @@ export const fetchAllAccessoriesStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_ACCESSORIES_START })
             let resp = await userService.handleGetAllAccessory(inputId)
-            console.log('resp all accessories', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllAccessoriesSuccess(resp.data))
             } else {
@@ -253,7 +253,7 @@ export const fetchAllFilterStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_FILTER_START })
             let resp = await userService.handleGetAllFilter(inputId)
-            console.log('resp all Filter', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllFilterSuccess(resp.data))
             } else {
@@ -280,7 +280,7 @@ export const fetchAllCartStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_CART_START })
             let resp = await userService.handleGetAllCart(inputId)
-            console.log('resp all Cart', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllCartSuccess(resp.data))
             } else {
@@ -307,7 +307,7 @@ export const fetchAllCheckoutStart = (inputId, role) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_CHECKOUT_START })
             let resp = await userService.handleGetAllCheckout(inputId, role)
-            console.log('resp all Checkout', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllCheckoutSuccess(resp.data))
             } else {
@@ -334,7 +334,7 @@ export const fetchAllCommentStart = (product_id, type) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_COMMENT_START })
             let resp = await userService.handleGetAllComment(product_id, type)
-            console.log('resp all Comment', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllCommentSuccess(resp.data))
             } else {
@@ -361,7 +361,7 @@ export const fetchAllStoreStart = (inputId) => {
         try {
             dispatch({ type: actionTypes.FETCH_ALL_STORE_START })
             let resp = await userService.handleGetAllStore(inputId)
-            console.log('resp all Store', resp.data)
+
             if (resp && resp.errCode === 0) {
                 dispatch(fetchAllStoreSuccess(resp.data))
             } else {

@@ -9,6 +9,20 @@ html {
   font-family: $fontmain;
   height: 100vh;
   overflow: hidden;
+
+  // .css-df17o1 {
+  //   height: 100vh !important;
+  // }
+}
+
+/* All small and medium devices */
+@media only screen and (max-width: 991px) {
+  .content-container {
+    .custom-scrollbar>div {
+      margin-right: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
 }
 
 .btn {

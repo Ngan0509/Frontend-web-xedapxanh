@@ -1,129 +1,72 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as selectors from "../../../../store/selectors"
-import * as actions from "../../../../store/actions";
 // import { LANGUAGES } from '../../../../utils/constant'
 import "./Cart.scss"
-import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import xedap from '../../../../assets/images/RINCON-2-2022-grey-fix.jpg'
-import * as userService from "../../../../services/userService"
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
+import { useMemo } from 'react';
 
 
-function ShoppingCart() {
+function ShoppingCart({ listAllCart, onGetAllCartData }) {
     // const lang = useSelector(selectors.selectorLanguages)
     const isLoggedInClient = useSelector(selectors.selectorIsLoggedInClient)
-    const allCartData = useSelector(selectors.selectorAllCartData)
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     let history = useHistory();
-
-    useEffect(() => {
-        return () => {
-            setListAllCart([])
-            setArrCartId([])
-        };
-    }, []);
-
-    useEffect(() => {
-        dispatch(actions.fetchAllCartStart('All'))
-    }, [dispatch])
-
-    const [listAllCart, setListAllCart] = useState([]);
-    console.log("listAllCart", listAllCart)
-
-    // get AllCart
-    useEffect(() => {
-        setListAllCart(allCartData)
-    }, [allCartData])
-
-    const [arrCartId, setArrCartId] = useState([])
-    console.log("arrCartId", arrCartId)
 
     const handleClickMinus = (cartItem) => {
         const result = listAllCart.map(item => {
             if (item.id === cartItem.id) {
                 if (item.so_luong > 1) {
-                    item.so_luong--
+                    item.so_luong--;
+                    cartItem.sum_price = cartItem.price * cartItem.so_luong;
                 }
             }
             return item
         })
-        setListAllCart(result)
-        arrCartId.push(cartItem.id)
-        const menuItems = [...new Set(arrCartId.map((item) => item))];
 
-        setArrCartId(menuItems)
+        localStorage.setItem("arrCart", JSON.stringify(result));
+        onGetAllCartData()
     }
 
     const handleClickPlus = (cartItem) => {
         const result = listAllCart.map(item => {
             if (item.id === cartItem.id) {
-                item.so_luong++
+                item.so_luong++;
+                cartItem.sum_price = cartItem.price * cartItem.so_luong;
             }
             return item
         })
-        setListAllCart(result)
 
-        arrCartId.push(cartItem.id)
-        const menuItems = [...new Set(arrCartId.map((item) => item))];
-
-        setArrCartId(menuItems)
-    }
-
-    const handleUpdateCart = () => {
-        if (arrCartId.length > 0) {
-            let arrCart = arrCartId.map(id => {
-                let obj = {}
-                listAllCart.forEach(item => {
-                    if (id === item.id) {
-                        obj = {
-                            id: item.id,
-                            so_luong: item.so_luong,
-                            price: item.price
-                        }
-                    }
-                })
-                return obj
-            })
-
-            arrCart.forEach(async (item) => {
-                const sum_price = item.so_luong * item.price
-                const data = {
-                    id: item.id,
-                    so_luong: item.so_luong,
-                    sum_price
-                }
-                await userService.handleUpdateNewCart(data)
-                dispatch(actions.fetchAllCartStart('All'))
-            })
-        }
-
-        setArrCartId([])
+        localStorage.setItem("arrCart", JSON.stringify(result));
+        onGetAllCartData()
     }
 
     const handleDeleteCart = async (id) => {
-        await userService.handleDeleteNewCart(id)
-        dispatch(actions.fetchAllCartStart('All'))
+        const result = listAllCart.filter(item => item.id !== id);
+
+        localStorage.setItem("arrCart", JSON.stringify(result));
+        onGetAllCartData()
     }
 
-    const sumSo_luong = () => {
+    const sumSo_luong = useMemo(() => {
         let sum = 0
         listAllCart.forEach(item => {
             sum += item.so_luong
         })
         return sum
-    }
+    }, [listAllCart])
 
-    const sumPrice = () => {
+    const sumPrice = useMemo(() => {
         let sum = 0
         listAllCart.forEach(item => {
             sum += item.sum_price
         })
         return sum
-    }
+    }, [listAllCart])
 
     const handleClickCheckout = () => {
         if (isLoggedInClient) {
@@ -137,17 +80,21 @@ function ShoppingCart() {
     const handlePushPageHome = () => {
         history.push("/home");
     }
+    const handleDetailPage = (id) => {
+        history.push(`/home/bicycle/detail/${id}`);
+    }
+
     return (
         <div id="ShoppingCart">
             <div className="shoppingCart_bg">
                 <div className="shoppingCart">
                     <div className='row'>
-                        <div className='col-7'>
+                        <div className='col-12'>
                             <table>
                                 <thead>
                                     <tr>
                                         <th><FormattedMessage id="bicycle-manage.productName" /></th>
-                                        <th><FormattedMessage id="bicycle-manage.priceNew" /></th>
+                                        <th className='price_new_th'><FormattedMessage id="bicycle-manage.priceNew" /></th>
                                         <th><FormattedMessage id="bicycle-manage.so_luong" /></th>
                                         <th><FormattedMessage id="order-manage.sum-price" /></th>
                                     </tr>
@@ -158,16 +105,21 @@ function ShoppingCart() {
                                         listAllCart.map(item => (
                                             <tr key={item.id}>
                                                 <td>
-                                                    <div className='product-wrap'>
+                                                    <div
+                                                        className='product-wrap'>
                                                         <div
                                                             onClick={() => handleDeleteCart(item.id)}
                                                             className='icon-close'>
                                                             <i className='bx bx-x-circle'></i>
                                                         </div>
-                                                        <div className='product-img'>
+                                                        <div
+                                                            onClick={() => handleDetailPage(item.product_id)}
+                                                            className='product-img'>
                                                             <img src={(item.productData && !_.isEmpty(item.productData) && item.productData.image) || xedap} alt='product' />
                                                         </div>
-                                                        <div className='product-title'>
+                                                        <div
+                                                            onClick={() => handleDetailPage(item.product_id)}
+                                                            className='product-title'>
                                                             <span>
                                                                 {
                                                                     item.productData && !_.isEmpty(item.productData) && item.productData.name
@@ -176,7 +128,7 @@ function ShoppingCart() {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td className='price_new_th'>
                                                     <div className='product-price'>
                                                         <span>
                                                             <NumberFormat
@@ -223,22 +175,22 @@ function ShoppingCart() {
                                 <button
                                     onClick={() => handlePushPageHome()}
                                     className='home_btn'><FormattedMessage id="headerHome.back-home" /></button>
-                                <button
+                                {/* <button
                                     onClick={() => handleUpdateCart()}
-                                    className='update_btn'><FormattedMessage id="headerHome.update-cart" /></button>
+                                    className='update_btn'><FormattedMessage id="headerHome.update-cart" /></button> */}
                             </div>
                         </div>
-                        <div className='col-5'>
+                        <div className='col-12'>
                             <div className='checkout'>
                                 <div className='number'>
                                     <span className='label'><FormattedMessage id="bicycle-manage.so_luong" /></span>
-                                    <span className='num'>{sumSo_luong()}</span>
+                                    <span className='num'>{sumSo_luong}</span>
                                 </div>
                                 <div className='sum'>
                                     <span className='label'><FormattedMessage id="order-manage.sum-price-all" /></span>
                                     <span className='price'>
                                         <NumberFormat
-                                            value={sumPrice()}
+                                            value={sumPrice}
                                             className="foo"
                                             displayType={'text'}
                                             thousandSeparator={true}

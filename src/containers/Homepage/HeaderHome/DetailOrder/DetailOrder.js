@@ -12,6 +12,7 @@ import _ from 'lodash';
 import Notify from '../DetailOrder/Notify'
 import Orders from '../DetailOrder/Orders'
 import Account from '../DetailOrder/Account'
+import avatar from '../../../../assets/images/avatar.webp'
 
 import {
     NavLink
@@ -37,11 +38,11 @@ function DetailOrder() {
             <div className="detailOrder_bg">
                 <div className="detailOrder">
                     <div className='row'>
-                        <div className='col-3 category'>
+                        <div className='col-lg-3 category'>
 
                             <div className='user'>
                                 <span className='user_img'>
-                                    <img src={!_.isEmpty(clientInfo) ? clientInfo.image : undefined} alt='user' />
+                                    <img src={!_.isEmpty(clientInfo) ? clientInfo.image ? clientInfo.image : avatar : undefined} alt='user' />
                                 </span>
                                 <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
                             </div>
@@ -64,7 +65,7 @@ function DetailOrder() {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-9 component'>
+                        <div className='col-lg-9 col-12 component'>
                             <div className='component_bg'>
                                 <Switch>
                                     <Route path={path.ACCOUNT} component={(Account)} />

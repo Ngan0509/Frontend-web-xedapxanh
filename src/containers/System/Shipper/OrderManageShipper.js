@@ -24,6 +24,14 @@ function OrderManageShipper() {
     const dispatch = useDispatch()
     const location = useLocation()
 
+    useEffect(() => {
+        return () => {
+            setListAllCheckout([])
+            setIsShow(false)
+            setDetailInfo({})
+        }
+    }, [])
+
     //dispatch actions
     useEffect(() => {
         if (location.pathname === pathSystem.ORDERS3) {
@@ -36,7 +44,6 @@ function OrderManageShipper() {
     }, [dispatch, location])
 
     const [listAllCheckout, setListAllCheckout] = useState([]);
-    console.log("listAllCheckout", listAllCheckout)
     // get AllCheckout
     useEffect(() => {
         let result = []

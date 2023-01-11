@@ -21,6 +21,9 @@ import { useHistory } from "react-router-dom";
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import PaginatedItems from './ProductList/Pagination';
+import LoadingOverlay from 'react-loading-overlay';
+LoadingOverlay.propTypes = undefined
+
 function Accessories() {
     const lang = useSelector(selectors.selectorLanguages)
     const allAccessoriesData = useSelector(selectors.selectorAllAccessoriesData)
@@ -60,8 +63,6 @@ function Accessories() {
     const [listAllFilter, setListAllFilter] = useState([]);
 
     const refs = useMemo(() => allFilterData.map(() => React.createRef()), [allFilterData]);
-    // console.log("listAllAccessories", listAllAccessories)
-    // console.log("listAllFilter", listAllFilter)
 
     // get AllAccessories
     useEffect(() => {
@@ -120,8 +121,6 @@ function Accessories() {
     }
 
     const filterKeys = Object.keys(filters.current)
-    // console.log("filterKeys", filterKeys)
-    console.log("filtersOut", filters.current)
 
     const handleFilterByKeyMap = (itemFilter, e) => {
         if (!e.currentTarget.classList.contains('active')) {
@@ -143,7 +142,6 @@ function Accessories() {
             })
 
             setListAllAccessories(listResult)
-            // console.log("listResult1", listResult)
 
 
         } else {
@@ -167,7 +165,6 @@ function Accessories() {
             })
 
             setListAllAccessories(listResult)
-            // console.log("listResult2", listResult)
 
         }
     }
@@ -193,80 +190,98 @@ function Accessories() {
 
     settings = { ...settings, ...settingsArrow }
 
+    const [isShowLoading, setIsShowLoading] = useState(true)
+    const timer = useRef()
+    useEffect(() => {
+        timer.current = setTimeout(() => {
+            setIsShowLoading(false)
+        }, 1500)
+
+        return () => {
+            clearTimeout(timer.current)
+        }
+    }, [])
+
     return (
-        <div id="Accessories">
-            <Header />
-            <div className="bicycle_bg">
-                <div className="bicycle">
-                    <div className='link'>
-                        <span
-                            onClick={() => handleClickLogoHome()}
-                            className='home-link'>Home</span>/
-                        <span className='bicycle-link'>{category}</span>
-                    </div>
-                    <div className="bicycle_filter">
-                        {
-                            listAllFilter && listAllFilter.length > 0 &&
-                            listAllFilter.map((item, i) => (
-                                <div
-                                    key={item.id}
-                                    className="item">
-                                    <span
-                                        ref={refs[i]}
-                                        onClick={(e) => handleClickShowFilterBox(e)}
-                                        className="filter_label">
-                                        {
-                                            lang === LANGUAGES.VI ? `Bộ lọc: ${item.nameVi}` : `Filter: ${item.nameEn}`
-                                        }
-                                        <span className='icon-arrow'>
-                                            <i className='bx bxs-down-arrow'></i>
-                                        </span>
-                                    </span>
-
-                                    <div className={`${i > 4 && i < 8 ? 'filter_box right' : 'filter_box left'}`}>
-                                        <div className='filter_box-wrap'>
+        <LoadingOverlay
+            active={isShowLoading}
+            spinner
+            text='Loading...'
+        >
+            <div id="Accessories">
+                <Header />
+                <div className="bicycle_bg">
+                    <div className="bicycle">
+                        <div className='link'>
+                            <span
+                                onClick={() => handleClickLogoHome()}
+                                className='home-link'>Home</span>/
+                            <span className='bicycle-link'>{category}</span>
+                        </div>
+                        <div className="bicycle_filter">
+                            {
+                                listAllFilter && listAllFilter.length > 0 &&
+                                listAllFilter.map((item, i) => (
+                                    <div
+                                        key={item.id}
+                                        className="item">
+                                        <span
+                                            ref={refs[i]}
+                                            onClick={(e) => handleClickShowFilterBox(e)}
+                                            className="filter_label">
                                             {
-                                                item.arrayType && item.arrayType.length > 0 &&
-                                                item.arrayType.map((itemChild) => (
-                                                    <span
-                                                        onClick={(e) => handleFilterByKeyMap(itemChild, e)}
-                                                        key={itemChild.id} className="filter_label-child">
-                                                        {
-                                                            lang === LANGUAGES.VI ? itemChild.valueVi : itemChild.valueEn
-                                                        }
-                                                    </span>
-                                                ))
+                                                lang === LANGUAGES.VI ? `Bộ lọc: ${item.nameVi}` : `Filter: ${item.nameEn}`
                                             }
-                                            <span
-                                                onClick={() => handleHideFilterBox()}
-                                                className='icon-close'>
-                                                <i className='bx bx-x-circle'></i>
+                                            <span className='icon-arrow'>
+                                                <i className='bx bxs-down-arrow'></i>
                                             </span>
+                                        </span>
+
+                                        <div className={`${i > 4 && i < 8 ? 'filter_box right' : 'filter_box left'}`}>
+                                            <div className='filter_box-wrap'>
+                                                {
+                                                    item.arrayType && item.arrayType.length > 0 &&
+                                                    item.arrayType.map((itemChild) => (
+                                                        <span
+                                                            onClick={(e) => handleFilterByKeyMap(itemChild, e)}
+                                                            key={itemChild.id} className="filter_label-child">
+                                                            {
+                                                                lang === LANGUAGES.VI ? itemChild.valueVi : itemChild.valueEn
+                                                            }
+                                                        </span>
+                                                    ))
+                                                }
+                                                <span
+                                                    onClick={() => handleHideFilterBox()}
+                                                    className='icon-close'>
+                                                    <i className='bx bx-x-circle'></i>
+                                                </span>
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
-                            ))
-                        }
-                    </div>
-
-                    <div className="bicycle_filter-more">
-                        <div className="bicycle_amount">
-                            <span>{listAllAccessories.length}</span>
-                            Phụ kiện
+                                ))
+                            }
                         </div>
-                        <div className="bicycle_discout">
-                            <input type='checkbox' id='discout' value='discout' />
-                            <label htmlFor="discout"><FormattedMessage id="bicycle-manage.discout" /></label>
-                        </div>
-                    </div>
 
-                    <PaginatedItems itemsPerPage={8} items={listAllAccessories} />
+                        <div className="bicycle_filter-more">
+                            <div className="bicycle_amount">
+                                <span>{listAllAccessories.length}</span>
+                                Phụ kiện
+                            </div>
+                            <div className="bicycle_discout">
+                                <input type='checkbox' id='discout' value='discout' />
+                                <label htmlFor="discout"><FormattedMessage id="bicycle-manage.discout" /></label>
+                            </div>
+                        </div>
+
+                        <PaginatedItems itemsPerPage={8} items={listAllAccessories} />
+                    </div>
                 </div>
+                <Knowledge settings={settings} />
+                <Footer />
             </div>
-            <Knowledge settings={settings} />
-            <Footer />
-        </div>
+        </LoadingOverlay>
     )
 }
 

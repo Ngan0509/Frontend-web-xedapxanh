@@ -19,6 +19,32 @@ function UserManage() {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        return () => {
+            setForm({
+                fullname: '',
+                email: '',
+                password: '',
+                phoneNumber: '',
+            })
+            setSelects({
+                role: '',
+                gender: '',
+                city: '',
+                district: ''
+            })
+            setIsEdit(false)
+            setId('')
+            setListRole([])
+            setListGender([])
+            setListAllUser([])
+            setListCity([])
+            setListDistrict([])
+            setListProvince([])
+
+        }
+    }, [])
+
     const buildInputData = useCallback((inputData, type) => {
         if (inputData && inputData.length > 0) {
             let result = inputData.map((item) => {
@@ -165,7 +191,6 @@ function UserManage() {
                 city_id: city.value,
                 district_id: district.value
             }
-            console.log("dataEdit", dataEdit)
             const resp = await userService.handleUpdateNewUser(dataEdit)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllUserStart('All'))
@@ -181,7 +206,6 @@ function UserManage() {
                 city_id: city.value,
                 district_id: district.value
             }
-            console.log("data", data)
             const resp = await userService.handleCreateNewUser(data)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllUserStart('All'))

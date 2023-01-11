@@ -3,7 +3,7 @@
         padding: 30px 0;
 
         .cart {
-            width: 100%;
+            width: 95%;
             max-width: 1200px;
             margin: 0 auto;
 
@@ -40,9 +40,14 @@
     #ShoppingCart {
         .shoppingCart_bg {
             .shoppingCart {
+                td {
+                    width: 200px;
+                }
+
                 .product-wrap {
                     display: flex;
                     align-items: center;
+                    cursor: pointer;
 
                     .icon-close {
                         font-size: 24px;
@@ -108,9 +113,10 @@
                 }
 
                 .checkout {
-                    margin-top: 60px;
                     border-left: 1px solid var(--border-color);
-                    padding-left: 30px;
+                    width: 90%;
+                    margin: 40px auto 0;
+                    max-width: 400px;
 
                     .number,
                     .sum {
@@ -338,3 +344,130 @@
         }
     }
 }
+
+/* Extra small devices (phones, 350px and down) */
+@media only screen and (max-width: 385px) {
+    #Cart {
+        #ShoppingCart {
+            .shoppingCart_bg {
+                .shoppingCart {
+                    .price_new_th {
+                        display: none;
+                    }
+
+                    .product-wrap {
+                        display: block;
+
+                        .product-img {
+                            width: 40px;
+                        }
+
+                        .product-title {
+                            margin-top: 16px;
+                            width: 40px;
+                            font-size: 13px;
+                        }
+                    }
+
+                    .product-num {
+
+                        span,
+                        .minus,
+                        .plus {
+                            padding: 4px;
+                        }
+                    }
+
+                    .price-sum {
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        #OrderComplete {
+
+            .orderComplete_bg {
+                .orderComplete {
+                    .notify {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Extra small devices (phones, 564px and down) */
+@media only screen and (min-width: 386px) and (max-width: 564px) {
+    #Cart {
+        #ShoppingCart {
+            .shoppingCart_bg {
+                .shoppingCart {
+                    .price_new_th {
+                        display: none;
+                    }
+
+                    .product-wrap {
+                        display: block;
+
+                        .product-img {
+                            width: 60px;
+                        }
+
+                        .product-title {
+                            margin-top: 16px;
+                            width: 60px;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        #OrderComplete {
+
+            .orderComplete_bg {
+                .orderComplete {
+                    .notify {
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 565px) and (max-width: 767px) {
+    #Cart {
+        #ShoppingCart {
+            .shoppingCart_bg {
+                .shoppingCart {
+                    .price_new_th {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {}
+
+/* All small and medium devices */
+@media only screen and (min-width: 600px) and (max-width: 991px) {
+    #Cart {
+        #ShoppingCart {
+            .shoppingCart_bg {
+                .shoppingCart {}
+            }
+        }
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}

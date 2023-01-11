@@ -113,11 +113,11 @@ function Signup() {
     }
 
     const validator = (id) => {
-        let isValid = false
+        let isValid = true
         let copyForm = { ...form, gender }
 
         if (copyForm[id] === '') {
-            isValid = true
+            isValid = false
             setBlurId(id)
             setErrorMessage('Trường này không được để trống')
         } else {
@@ -125,37 +125,37 @@ function Signup() {
                 //eslint-disable-next-line
                 const regex = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
                 if (regex.test(copyForm[id])) {
-                    isValid = false
+                    isValid = true
                     setBlurId('')
                     setErrorMessage('')
                 } else {
-                    isValid = true
+                    isValid = false
                     setBlurId(id)
                     setErrorMessage('Trường này phải là email')
                 }
             } else if (id === 'password') {
                 const min = 6
                 if (copyForm[id].length >= min) {
-                    isValid = false
+                    isValid = true
                     setBlurId('')
                     setErrorMessage('')
                 } else {
-                    isValid = true
+                    isValid = false
                     setBlurId(id)
                     setErrorMessage(`Vui lòng nhập tối thiểu ${min} ký tự`)
                 }
             } else if (id === 'password2') {
                 if (copyForm[id] === password) {
-                    isValid = false
+                    isValid = true
                     setBlurId('')
                     setErrorMessage('')
                 } else {
-                    isValid = true
+                    isValid = false
                     setBlurId(id)
                     setErrorMessage('Giá trị nhập vào không chính xác')
                 }
             } else {
-                isValid = false
+                isValid = true
                 setBlurId('')
                 setErrorMessage('')
             }
@@ -175,7 +175,7 @@ function Signup() {
 
         let keys = Object.keys(data)
 
-        let result = keys.every(key => validator(key) === false)
+        let result = keys.every(key => validator(key))
 
         if (!result) return
 

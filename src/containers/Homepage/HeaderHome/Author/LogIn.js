@@ -57,11 +57,11 @@ function Login() {
     }
 
     const validator = (id) => {
-        let isValid = false
+        let isValid = true
         let copyForm = { ...form }
 
         if (copyForm[id] === '') {
-            isValid = true
+            isValid = false
             setBlurId(id)
             setErrorMessage('Trường này không được để trống')
         } else {
@@ -69,27 +69,27 @@ function Login() {
                 //eslint-disable-next-line
                 const regex = /^[a-z][a-z0-9]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
                 if (regex.test(copyForm[id])) {
-                    isValid = false
+                    isValid = true
                     setBlurId('')
                     setErrorMessage('')
                 } else {
-                    isValid = true
+                    isValid = false
                     setBlurId(id)
                     setErrorMessage('Trường này phải là email')
                 }
             } else if (id === 'password') {
                 const min = 6
                 if (copyForm[id].length >= min) {
-                    isValid = false
+                    isValid = true
                     setBlurId('')
                     setErrorMessage('')
                 } else {
-                    isValid = true
+                    isValid = false
                     setBlurId(id)
                     setErrorMessage(`Vui lòng nhập tối thiểu ${min} ký tự`)
                 }
             } else {
-                isValid = false
+                isValid = true
                 setBlurId('')
                 setErrorMessage('')
             }
@@ -107,13 +107,12 @@ function Login() {
         setErrorMessageLogin('')
         let keys = Object.keys(form)
 
-        let result = keys.every(key => validator(key) === false)
+        let result = keys.every(key => validator(key))
 
         if (!result) return
 
         try {
             let data = await userService.handleLogInClient(email, password)
-            console.log('data', data)
             if (data && data.errCode !== 0) {
                 setErrorMessageLogin(data.errMessage)
             }

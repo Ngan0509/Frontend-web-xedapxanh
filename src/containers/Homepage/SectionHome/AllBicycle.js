@@ -6,7 +6,7 @@ import { LANGUAGES } from '../../../utils/constant'
 
 import '../Homepage.scss'
 import '../SectionHome/Product/Bicycle.scss'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import PaginatedItems from './Product/ProductList/Pagination';
@@ -19,7 +19,7 @@ function AllBicycle() {
 
 
     const dispatch = useDispatch()
-    let history = useHistory();
+    // let history = useHistory();
 
     useEffect(() => {
         dispatch(actions.fetchAllcodeStart())
@@ -31,8 +31,6 @@ function AllBicycle() {
     const [listAllFilter, setListAllFilter] = useState([]);
 
     const refs = useMemo(() => allFilterData.map(() => React.createRef()), [allFilterData]);
-    // console.log("listAllBicycle", listAllBicycle)
-    // console.log("listAllFilter", listAllFilter)
 
     // get AllBicycle
     useEffect(() => {
@@ -121,10 +119,7 @@ function AllBicycle() {
     }
 
     const filterKeys = Object.keys(filters.current)
-    // console.log("filterKeys", filterKeys)
-    console.log("filtersOut", filters.current)
     const handleFilterByKeyMap = (itemFilter, e) => {
-        // console.log(itemFilter)
         if (!e.currentTarget.classList.contains('active')) {
             e.currentTarget.classList.add('active')
 
@@ -150,42 +145,8 @@ function AllBicycle() {
                 utilities_id: filters.current.utilities_id
             })
 
-            const listResult = allBicycleData.filter(item => {
-                let result = filterKeys.every(key => {
-                    if (!filters.current[key].length) return true;
-
-                    return filters.current[key].includes(item[key]);
-                })
-                if (checkedBoxArr.includes('discout')) {
-                    return result && item.discout > 5
-                }
-                return result
-            })
-            if (sortSelect.id === 'desc') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.price_new, 10);
-                    let numB = parseInt(b.price_new, 10);
-                    return numB - numA;
-                })
-            }
-            if (sortSelect.id === 'asc') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.price_new, 10);
-                    let numB = parseInt(b.price_new, 10);
-                    return numA - numB;
-                })
-            }
-
-            if (sortSelect.id === '%discout') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.discout, 10);
-                    let numB = parseInt(b.discout, 10);
-                    return numB - numA;
-                })
-            }
+            const listResult = handleEverySameFilter(checkedBoxArr, sortSelect);
             setListAllBicycle(listResult)
-            // console.log("listResult1", listResult)
-
 
         } else {
             e.currentTarget.classList.remove('active')
@@ -230,47 +191,14 @@ function AllBicycle() {
                 utilities_id: filters.current.utilities_id
             })
 
-            const listResult = allBicycleData.filter(item => {
-                let result = filterKeys.every(key => {
-                    if (!filters.current[key].length) return true;
-
-                    return filters.current[key].includes(item[key]);
-                })
-                if (checkedBoxArr.includes('discout')) {
-                    return result && item.discout > 5
-                }
-                return result
-            })
-            if (sortSelect.id === 'desc') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.price_new, 10);
-                    let numB = parseInt(b.price_new, 10);
-                    return numB - numA;
-                })
-            }
-            if (sortSelect.id === 'asc') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.price_new, 10);
-                    let numB = parseInt(b.price_new, 10);
-                    return numA - numB;
-                })
-            }
-
-            if (sortSelect.id === '%discout') {
-                listResult.sort((a, b) => {
-                    let numA = parseInt(a.discout, 10);
-                    let numB = parseInt(b.discout, 10);
-                    return numB - numA;
-                })
-            }
+            const listResult = handleEverySameFilter(checkedBoxArr, sortSelect);
             setListAllBicycle(listResult)
-            // console.log("listResult2", listResult)
 
         }
         // const menuItems = [...new Set(listResult.map((item) => item))];
-        // console.log("menuItems", menuItems)
 
     }
+
     const [checkedBoxArr, setCheckedBoxArr] = useState([])
 
     const handleCheckBox = (id) => {
@@ -282,14 +210,43 @@ function AllBicycle() {
                 return [...prev, id]
             }
         })
+
+        let temp = [...checkedBoxArr];
+        if (isChecked) {
+            temp = temp.filter((item) => item !== id)
+        } else {
+            temp = [...temp, id]
+        }
+
+        const listResult = handleEverySameFilter(temp, sortSelect);
+        setListAllBicycle(listResult)
+    }
+
+    const [sortSelect, setSortSelect] = useState({
+        id: '',
+        nameVi: 'Nổi bật',
+        nameEn: 'Outstanding'
+    })
+
+    const handleClickSortSelect = (itemSort) => {
+        setSortSelect({
+            id: itemSort.id,
+            nameVi: itemSort.nameVi,
+            nameEn: itemSort.nameEn,
+        })
+
+        const listResult = handleEverySameFilter(checkedBoxArr, itemSort);
+        setListAllBicycle(listResult)
+    }
+
+    const handleEverySameFilter = (checkedBoxArr, sortSelect) => {
         const listResult = allBicycleData.filter(item => {
             let result = filterKeys.every(key => {
                 if (!filters.current[key].length) return true;
 
                 return filters.current[key].includes(item[key]);
             })
-
-            if (!isChecked && id === 'discout') {
+            if (checkedBoxArr.includes('discout')) {
                 return result && item.discout > 5
             }
             return result
@@ -316,57 +273,8 @@ function AllBicycle() {
                 return numB - numA;
             })
         }
-        setListAllBicycle(listResult)
 
-    }
-
-    const [sortSelect, setSortSelect] = useState({
-        id: '',
-        nameVi: 'Nổi bật',
-        nameEn: 'Outstanding'
-    })
-
-    const handleClickSortSelect = (itemSort) => {
-        setSortSelect({
-            id: itemSort.id,
-            name: itemSort.name
-        })
-        console.log(itemSort)
-        const listResult = allBicycleData.filter(item => {
-            let result = filterKeys.every(key => {
-                if (!filters.current[key].length) return true;
-
-                return filters.current[key].includes(item[key]);
-            })
-            if (checkedBoxArr.includes('discout')) {
-                return result && item.discout > 5
-            }
-            return result
-        })
-        if (itemSort.id === 'desc') {
-            listResult.sort((a, b) => {
-                let numA = parseInt(a.price_new, 10);
-                let numB = parseInt(b.price_new, 10);
-                return numB - numA;
-            })
-        }
-        if (itemSort.id === 'asc') {
-            listResult.sort((a, b) => {
-                let numA = parseInt(a.price_new, 10);
-                let numB = parseInt(b.price_new, 10);
-                return numA - numB;
-            })
-        }
-
-        if (itemSort.id === '%discout') {
-            listResult.sort((a, b) => {
-                let numA = parseInt(a.discout, 10);
-                let numB = parseInt(b.discout, 10);
-                return numB - numA;
-            })
-        }
-
-        setListAllBicycle(listResult)
+        return listResult;
     }
 
     const selectSorts = [
@@ -425,7 +333,7 @@ function AllBicycle() {
                                         </span>
                                     </span>
 
-                                    <div className={`${i > 4 && i < 8 ? 'filter_box right' : 'filter_box left'}`}>
+                                    <div className='filter_box'>
                                         <div className='filter_box-wrap'>
                                             {
                                                 item.arrayType && item.arrayType.length > 0 &&

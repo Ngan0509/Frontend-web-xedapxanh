@@ -1,12 +1,10 @@
 import axios from "../axios";
 
 const handleLogin = (email, password) => {
-    console.log(email, password)
     return axios.post('/api/login', { email, password })
 }
 
 const handleLogInClient = (email, password) => {
-    console.log(email, password)
     return axios.post('/api/login-client', { email, password })
 }
 
@@ -178,6 +176,18 @@ const handleCreateNewFavorite = (data) => {
     return axios.post('/api/create-new-favorite', data)
 }
 
+const handleGetMultiImage = (productId, type) => {
+    return axios.get(`/api/get-multi-image?id=${productId}&type=${type}`)
+}
+
+const handleCreateMultiImage = (data) => {
+    return axios.post('/api/create-multi-image', data)
+}
+
+const handleDeleteMultiImage = (name) => {
+    return axios.delete(`/api/delete-multi_image?name=${name}`)
+}
+
 export {
     handleLogin, getAllCodeService, getCategory, handleGetAllUser, handleGetTypeAllCode,
     handleCreateNewUser, handleDeleteNewUser, handleUpdateNewUser,
@@ -190,5 +200,5 @@ export {
     handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout,
     handleGetAllComment, handleCreateNewComment, handleDeleteNewComment, handleUpdateNewComment,
     handleGetAllStore, handleCreateNewStore, handleUpdateNewStore, handleDeleteNewStore,
-    handleCreateNewFavorite, handleGetDetailAccessory
+    handleCreateNewFavorite, handleGetDetailAccessory, handleGetMultiImage, handleCreateMultiImage, handleDeleteMultiImage
 }

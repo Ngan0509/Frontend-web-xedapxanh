@@ -2,10 +2,10 @@ import React from "react";
 import './ArrowButtons.scss'
 
 export function SampleNextArrow(props) {
-    const { onClick, slideCount, currentSlide, slidesToShow } = props;
+    const { onClick } = props;
     return (
         <button
-            className={slideCount - currentSlide === slidesToShow ? "section-next disabled" : "section-next"}
+            className={"section-next"}
             onClick={onClick}
         >
             <i className='bx bx-chevron-right'></i>
@@ -14,10 +14,10 @@ export function SampleNextArrow(props) {
 }
 
 export function SamplePrevArrow(props) {
-    const { onClick, currentSlide } = props;
+    const { onClick } = props;
     return (
         <button
-            className={currentSlide === 0 ? "section-prev disabled" : "section-prev"}
+            className={"section-prev"}
             onClick={onClick}
         >
             <i className='bx bx-chevron-left'></i>

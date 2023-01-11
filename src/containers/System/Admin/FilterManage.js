@@ -16,6 +16,25 @@ function FilterManage() {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        return () => {
+            setForm({
+                nameEn: '',
+                nameVi: ''
+            })
+            setSelects({
+                type: '',
+                category: ''
+            })
+
+            setIsEdit(false)
+            setId('')
+            setListType([])
+            setListCategory([])
+            setListAllFilter([])
+        }
+    }, [])
+
     // input onChange
     const [form, setForm] = useState({
         nameEn: '',
@@ -132,7 +151,6 @@ function FilterManage() {
                 type: type.value,
                 category: category.value
             }
-            console.log("dataEdit", dataEdit)
             const resp = await userService.handleUpdateNewFilter(dataEdit)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllFilterStart('All'))
@@ -146,7 +164,6 @@ function FilterManage() {
                 type: type.value,
                 category: category.value
             }
-            console.log("data", data)
             const resp = await userService.handleCreateNewFilter(data)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllFilterStart('All'))

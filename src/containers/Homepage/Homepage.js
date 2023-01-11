@@ -12,47 +12,45 @@ import AllBicycle from './SectionHome/AllBicycle'
 import Knowledge from './SectionHome/Knowledge'
 import ShopSystem from './SectionHome/ShopSystem'
 import Footer from './FooterHome/Footer'
-
 import './Homepage.scss'
+import { useEffect, useRef, useState } from 'react'
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { SampleNextArrow, SamplePrevArrow } from '../Homepage/ArrowButtons/ArrowButtons'
+import LoadingOverlay from 'react-loading-overlay';
+LoadingOverlay.propTypes = undefined
+
 
 function Homepage() {
     // const lang = useSelector(selectors.selectorLanguages)
 
     // const dispatch = useDispatch()
+    const [isShowLoading, setIsShowLoading] = useState(true)
+    const timer = useRef()
+    useEffect(() => {
+        timer.current = setTimeout(() => {
+            setIsShowLoading(false)
+        }, 2000)
 
-
-    let settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000
-    };
-
-    let settingsArrow = {
-        nextArrow: <SampleNextArrow slidesToShow={settings.slidesToShow} />,
-        prevArrow: <SamplePrevArrow />
-    }
-
-    settings = { ...settings, ...settingsArrow }
-
+        return () => {
+            clearTimeout(timer.current)
+        }
+    }, [])
 
     return (
-        <div id="Homepage">
-            <Header />
-            <Sliders />
-            <Category />
-            <AllBicycle />
-            <Knowledge settings={settings} />
-            <ShopSystem />
-            <Footer />
-        </div>
+        <LoadingOverlay
+            active={isShowLoading}
+            spinner
+            text='Loading...'
+        >
+            <div id="Homepage">
+                <Header />
+                <Sliders />
+                <Category />
+                <AllBicycle />
+                <Knowledge />
+                <ShopSystem />
+                <Footer />
+            </div>
+        </LoadingOverlay>
 
     )
 }

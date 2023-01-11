@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import * as userService from '../../../../services/userService'
 import _ from 'lodash';
 
-function OrderComplete() {
+function OrderComplete({ onGetAllCartData }) {
     // const lang = useSelector(selectors.selectorLanguages)
     const clientInfoSelect = useSelector(selectors.selectorClientInfo)
 
@@ -30,6 +30,8 @@ function OrderComplete() {
                 let resp = await userService.handleUpdateStatusIdCheckout({ token, statusId })
                 if (resp && resp.errCode === 0) {
                     setNotify('Đặt hàng thành công')
+                    localStorage.removeItem("arrCart")
+                    onGetAllCartData()
                 } else {
                     alert(resp.errMessage)
                 }

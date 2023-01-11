@@ -9,6 +9,7 @@ import CommonUtils from '../../../../utils/CommonUtils';
 import DatePicker from '../../../../components/Input/DatePicker';
 import _ from 'lodash';
 import * as userService from '../../../../services/userService'
+import avatar from '../../../../assets/images/avatar.webp'
 
 function Account() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -35,7 +36,11 @@ function Account() {
     useEffect(() => {
         if (!_.isEmpty(clientInfo)) {
             let image = clientInfo.image
-            setPreviewImg(image)
+            if (!image) {
+                setPreviewImg(avatar)
+            } else {
+                setPreviewImg(image)
+            }
             setForm(f => ({ ...f, fullname: clientInfo.fullname }))
         }
     }, [clientInfo])
@@ -58,7 +63,7 @@ function Account() {
     }
 
     const validator = (id) => {
-        let isValid = false
+        let isValid = true
         let copyForm = {
             fullname,
             birthday,
@@ -66,11 +71,11 @@ function Account() {
         }
 
         if (copyForm[id] === '') {
-            isValid = true
+            isValid = false
             setBlurId(id)
             setErrorMessage('Trường này không được để trống')
         } else {
-            isValid = false
+            isValid = true
             setBlurId('')
             setErrorMessage('')
         }
@@ -143,7 +148,7 @@ function Account() {
             genderId
         })
 
-        let result = keys.every(key => validator(key) === false)
+        let result = keys.every(key => validator(key))
         if (!result) return
 
         const data = {

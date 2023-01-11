@@ -17,8 +17,23 @@ function SpecificationsManage() {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        return () => {
+            setUtilities([])
+            setListAllBicycle([])
+            setForm({
+                chat_lieu_son: '', do_tuoi: '', chieu_cao: '', kich_thuoc_trong_luong: '',
+                tai_trong: '', tai_trong_yen_phu: '', thuong_hieu: '', noi_san_xuat: '', suon_xe: '', phuoc: '', kich_co_banh_xe: '',
+                vanh: '', lop_xe: '', loai_van_bom: '', bo_dia: '', bo_thang: '', tay_thang: '', loai_phanh_thang: '', bo_lip: '',
+                ghi_dong: '', chat_lieu_yen: '', chat_lieu_cot: '', hang: ''
+            })
+            setSelects({
+                selectedBicycle: ''
+            })
+        }
+    }, [])
+
     const [utilities, setUtilities] = useState([])
-    console.log("utilities", utilities)
 
     useEffect(() => {
         async function fetchData() {
@@ -81,7 +96,6 @@ function SpecificationsManage() {
                         value: value
                     }
                 })
-                console.log('result', result)
                 return result
             }
         }
@@ -98,7 +112,6 @@ function SpecificationsManage() {
 
     const handleChangeSelect = async (selectedBicycle) => {
         let resp = await userService.handleGetDetailBicycle(selectedBicycle.value)
-        console.log("handleGetDetailBicycle", resp)
         if (resp && resp.errCode === 0 && resp.data && !_.isEmpty(resp.data.specificationsData)) {
             let specifications = resp.data.specificationsData
 

@@ -41,6 +41,7 @@ function DetailBicycle() {
         return () => {
             setCategory('')
             setDetailBicycle({})
+            setUploadedFiles([])
             setIsShowMarkDown(false)
             setIsShowSpecification(false)
             setSo_luong(1)
@@ -53,10 +54,10 @@ function DetailBicycle() {
 
     const [category, setCategory] = useState('')
     const [detailBicycle, setDetailBicycle] = useState({})
+    const [uploadedFiles, setUploadedFiles] = useState([])
 
     useEffect(() => {
         dispatch(actions.fetchCategoryStart('BICYCLE'))
-        dispatch(actions.fetchAllCartStart('All'))
     }, [dispatch])
 
     useEffect(() => {
@@ -71,12 +72,21 @@ function DetailBicycle() {
         })
     }, [category, categoryData, lang, detailBicycle])
 
+    const [isShowLoading, setIsShowLoading] = useState(true)
+
     useEffect(() => {
         async function fetchData() {
             // You can await here
-            let resp = await userService.handleGetDetailBicycle(id)
+            const resp = await userService.handleGetDetailBicycle(id)
+            const resp2 = await userService.handleGetMultiImage(id, 'BICYCLE')
+            if (resp2 && resp2.errCode === 0) {
+                setUploadedFiles(resp2.data)
+            } else {
+                alert(resp2.errMessage)
+            }
             if (resp && resp.errCode === 0 && resp.data) {
                 setDetailBicycle(resp.data)
+                setIsShowLoading(false)
             } else {
                 alert(resp.errMessage)
             }
@@ -114,43 +124,46 @@ function DetailBicycle() {
 
     const [isClickAddCart, setIsClickAddCart] = useState(false)
 
-    const handleCreateCart = async () => {
-        setIsClickAddCart(true)
+    const [listAllCart, setListAllCart] = useState(() => {
+        const allCartData = JSON.parse(localStorage.getItem("arrCart")) || [];
+        return allCartData;
+    });
+
+    const handleAddCart = () => {
         const sum_price = detailBicycle.price_new * so_luong
         const data = {
+            id: Math.floor(Math.random() * 100),
             product_id: id,
             type: 'BICYCLE',
             so_luong,
             price: detailBicycle.price_new,
-            sum_price
+            sum_price,
+            productData: {
+                name: detailBicycle.name,
+                image: detailBicycle.image,
+                price_new: detailBicycle.price_new,
+                price_old: detailBicycle.price_old,
+            }
         }
 
-        const resp = await userService.handleCreateNewCart(data)
-        if (resp && resp.errCode === 0) {
-            alert(`Đã thêm ${so_luong} sản phẩm vào giỏ hàng`)
-        }
-        dispatch(actions.fetchAllCartStart('All'))
+        const arrCart = [...listAllCart, data];
 
+        localStorage.setItem("arrCart", JSON.stringify(arrCart));
+        setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || []);
+        alert(`Đã thêm ${so_luong} vào giỏ hàng`)
+    }
+
+    const handleCreateCart = async () => {
+        setIsClickAddCart(true)
+        handleAddCart();
     }
 
     const handleClickCheckout = async () => {
         if (isClickAddCart) {
             history.push("/home/cart/shoppingcart")
         } else {
-            const sum_price = detailBicycle.price_new * so_luong
-            const data = {
-                product_id: id,
-                type: 'BICYCLE',
-                so_luong,
-                price: detailBicycle.price_new,
-                sum_price
-            }
-
-            const resp = await userService.handleCreateNewCart(data)
-            if (resp && resp.errCode === 0) {
-                history.push("/home/cart/shoppingcart")
-            }
-            dispatch(actions.fetchAllCartStart('All'))
+            handleAddCart();
+            history.push("/home/cart/shoppingcart")
         }
     }
 
@@ -206,7 +219,6 @@ function DetailBicycle() {
     }, [dispatch, id])
 
     const [listAllComment, setListAllComment] = useState([]);
-    console.log("listAllComment", listAllComment)
 
     // get AllComment
     useEffect(() => {
@@ -231,18 +243,18 @@ function DetailBicycle() {
         }
     }
 
-    const [isShowLoading, setIsShowLoading] = useState(true)
+    // const [isShowLoading, setIsShowLoading] = useState(true)
 
-    useEffect(() => {
-        async function fetchData() {
-            setIsShowLoading(false)
-        }
-        // fetchData()
-        const myTimeOut = setTimeout(fetchData, 1500)
-        return () => {
-            clearTimeout(myTimeOut)
-        }
-    }, [])
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         setIsShowLoading(false)
+    //     }
+    //     // fetchData()
+    //     const myTimeOut = setTimeout(fetchData, 1500)
+    //     return () => {
+    //         clearTimeout(myTimeOut)
+    //     }
+    // }, [])
 
     const arrStar = [{ num: 1, isYellow: false }, { num: 2, isYellow: false }, { num: 3, isYellow: false }, { num: 4, isYellow: false }, { num: 5, isYellow: false }]
 
@@ -292,13 +304,13 @@ function DetailBicycle() {
     }
 
     return (
-        <div id="DetailBicycle">
-            <Header />
-            <LoadingOverlay
-                active={isShowLoading}
-                spinner
-                text='Loading...'
-            >
+        <LoadingOverlay
+            active={isShowLoading}
+            spinner
+            text='Loading...'
+        >
+            <div id="DetailBicycle">
+                <Header allCartData={listAllCart} />
                 <div className='detailBicycle_bg'>
                     <div className='detailBicycle'>
                         <div className='link'>
@@ -310,112 +322,108 @@ function DetailBicycle() {
 
                         <div className='infor_buy'>
                             <div className='row product_infor'>
-                                <div className='col-5 image_product'>
+                                <div className='col-lg-5 col-md-5 col-sm-12 image_product'>
                                     <div className='row'>
-                                        <Slider
-                                            asNavFor={nav2} ref={c => setNav1(c)}
-                                        >
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-main'>
-                                                    <img src={xedap} alt='slider-main' />
-                                                </div>
-                                            </div>
-                                        </Slider>
+                                        {
+                                            uploadedFiles.length > 0 ?
+                                                <Slider
+                                                    asNavFor={nav2} ref={c => setNav1(c)}
+                                                >
+                                                    {
+                                                        uploadedFiles && uploadedFiles.length > 0 &&
+                                                        uploadedFiles.map(item => (
+                                                            <div key={item.id} className='col'>
+                                                                <div className='image_slider-main'>
+                                                                    <img src={item.image ? item.image : xedap} alt='slider-main' />
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </Slider>
+                                                :
+                                                <Slider
+                                                    asNavFor={nav2} ref={c => setNav1(c)}
+                                                >
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-main'>
+                                                            <img src={xedap} alt='slider-main' />
+                                                        </div>
+                                                    </div>
+                                                </Slider>
+                                        }
                                     </div>
                                     <div className='row'>
-                                        <Slider
-                                            asNavFor={nav1}
-                                            ref={c => setNav2(c)}
-                                            slidesToShow={4}
-                                            swipeToSlide={true}
-                                            focusOnSelect={true}
-                                            arrows={false}
-                                        >
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
-                                            <div className='col'>
-                                                <div className='image_slider-child'>
-                                                    <img src={xedap} alt='slider-child' />
-                                                </div>
-                                            </div>
+                                        {
+                                            uploadedFiles.length > 0 ?
+                                                <Slider
+                                                    asNavFor={nav1}
+                                                    ref={c => setNav2(c)}
+                                                    slidesToShow={4}
+                                                    swipeToSlide={true}
+                                                    focusOnSelect={true}
+                                                    arrows={false}
+                                                >
+                                                    {
+                                                        uploadedFiles && uploadedFiles.length > 0 &&
+                                                        uploadedFiles.map(item => (
+                                                            <div key={item.id} className='col'>
+                                                                <div className='image_slider-child'>
+                                                                    <img src={item.image ? item.image : xedap} alt='slider-child' />
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
 
-                                        </Slider>
+                                                </Slider>
+                                                :
+                                                <Slider
+                                                    asNavFor={nav1}
+                                                    ref={c => setNav2(c)}
+                                                    slidesToShow={4}
+                                                    swipeToSlide={true}
+                                                    focusOnSelect={true}
+                                                    arrows={false}
+                                                >
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <div className='image_slider-child'>
+                                                            <img src={xedap} alt='slider-child' />
+                                                        </div>
+                                                    </div>
+                                                </Slider>
+                                        }
                                     </div>
                                 </div>
-                                <div className='col-7 infor_buy-product'>
+                                <div className='col-lg-7 col-md-7 col-sm-12 infor_buy-product'>
                                     <div className='title_product'>
                                         <span>{category} {detailBicycle.name}</span>
                                     </div>
@@ -456,9 +464,11 @@ function DetailBicycle() {
                                                 onClick={() => handleClickPlus()}
                                                 className='plus'>+</button>
                                         </div>
-                                        <button
-                                            onClick={() => handleCreateCart()}
-                                            className='add_to_cart'>Thêm vào giỏ</button>
+                                        <div className='wrap'>
+                                            <button
+                                                onClick={() => handleCreateCart()}
+                                                className='add_to_cart'>Thêm vào giỏ</button>
+                                        </div>
                                     </div>
                                     <div className='promotion'>
                                         <div className='label'>
@@ -476,8 +486,19 @@ function DetailBicycle() {
                                         className='buy_btn'>Mua ngay</button>
                                 </div>
                             </div>
+                            <div className='promotion_mobile'>
+                                <div className='label'>
+                                    KHUYẾN MÃI KHI MUA XE ĐẠP ONLINE
+                                </div>
+                                <ul className='list'>
+                                    <li>Miễn phí giao hàng khi mua xe đạp</li>
+                                    <li>Giảm 10% giá bán lẻ khi mua 3 món phụ kiện trở lên</li>
+                                    <li>Giảm 15% giá bán lẻ khi mua 5 món phụ kiện trở lên</li>
+                                    <li>Giảm 17% giá bán lẻ khi mua 7 món phụ kiện trở lên</li>
+                                </ul>
+                            </div>
                             <div className='row product_infor_more'>
-                                <div className='col-7'>
+                                <div className='col-lg-7 col-md-7 col-sm-12'>
                                     <div className='markdown'>
                                         <h4>Thông tin mô tả</h4>
                                         {
@@ -499,101 +520,8 @@ function DetailBicycle() {
                                                 <span>Không có thông tin mô tả</span>
                                         }
                                     </div>
-
-                                    <div className='comment'>
-                                        <h5>
-                                            Đánh giá sản phẩm
-                                            <div className='favorite'>
-                                                {
-                                                    listStar && listStar.length > 0 &&
-                                                    listStar.map(item => (
-                                                        <span
-                                                            onMouseOver={() => handleMouseOverStar(item)}
-                                                            onClick={() => handleClickStar(item)}
-                                                            key={item.num} className={`${item.isYellow ? 'icon-star active' : 'icon-star'}`}>
-                                                            <i className='bx bxs-leaf'></i>
-                                                        </span>
-                                                    ))
-                                                }
-                                            </div>
-                                            <span>(Click vào để đánh giá !!!)</span>
-                                        </h5>
-                                        <div className='comment_input'>
-                                            <div className='textarea'>
-                                                <textarea
-                                                    onChange={(e) => setContentComment(e.target.value)}
-                                                    value={contentComment} autoFocus className='form-control' />
-                                            </div>
-                                            <button
-                                                onClick={() => handleClickComment()}
-                                                className='comment-btn'>{isEdit ? 'Sửa bình luận' : 'Bình luận'}</button>
-                                        </div>
-
-                                        <ul className='list-comment'>
-                                            {
-                                                listAllComment && listAllComment.length > 0 &&
-                                                listAllComment.map(item => (
-                                                    <li key={item.id}>
-                                                        <div className='info'>
-                                                            <div className='image-name'>
-                                                                <div className='image'>
-                                                                    <img src={avatar} alt='avatar' />
-                                                                </div>
-                                                                <div className='name'>
-                                                                    {item.fullname}
-                                                                </div>
-                                                                <div className='favorite'>
-                                                                    {
-                                                                        arrStar && arrStar.length > 0 &&
-                                                                        arrStar
-                                                                            .map(star => {
-                                                                                if (item.num_star > 0 && star.num <= item.num_star) {
-                                                                                    star.isYellow = true
-                                                                                } else {
-                                                                                    star.isYellow = false
-                                                                                }
-                                                                                return star
-                                                                            })
-                                                                            .map(star => (
-                                                                                <span
-                                                                                    key={star.num} className={`${star.isYellow ? 'icon-star active' : 'icon-star'}`}>
-                                                                                    <i className='bx bxs-leaf'></i>
-                                                                                </span>
-                                                                            ))
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <div className='date-icon'>
-                                                                <div className='date'>{item.date}</div>
-                                                                <div className='icon-wrap'>
-                                                                    {
-                                                                        isLoggedInClient &&
-                                                                        <span className='icon'>
-                                                                            <i className='bx bx-dots-vertical-rounded'></i>
-                                                                        </span>
-                                                                    }
-                                                                    <div className='box'>
-                                                                        <span
-                                                                            onClick={() => handleEditComment(item)}
-                                                                        >Sửa</span>
-                                                                        <span
-                                                                            onClick={() => handleDeleteComment(item.id)}
-                                                                        >Xóa</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div className='comment-client'>
-                                                            <p className='text'>{item.content}</p>
-                                                        </div>
-                                                    </li>
-                                                ))
-                                            }
-                                        </ul>
-                                    </div>
                                 </div>
-                                <div className='col-5'>
+                                <div className='col-lg-5 col-md-5 col-sm-12'>
                                     <div className='specification'>
                                         <h4>Thông số kỹ thuật xe đạp {detailBicycle.name}</h4>
                                         {
@@ -714,12 +642,106 @@ function DetailBicycle() {
                                     </div>
                                 </div>
                             </div>
+                            <div className='row product_infor_more'>
+                                <div className='col-lg-7 col-md-7 col-sm-12'>
+                                    <div className='comment'>
+                                        <h5>
+                                            Đánh giá sản phẩm
+                                            <div className='favorite'>
+                                                {
+                                                    listStar && listStar.length > 0 &&
+                                                    listStar.map(item => (
+                                                        <span
+                                                            onMouseOver={() => handleMouseOverStar(item)}
+                                                            onClick={() => handleClickStar(item)}
+                                                            key={item.num} className={`${item.isYellow ? 'icon-star active' : 'icon-star'}`}>
+                                                            <i className='bx bxs-leaf'></i>
+                                                        </span>
+                                                    ))
+                                                }
+                                            </div>
+                                            <span>(Click vào để đánh giá !!!)</span>
+                                        </h5>
+                                        <div className='comment_input'>
+                                            <div className='textarea'>
+                                                <textarea
+                                                    onChange={(e) => setContentComment(e.target.value)}
+                                                    value={contentComment} autoFocus className='form-control' />
+                                            </div>
+                                            <button
+                                                onClick={() => handleClickComment()}
+                                                className='comment-btn'>{isEdit ? 'Sửa bình luận' : 'Bình luận'}</button>
+                                        </div>
+
+                                        <ul className='list-comment'>
+                                            {
+                                                listAllComment && listAllComment.length > 0 &&
+                                                listAllComment.map(item => (
+                                                    <li key={item.id}>
+                                                        <div className='info'>
+                                                            <div className='image-name'>
+                                                                <div className='image'>
+                                                                    <img src={avatar} alt='avatar' />
+                                                                </div>
+                                                                <div className='name'>
+                                                                    {item.fullname}
+                                                                </div>
+                                                                <div className='favorite'>
+                                                                    {
+                                                                        arrStar && arrStar.length > 0 &&
+                                                                        arrStar
+                                                                            .map(star => {
+                                                                                if (item.num_star > 0 && star.num <= item.num_star) {
+                                                                                    star.isYellow = true
+                                                                                } else {
+                                                                                    star.isYellow = false
+                                                                                }
+                                                                                return star
+                                                                            })
+                                                                            .map(star => (
+                                                                                <span
+                                                                                    key={star.num} className={`${star.isYellow ? 'icon-star active' : 'icon-star'}`}>
+                                                                                    <i className='bx bxs-leaf'></i>
+                                                                                </span>
+                                                                            ))
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div className='date-icon'>
+                                                                <div className='date'>{item.date}</div>
+                                                                <div className='icon-wrap'>
+                                                                    <span className='icon'>
+                                                                        <i className='bx bx-dots-vertical-rounded'></i>
+                                                                    </span>
+                                                                    <div className='box'>
+                                                                        <span
+                                                                            onClick={() => handleEditComment(item)}
+                                                                        >Sửa</span>
+                                                                        <span
+                                                                            onClick={() => handleDeleteComment(item.id)}
+                                                                        >Xóa</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div className='comment-client'>
+                                                            <p className='text'>{item.content}</p>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className='col-lg-5 col-md-5 col-sm-12'></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </LoadingOverlay>
-            <Footer />
-        </div>
+                <Footer />
+            </div>
+        </LoadingOverlay>
     )
 }
 

@@ -4,7 +4,7 @@
 // import * as actions from "../../../../store/actions";
 // import { LANGUAGES } from '../../../../utils/constant'
 import "./Cart.scss"
-// import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Switch, Route } from "react-router-dom";
 import Header from '../Header';
 import '../../Homepage.scss'
@@ -31,9 +31,18 @@ function Cart() {
         e.preventDefault()
     }
 
+    const [listAllCart, setListAllCart] = useState(() => {
+        const allCartData = JSON.parse(localStorage.getItem("arrCart")) || [];
+        return allCartData;
+    });
+
+    const handleAllCartData = () => {
+        setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || []);
+    }
+
     return (
         <div id="Cart">
-            <Header />
+            <Header allCartData={listAllCart} />
             <div className="cart_bg">
                 <div className="cart">
                     <div className="topnav">
@@ -51,9 +60,18 @@ function Cart() {
                     </div>
 
                     <Switch>
-                        <Route path={path.SHOPPINGCART} component={(ShoppingCart)} />
-                        <Route path={path.CHECKOUTDETAILS} component={(CheckoutDetails)} />
-                        <Route path={path.ORDERCOMPLETE} component={(OrderComplete)} />
+                        <Route path={path.SHOPPINGCART}>
+                            <ShoppingCart
+                                onGetAllCartData={handleAllCartData}
+                                listAllCart={listAllCart}
+                            />
+                        </Route>
+                        <Route path={path.CHECKOUTDETAILS}>
+                            <CheckoutDetails listAllCart={listAllCart} />
+                        </Route>
+                        <Route path={path.ORDERCOMPLETE}>
+                            <OrderComplete onGetAllCartData={handleAllCartData} />
+                        </Route>
                     </Switch>
                 </div>
             </div>

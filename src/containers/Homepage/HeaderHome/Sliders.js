@@ -41,7 +41,7 @@ function Sliders() {
             <div className="sliders_bg">
                 <div className="sliders">
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-lg-8">
                             <div className="row">
                                 <Slider {...settings}>
                                     <div className="col-12">
@@ -65,9 +65,9 @@ function Sliders() {
                                 </Slider>
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-lg-4 hidden-xs">
                             <div className="row">
-                                <div className="col-12">
+                                <div className="col-lg-12 col-md-6 col-sm-6">
                                     <div className="banner">
                                         <a href="/">
                                             <div className="banner_img">
@@ -76,7 +76,7 @@ function Sliders() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className="col-12">
+                                <div className="col-lg-12 col-md-6 col-sm-6">
                                     <div className="banner">
                                         <a href="/">
                                             <div className="banner_img">

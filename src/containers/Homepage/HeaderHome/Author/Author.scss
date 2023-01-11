@@ -7,7 +7,7 @@
 
         .signup,
         .login {
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
 
@@ -20,7 +20,8 @@
 
             .signup_content,
             .login_content {
-                width: 500px;
+                width: 100%;
+                max-width: 500px;
                 padding: 32px 24px;
                 text-align: center;
                 background: #fff;

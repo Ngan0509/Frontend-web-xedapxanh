@@ -16,6 +16,21 @@ function StoreManage() {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        return () => {
+            setForm({
+                name: '',
+                address: '',
+                phoneNumber: '',
+                previewImg: ''
+            })
+
+            setIsEdit(false)
+            setId('')
+            setListAllStore([])
+        }
+    }, [])
+
     // input onChange
     const [form, setForm] = useState({
         name: '',
@@ -75,7 +90,6 @@ function StoreManage() {
                 image: previewImg
 
             }
-            console.log("dataEdit", dataEdit)
             const resp = await userService.handleUpdateNewStore(dataEdit)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllStoreStart('All'))
@@ -88,7 +102,6 @@ function StoreManage() {
                 ...form,
                 image: previewImg
             }
-            console.log("data", data)
             const resp = await userService.handleCreateNewStore(data)
             if (resp && resp.errCode === 0) {
                 dispatch(actions.fetchAllStoreStart('All'))

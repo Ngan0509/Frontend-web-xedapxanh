@@ -12,6 +12,7 @@ import shoppingBag from '../../../assets/images/shopping-bag.png'
 import _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import xedap from '../../../assets/images/RINCON-2-2022-grey-fix.jpg'
+import avatar from '../../../assets/images/avatar.webp'
 
 import CustomScrollbars from '../../../components/CustomScrollbars';
 
@@ -20,17 +21,18 @@ import {
 } from "react-router-dom";
 import { path } from '../../../utils'
 
-function Header() {
+function Header(props) {
     const lang = useSelector(selectors.selectorLanguages)
     const isLoggedInClient = useSelector(selectors.selectorIsLoggedInClient)
     const clientInfoSelect = useSelector(selectors.selectorClientInfo)
     const allBicycleData = useSelector(selectors.selectorAllBicycleData)
-    const allCartData = useSelector(selectors.selectorAllCartData)
 
     const dispatch = useDispatch()
 
     const [search, setSearch] = useState('')
     const [isFocus, setIsFocus] = useState(false)
+    const [isShowAside, setIsShowAside] = useState(false)
+    const [isShowCartMobile, setIsShowCartMobile] = useState(false)
 
     useEffect(() => {
         dispatch(actions.fetchAllBicycleStart('All'))
@@ -54,16 +56,12 @@ function Header() {
         dispatch(actions.changeLanguageApp(language))
     }
 
-    useEffect(() => {
-        dispatch(actions.fetchAllCartStart('All'))
-    }, [dispatch])
-
     const [listAllCart, setListAllCart] = useState([]);
 
     // get AllCart
     useEffect(() => {
-        setListAllCart(allCartData)
-    }, [allCartData])
+        setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || [])
+    }, [props.allCartData])
 
     const [clientInfo, setClientInfo] = useState({});
     // get clientInfo
@@ -112,11 +110,21 @@ function Header() {
         history.push('/home')
     }
 
+    const handleClickHide = () => {
+        setIsFocus(false)
+        setIsShowAside(false)
+        setIsShowCartMobile(false)
+    }
+
+    const handleDetailPage = (id) => {
+        history.push(`/home/bicycle/detail/${id}`);
+    }
+
     return (
         <>
             <div
-                onClick={() => setIsFocus(false)}
-                className={`${isFocus ? 'overplay active' : 'overplay'}`}>
+                onClick={handleClickHide}
+                className={`${isFocus || isShowAside || isShowCartMobile ? 'overplay active' : 'overplay'}`}>
             </div>
             <div id="Header">
                 <div className='header_bg'>
@@ -168,7 +176,7 @@ function Header() {
                                         <li className='user_login'>
                                             <div className='wrap'>
                                                 <span className='user_img'>
-                                                    <img src={!_.isEmpty(clientInfo) ? clientInfo.image : undefined} alt='user' />
+                                                    <img src={!_.isEmpty(clientInfo) ? clientInfo.image ? clientInfo.image : avatar : undefined} alt='user' />
                                                 </span>
                                                 <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
                                             </div>
@@ -191,6 +199,94 @@ function Header() {
                         </div>
                     </div>
                     <div className='header_home'>
+                        <div className='menu'>
+                            <span
+                                onClick={() => setIsShowAside(true)}
+                                className='icon-menu'>
+                                <i className='bx bx-menu'></i>
+                            </span>
+                            <div className={`${isShowAside ? 'menu_aside active' : 'menu_aside'}`}>
+                                <span
+                                    onClick={() => setIsShowAside(false)}
+                                    className='close_icon'>
+                                    <i className='bx bx-x-circle'></i>
+                                </span>
+                                <div
+                                    onClick={() => handleClickLogoHome()}
+                                    className='logo'>
+                                    <img src={logo} alt='logo-xedapxanh' />
+                                </div>
+                                <div className='top_content'>
+                                    <ul>
+                                        {
+                                            !isLoggedInClient ?
+                                                <li className='user_not-login'>
+                                                    <span
+                                                        onClick={() => handlePushSignUp()}
+                                                    >
+                                                        <FormattedMessage id='headerHome.signup' />
+                                                    </span>
+                                                    <span
+                                                        onClick={() => handlePushLogIn()}
+                                                    >
+                                                        <FormattedMessage id='headerHome.login' />
+                                                    </span>
+                                                </li>
+                                                :
+                                                <li className='user_login'>
+                                                    <div className='wrap'>
+                                                        <span className='user_img'>
+                                                            <img src={!_.isEmpty(clientInfo) ? clientInfo.image ? clientInfo.image : avatar : undefined} alt='user' />
+                                                        </span>
+                                                        <span className='user_name'>{!_.isEmpty(clientInfo) && clientInfo.fullname}</span>
+                                                    </div>
+                                                    <ul className='user_box'>
+                                                        <li>
+                                                            <NavLink to={path.ACCOUNT} activeClassName="active" exact={true}>
+                                                                <FormattedMessage id="headerHome.account" />
+                                                            </NavLink>
+                                                        </li>
+                                                        <li>
+                                                            <NavLink to={path.ORDERS} activeClassName="active" exact={true}>
+                                                                <FormattedMessage id="headerHome.order" />
+                                                            </NavLink>
+                                                        </li>
+                                                        <li onClick={(e) => handleClickLogout(e)}><a href='/home'><FormattedMessage id="headerHome.logout" /></a></li>
+                                                    </ul>
+                                                </li>
+                                        }
+
+                                        <li className='contact'>
+                                            <i className='bx bx-headphone'></i>
+                                            <FormattedMessage id='headerHome.contact' />
+                                        </li>
+                                        <li className='languages'>
+                                            <i className='bx bx-globe' ></i>
+                                            <span onClick={() => changeLanguage(LANGUAGES.VI)} className={lang === LANGUAGES.VI ? 'vietnam active' : 'vietnam'}>VI</span>
+                                            <span onClick={() => changeLanguage(LANGUAGES.EN)} className={lang === LANGUAGES.EN ? 'english active' : 'english'}>EN</span>
+                                        </li>
+                                        <li className='find_address'>
+                                            <i className='bx bx-map'></i>
+                                            <FormattedMessage id="headerHome.find-store-address" />
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className='bottom_content'>
+                                    <ul>
+                                        <li
+                                            onClick={handleClickAdmin}
+                                        >
+                                            <FormattedMessage id="headerHome.pageAdmin" />
+                                        </li>
+                                        <li
+                                            onClick={handleClickShipper}
+                                        >
+                                            <FormattedMessage id="headerHome.pageShipper" />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div
                             onClick={() => handleClickLogoHome()}
                             className='logo'>
@@ -219,7 +315,9 @@ function Header() {
                                             listAllBicycle
                                                 .filter((item) => item.name.match(new RegExp(search, "i")))
                                                 .map(item => (
-                                                    <li key={item.id}>
+                                                    <li
+                                                        onClick={() => handleDetailPage(item.id)}
+                                                        key={item.id}>
                                                         <div className='image-name'>
                                                             <div className='image-product'>
                                                                 <img src={item.image || xedap} alt='product' />
@@ -242,6 +340,11 @@ function Header() {
                                         }
                                     </ul>
                                 </CustomScrollbars>
+                                <div
+                                    onClick={() => setIsFocus(false)}
+                                    className="close_btn">
+                                    <button>X</button>
+                                </div>
                             </div>
                         </div>
 
@@ -252,6 +355,11 @@ function Header() {
                                 <i className='bx bx-news' ></i>
                                 <FormattedMessage id="headerHome.news" />
                             </a>
+                            <a
+                                href={path.NEWS}
+                                className='news_icon-mobile'>
+                                <i className='bx bx-news' ></i>
+                            </a>
                         </div>
                         <div className='cart'>
                             <div className='cart_wrap'>
@@ -260,7 +368,13 @@ function Header() {
                                     <FormattedMessage id="headerHome.cart" />
                                     <span className='amount'>{listAllCart.length}</span>
                                 </span>
-                                <div className='cart_info'>
+                                <span
+                                    onClick={() => setIsShowCartMobile(true)}
+                                    className='cart_icon-mobile'>
+                                    <i className='bx bx-cart'></i>
+                                    <span className='amount'>{listAllCart.length}</span>
+                                </span>
+                                <div className={`${isShowCartMobile ? 'cart_info active' : 'cart_info'}`}>
                                     {
                                         listAllCart && listAllCart.length > 0 ?
                                             <div className='cart_have-product'>
@@ -270,7 +384,9 @@ function Header() {
                                                         {
                                                             listAllCart && listAllCart.length > 0 &&
                                                             listAllCart.map(item => (
-                                                                <li key={item.id} className='product_list-item'>
+                                                                <li
+                                                                    onClick={() => handleDetailPage(item.product_id)}
+                                                                    key={item.id} className='product_list-item'>
                                                                     <div className='product_img'>
                                                                         <img src={(item.productData && !_.isEmpty(item.productData) && item.productData.image) || xedap} alt='product' />
                                                                     </div>
@@ -294,17 +410,24 @@ function Header() {
                                                                                     suffix={'VND'}
                                                                                 />
                                                                             </span>
-                                                                            <span className='new_price'>
-                                                                                <NumberFormat
-                                                                                    value=
-                                                                                    {
-                                                                                        item.productData && !_.isEmpty(item.productData) && item.productData.price_new
-                                                                                    }
-                                                                                    className="foo"
-                                                                                    displayType={'text'}
-                                                                                    thousandSeparator={true}
-                                                                                    suffix={'VND'}
-                                                                                />
+
+                                                                            <span className='wrap'>
+                                                                                <span className='so_luong'>
+                                                                                    {item.so_luong}
+                                                                                </span>
+                                                                                x
+                                                                                <span className='new_price'>
+                                                                                    <NumberFormat
+                                                                                        value=
+                                                                                        {
+                                                                                            item.productData && !_.isEmpty(item.productData) && item.productData.price_new
+                                                                                        }
+                                                                                        className="foo"
+                                                                                        displayType={'text'}
+                                                                                        thousandSeparator={true}
+                                                                                        suffix={'VND'}
+                                                                                    />
+                                                                                </span>
                                                                             </span>
                                                                         </div>
                                                                     </div>
