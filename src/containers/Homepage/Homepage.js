@@ -28,7 +28,7 @@ function Homepage() {
     useEffect(() => {
         timer.current = setTimeout(() => {
             setIsShowLoading(false)
-        }, 2000)
+        }, 1000)
 
         return () => {
             clearTimeout(timer.current)
