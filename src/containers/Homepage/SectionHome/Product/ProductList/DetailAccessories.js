@@ -141,7 +141,7 @@ function DetailAccessories() {
 
         localStorage.setItem("arrCart", JSON.stringify(arrCart));
         setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || []);
-        // alert(`Đã thêm ${so_luong} vào giỏ hàng`)
+        alert(`Đã thêm ${so_luong} vào giỏ hàng`)
     }
 
     const handleCreateCart = () => {
