@@ -39,7 +39,7 @@ function OrderComplete({ onGetAllCartData }) {
             // ...
         }
         fetchData();
-    }, [location])
+    }, [location, onGetAllCartData])
     // const handleClickPushPage = (item) => {
 
     // }
