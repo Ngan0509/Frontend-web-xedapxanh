@@ -9,7 +9,7 @@ const initialState = {
     allBicycleData: [],
     allAccessoriesData: [],
     allFilterData: [],
-    allCartData: [],
+    // allCartData: [],
     allCheckoutData: [],
     allCommentData: [],
     allStoreData: [],
@@ -121,16 +121,16 @@ const adminReducer = (state = initialState, action) => {
 
         //---------------------------------------
 
-        case actionTypes.FETCH_ALL_CART_SUCCESS:
-            return {
-                ...state,
-                allCartData: action.data
-            }
-        case actionTypes.FETCH_ALL_CART_FAILED:
-            return {
-                ...state,
-                allCartData: []
-            }
+        // case actionTypes.FETCH_ALL_CART_SUCCESS:
+        //     return {
+        //         ...state,
+        //         allCartData: action.data
+        //     }
+        // case actionTypes.FETCH_ALL_CART_FAILED:
+        //     return {
+        //         ...state,
+        //         allCartData: []
+        //     }
 
         //---------------------------------------
 

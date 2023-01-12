@@ -222,6 +222,20 @@ function UserManage() {
         if (resp && resp.errCode === 0) {
             dispatch(actions.fetchAllUserStart('All'))
             alert(resp.errMessage)
+            setForm({
+                fullname: '',
+                email: '',
+                password: '',
+                phoneNumber: '',
+            })
+            setSelects({
+                role: '',
+                gender: '',
+                city: '',
+                district: ''
+            })
+            setIsEdit(false)
+            setId('')
         } else {
             alert(resp.errMessage)
         }

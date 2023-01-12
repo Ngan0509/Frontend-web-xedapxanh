@@ -275,31 +275,31 @@ export const fetchAllFilterFailed = () => ({
 })
 
 //-------------------------------------------------------
-export const fetchAllCartStart = (inputId) => {
-    return async (dispatch, getState) => {
-        try {
-            dispatch({ type: actionTypes.FETCH_ALL_CART_START })
-            let resp = await userService.handleGetAllCart(inputId)
+// export const fetchAllCartStart = (inputId) => {
+//     return async (dispatch, getState) => {
+//         try {
+//             dispatch({ type: actionTypes.FETCH_ALL_CART_START })
+//             let resp = await userService.handleGetAllCart(inputId)
 
-            if (resp && resp.errCode === 0) {
-                dispatch(fetchAllCartSuccess(resp.data))
-            } else {
-                dispatch(fetchAllCartFailed())
-            }
-        } catch (error) {
-            dispatch(fetchAllCartFailed())
-        }
-    }
-}
+//             if (resp && resp.errCode === 0) {
+//                 dispatch(fetchAllCartSuccess(resp.data))
+//             } else {
+//                 dispatch(fetchAllCartFailed())
+//             }
+//         } catch (error) {
+//             dispatch(fetchAllCartFailed())
+//         }
+//     }
+// }
 
-export const fetchAllCartSuccess = (AllCartData) => ({
-    type: actionTypes.FETCH_ALL_CART_SUCCESS,
-    data: AllCartData
-})
+// export const fetchAllCartSuccess = (AllCartData) => ({
+//     type: actionTypes.FETCH_ALL_CART_SUCCESS,
+//     data: AllCartData
+// })
 
-export const fetchAllCartFailed = () => ({
-    type: actionTypes.FETCH_ALL_CART_FAILED
-})
+// export const fetchAllCartFailed = () => ({
+//     type: actionTypes.FETCH_ALL_CART_FAILED
+// })
 
 //-------------------------------------------------------
 export const fetchAllCheckoutStart = (inputId, role) => {

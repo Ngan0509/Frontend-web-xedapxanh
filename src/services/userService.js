@@ -100,21 +100,21 @@ const handleUpdateNewFilter = (editData) => {
     return axios.put('/api/update-filter', editData)
 }
 
-const handleGetAllCart = (inputId) => {
-    return axios.get(`/api/get-all-cart?id=${inputId}`)
-}
+// const handleGetAllCart = (inputId) => {
+//     return axios.get(`/api/get-all-cart?id=${inputId}`)
+// }
 
-const handleCreateNewCart = (data) => {
-    return axios.post('/api/create-new-cart', data)
-}
+// const handleCreateNewCart = (data) => {
+//     return axios.post('/api/create-new-cart', data)
+// }
 
-const handleDeleteNewCart = (cartId) => {
-    return axios.delete(`/api/delete-cart?id=${cartId}`)
-}
+// const handleDeleteNewCart = (cartId) => {
+//     return axios.delete(`/api/delete-cart?id=${cartId}`)
+// }
 
-const handleUpdateNewCart = (editData) => {
-    return axios.put('/api/update-cart', editData)
-}
+// const handleUpdateNewCart = (editData) => {
+//     return axios.put('/api/update-cart', editData)
+// }
 
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/get-all-code?type=${inputType}`)
@@ -195,7 +195,7 @@ export {
     handleGetAllAccessory, handleCreateNewAccessory, handleDeleteNewAccessory, handleUpdateNewAccessory,
     handleGetAllFilter, handleCreateNewFilter, handleUpdateNewFilter, handleDeleteNewFilter,
     handleGetDetailBicycle, handleCreateMarkDownBicycle, handleCreateSpecificationsBicycle,
-    handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
+    // handleGetAllCart, handleCreateNewCart, handleDeleteNewCart, handleUpdateNewCart,
     handleLogInClient, handleSignUpClient, handleDeleteNewClient, handleUpdateNewClient,
     handleGetAllCheckout, handleCreateNewCheckout, handleUpdateStatusIdCheckout,
     handleGetAllComment, handleCreateNewComment, handleDeleteNewComment, handleUpdateNewComment,

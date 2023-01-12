@@ -18,7 +18,6 @@ function AccessoriesManage() {
     const allCodeData = useSelector(selectors.selectorAllcodeAccessoryData)
     const categoryData = useSelector(selectors.selectorCategoryData)
     const allAccessoriesData = useSelector(selectors.selectorAllAccessoriesData)
-
     const dispatch = useDispatch()
 
     const buildInputData = useCallback((inputData, type) => {
@@ -211,6 +210,17 @@ function AccessoriesManage() {
         if (resp && resp.errCode === 0) {
             dispatch(actions.fetchAllAccessoriesStart('All'))
             alert(resp.errMessage)
+            setForm({
+                productName: '',
+                priceNew: '',
+                previewImg: ''
+            })
+            setSelects({
+                category: '',
+                accessories_id: ''
+            })
+            setIsEdit(false)
+            setId('')
         } else {
             alert(resp.errMessage)
         }

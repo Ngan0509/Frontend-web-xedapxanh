@@ -119,6 +119,15 @@ function StoreManage() {
         if (resp && resp.errCode === 0) {
             dispatch(actions.fetchAllStoreStart('All'))
             alert(resp.errMessage)
+            setForm({
+                name: '',
+                address: '',
+                phoneNumber: '',
+                previewImg: ''
+            })
+
+            setIsEdit(false)
+            setId('')
         } else {
             alert(resp.errMessage)
         }

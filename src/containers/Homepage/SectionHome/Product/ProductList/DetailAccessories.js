@@ -23,9 +23,12 @@ import './DetailBicycle.scss'
 import NumberFormat from 'react-number-format';
 import { useEffect, useState } from 'react';
 import avatar from '../../../../../assets/images/avatar.webp'
+import { v4 as uuidv4 } from 'uuid';
 
 import LoadingOverlay from 'react-loading-overlay';
 LoadingOverlay.propTypes = undefined
+
+
 
 function DetailAccessories() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -119,8 +122,9 @@ function DetailAccessories() {
 
     const handleAddCart = () => {
         const sum_price = detailAccessories.price_new * so_luong
+        const token = uuidv4()
         const data = {
-            id: Math.floor(Math.random() * 100),
+            id: token,
             product_id: id,
             type: 'ACCESSORIES',
             so_luong,
@@ -137,6 +141,7 @@ function DetailAccessories() {
 
         localStorage.setItem("arrCart", JSON.stringify(arrCart));
         setListAllCart(JSON.parse(localStorage.getItem("arrCart")) || []);
+        // alert(`Đã thêm ${so_luong} vào giỏ hàng`)
     }
 
     const handleCreateCart = () => {
@@ -224,6 +229,7 @@ function DetailAccessories() {
         const resp = await userService.handleDeleteNewComment(comment_id)
         if (resp && resp.errCode === 0) {
             alert(resp.errMessage)
+            dispatch(actions.fetchAllCommentStart(id, 'ACCESSORIES'))
         } else {
             alert(resp.errMessage)
         }

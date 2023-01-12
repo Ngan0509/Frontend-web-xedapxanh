@@ -23,9 +23,12 @@ import './DetailBicycle.scss'
 import NumberFormat from 'react-number-format';
 import { useEffect, useState } from 'react';
 import avatar from '../../../../../assets/images/avatar.webp'
+import { v4 as uuidv4 } from 'uuid';
 
 import LoadingOverlay from 'react-loading-overlay';
 LoadingOverlay.propTypes = undefined
+
+
 
 function DetailBicycle() {
     const lang = useSelector(selectors.selectorLanguages)
@@ -131,8 +134,9 @@ function DetailBicycle() {
 
     const handleAddCart = () => {
         const sum_price = detailBicycle.price_new * so_luong
+        const token = uuidv4()
         const data = {
-            id: Math.floor(Math.random() * 100),
+            id: token,
             product_id: id,
             type: 'BICYCLE',
             so_luong,
@@ -238,6 +242,7 @@ function DetailBicycle() {
         const resp = await userService.handleDeleteNewComment(comment_id)
         if (resp && resp.errCode === 0) {
             alert(resp.errMessage)
+            dispatch(actions.fetchAllCommentStart(id, 'BICYCLE'))
         } else {
             alert(resp.errMessage)
         }

@@ -181,6 +181,17 @@ function FilterManage() {
         if (resp && resp.errCode === 0) {
             dispatch(actions.fetchAllFilterStart('All'))
             alert(resp.errMessage)
+            setForm({
+                nameEn: '',
+                nameVi: ''
+            })
+            setSelects({
+                type: '',
+                category: ''
+            })
+
+            setIsEdit(false)
+            setId('')
         } else {
             alert(resp.errMessage)
         }

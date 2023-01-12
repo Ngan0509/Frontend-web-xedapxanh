@@ -281,6 +281,27 @@ function BicycleManage() {
         if (resp && resp.errCode === 0) {
             dispatch(actions.fetchAllBicycleStart('All'))
             alert(resp.errMessage)
+            setForm({
+                productName: '',
+                priceNew: '',
+                priceOld: '',
+                discout: '',
+                previewImg: ''
+            })
+            setSelects({
+                category: '',
+                priceSpace: '',
+                brand: '',
+                useTarget: '',
+                weelSize: '',
+                frameMaterial: '',
+                riderHeight: '',
+                brake: '',
+                diskNumber: '',
+                utilities: ''
+            })
+            setIsEdit(false)
+            setId('')
         } else {
             alert(resp.errMessage)
         }
