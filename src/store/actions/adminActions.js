@@ -228,7 +228,7 @@ export const fetchAllAccessoriesStart = (inputId) => {
             let resp = await userService.handleGetAllAccessory(inputId)
 
             if (resp && resp.errCode === 0) {
-                dispatch(fetchAllAccessoriesSuccess(resp.data))
+                dispatch(fetchAllAccessoriesSuccess(resp.data.reverse()))
             } else {
                 dispatch(fetchAllAccessoriesFailed())
             }

@@ -294,6 +294,7 @@ function AccessoriesManage() {
     const [isShow, setIsShow] = useState(false)
     const toggle = () => {
         setIsShow(state => !state)
+        setIsLimitFiles(false)
     }
 
     const [idImage, setIdImage] = useState(null)
@@ -357,6 +358,7 @@ function AccessoriesManage() {
 
         setUploadedFiles([])
         setIdImage(null)
+        setIsLimitFiles(false)
         setIsShow(false)
     }
 

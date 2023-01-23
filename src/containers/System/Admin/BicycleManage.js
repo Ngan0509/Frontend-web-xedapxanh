@@ -393,6 +393,7 @@ function BicycleManage() {
     const [isShow, setIsShow] = useState(false)
     const toggle = () => {
         setIsShow(state => !state)
+        setIsLimitFiles(false)
     }
 
     const [idImage, setIdImage] = useState(null)
