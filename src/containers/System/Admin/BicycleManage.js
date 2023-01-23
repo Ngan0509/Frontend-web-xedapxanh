@@ -457,6 +457,7 @@ function BicycleManage() {
         setUploadedFiles([])
         setIdImage(null)
         setIsShow(false)
+        setIsLimitFiles(false)
     }
 
     const handleDeleteMultiImage = async (file) => {
