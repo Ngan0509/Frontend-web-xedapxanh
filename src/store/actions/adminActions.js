@@ -201,7 +201,7 @@ export const fetchAllBicycleStart = (inputId) => {
             let resp = await userService.handleGetAllBicycle(inputId)
 
             if (resp && resp.errCode === 0) {
-                dispatch(fetchAllBicycleSuccess(resp.data))
+                dispatch(fetchAllBicycleSuccess(resp.data.reverse()))
             } else {
                 dispatch(fetchAllBicycleFailed())
             }
